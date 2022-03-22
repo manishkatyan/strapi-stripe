@@ -129,16 +129,7 @@ const CreateProduct = ({ isVisible, handleClose }) => {
                   name="title"
                   onChange={handleChange}
                   error={error.title ? error.title : ""}
-                  labelAction={
-                    <Tooltip description="Enter the title of the product">
-                      <button
-                        aria-label="Information about the title of the product"
-                        style={toolTipStyle}
-                      >
-                        <Information aria-hidden={true} />
-                      </button>
-                    </Tooltip>
-                  }
+                  required
                 />
               </GridItem>
               <GridItem col={6}>
@@ -149,16 +140,7 @@ const CreateProduct = ({ isVisible, handleClose }) => {
                   onValueChange={(value) => handleChangeNumber(value)}
                   value={price}
                   error={error.price ? error.price : ""}
-                  labelAction={
-                    <Tooltip description="Enter the price of the product">
-                      <button
-                        aria-label="Information about the price of the product"
-                        style={toolTipStyle}
-                      >
-                        <Information aria-hidden={true} />
-                      </button>
-                    </Tooltip>
-                  }
+                  required
                 />
               </GridItem>
               <GridItem col={6}>
@@ -168,16 +150,7 @@ const CreateProduct = ({ isVisible, handleClose }) => {
                   name="url"
                   onChange={handleChange}
                   error={error.url ? error.url : ""}
-                  labelAction={
-                    <Tooltip description="Enter the image url of the product">
-                      <button
-                        aria-label="Information about the image url  of the product"
-                        style={toolTipStyle}
-                      >
-                        <Information aria-hidden={true} />
-                      </button>
-                    </Tooltip>
-                  }
+                  required
                 />
               </GridItem>
               <GridItem col={6}>
@@ -187,19 +160,7 @@ const CreateProduct = ({ isVisible, handleClose }) => {
                   name="description"
                   onChange={handleChange}
                   error={error.description ? error.description : ""}
-                  labelAction={
-                    <Tooltip
-                      description="Enter the product description"
-                      position="right"
-                    >
-                      <button
-                        aria-label="Information about the Description of the product"
-                        style={toolTipStyle}
-                      >
-                        <Information aria-hidden={true} />
-                      </button>
-                    </Tooltip>
-                  }
+                  required
                 >
                   {description}
                 </Textarea>
