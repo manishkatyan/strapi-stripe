@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SettingsPageTitle } from "@strapi/helper-plugin";
 import Check from "@strapi/icons/Check";
 import { Box } from "@strapi/design-system/Box";
@@ -21,10 +21,12 @@ import { Checkbox } from "@strapi/design-system/Checkbox";
 import { Select, Option } from "@strapi/design-system/Select";
 import { Link } from "@strapi/design-system/Link";
 import currencies from "./constant";
+import {
+  saveStripeConfiguration,
+  getStripeConfiguration,
+} from "../../utils/apiCalls";
 
 const Configuration = () => {
-  // const [isLiveMode, setIsLiveMode] = useState(false);
-  // const [stripeCurrency, setStripeCurrency] = useState();
   const [stripeConfiguration, setStripeConfiguration] = useState({
     isLiveMode: false,
     stripeLivePubKey: "",
@@ -36,6 +38,9 @@ const Configuration = () => {
     paymentButtonText: "",
   });
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [error, setError] = useState({
     stripeLivePubKey: "",
     stripeLiveSecKey: "",
@@ -46,24 +51,65 @@ const Configuration = () => {
     paymentButtonText: "",
   });
 
+  useEffect(async () => {
+    const response = await getStripeConfiguration();
+    if (response.data?.response) {
+      const {
+        isLiveMode,
+        stripeLivePubKey,
+        stripeLiveSecKey,
+        stripeTestPubKey,
+        stripeTestSecKey,
+        checkoutSuccessUrl,
+        currency,
+        paymentButtonText,
+      } = response.data.response;
+      setStripeConfiguration({
+        ...stripeConfiguration,
+        isLiveMode,
+        stripeLivePubKey,
+        stripeLiveSecKey,
+        stripeTestPubKey,
+        stripeTestSecKey,
+        checkoutSuccessUrl,
+        currency,
+        paymentButtonText,
+      });
+    }
+  }, []);
   const handleChangeCurrency = (value) => {
     setStripeConfiguration({ ...stripeConfiguration, currency: value });
+    setError({ ...error, currency: "" });
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setStripeConfiguration({ ...stripeConfiguration, [name]: value });
+    if (name === "stripeLivePubKey") {
+      setError({ ...error, stripeLivePubKey: "" });
+    } else if (name === "stripeLiveSecKey") {
+      setError({ ...error, stripeLiveSecKey: "" });
+    } else if (name === "stripeTestPubKey") {
+      setError({ ...error, stripeTestPubKey: "" });
+    } else if (name === "stripeTestSecKey") {
+      setError({ ...error, stripeTestSecKey: "" });
+    } else if (name === "checkoutSuccessUrl") {
+      setError({ ...error, checkoutSuccessUrl: "" });
+    } else if (name === "paymentButtonText") {
+      setError({ ...error, paymentButtonText: "" });
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
     if (
-      !stripeLivePubKey &&
-      !stripeLiveSecKey &&
-      !stripeTestPubKey &&
-      !stripeTestSecKey &&
-      !checkoutSuccessUrl &&
-      !currency &&
-      !paymentButtonText
+      !stripeConfiguration.stripeLivePubKey &&
+      !stripeConfiguration.stripeLiveSecKey &&
+      !stripeConfiguration.stripeTestPubKey &&
+      !stripeConfiguration.stripeTestSecKey &&
+      !stripeConfiguration.checkoutSuccessUrl &&
+      !stripeConfiguration.currency &&
+      !stripeConfiguration.paymentButtonText
     ) {
       setError({
         ...error,
@@ -72,11 +118,59 @@ const Configuration = () => {
         stripeTestPubKey: "Test Stripe Publishable Key is required",
         stripeTestSecKey: "Test Stripe Secret Key is required",
         checkoutSuccessUrl: "Checkout Success Page Url is required",
-        currency: "Choose your Currency is required",
+        currency: "Currency is required",
         paymentButtonText: "Payment Button Text is required",
       });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.stripeLivePubKey) {
+      setError({
+        ...error,
+        stripeLivePubKey: "Live Stripe Publishable Key is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.stripeLiveSecKey) {
+      setError({
+        ...error,
+        stripeLiveSecKey: "Live Stripe Secret Key is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.stripeTestPubKey) {
+      setError({
+        ...error,
+        stripeTestPubKey: "Test Stripe Publishable Key is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.stripeTestSecKey) {
+      setError({
+        ...error,
+        stripeTestSecKey: "Test Stripe Secret Key is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.checkoutSuccessUrl) {
+      setError({
+        ...error,
+        checkoutSuccessUrl: "Checkout Success Page Url is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.currency) {
+      setError({
+        ...error,
+        currency: "Currency is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.paymentButtonText) {
+      setError({
+        ...error,
+        paymentButtonText: "Payment Button Text is required",
+      });
+      setIsSubmitting(false);
+    } else {
+      const response = await saveStripeConfiguration(stripeConfiguration);
+      if (response.data.ok) {
+        setShowAlert(true);
+      }
+      setIsSubmitting(false);
     }
-    console.log(stripeConfiguration);
   };
 
   return (
@@ -87,7 +181,7 @@ const Configuration = () => {
         primaryAction={
           <Button
             type="submit"
-            // loading={isSubmitting}
+            loading={isSubmitting}
             onClick={handleSubmit}
             startIcon={<Check />}
             size="L"
@@ -99,20 +193,20 @@ const Configuration = () => {
 
       <ContentLayout>
         <Box paddingBottom={2}>
-          {/* {showAlert ? (
+          {showAlert ? (
             <Alert
               closeLabel="Close alert"
-              title="BigBlueButton"
+              title="Stripe configuration"
               variant="success"
               onClose={() => {
                 setShowAlert(false);
               }}
             >
-              url and secret saved successfully.
+              saved successfully.
             </Alert>
           ) : (
             ""
-          )} */}
+          )}
         </Box>
         <Box shadow="tableShadow" background="neutral0" padding={3}>
           <Box>
@@ -151,7 +245,7 @@ const Configuration = () => {
                     placeholder="Live Stripe Publishable Key"
                     required
                     value={stripeConfiguration.stripeLivePubKey}
-                    // error={errorUrl ? errorUrl : ""}
+                    error={error.stripeLivePubKey ? error.stripeLivePubKey : ""}
                     onChange={handleChange}
                   />
                 </Box>
@@ -164,7 +258,7 @@ const Configuration = () => {
                     label="Live Stripe Secret Key"
                     required
                     value={stripeConfiguration.stripeLiveSecKey}
-                    // error={errorSecret ? errorSecret : ""}
+                    error={error.stripeLiveSecKey ? error.stripeLiveSecKey : ""}
                     onChange={handleChange}
                   />
                 </Box>
@@ -181,7 +275,7 @@ const Configuration = () => {
                     placeholder="Test Stripe Publishable Key"
                     required
                     value={stripeConfiguration.stripeTestPubKey}
-                    // error={errorUrl ? errorUrl : ""}
+                    error={error.stripeTestPubKey ? error.stripeTestPubKey : ""}
                     onChange={handleChange}
                   />
                 </Box>
@@ -194,7 +288,7 @@ const Configuration = () => {
                     label="Test Stripe Secret Key"
                     required
                     value={stripeConfiguration.stripeTestSecKey}
-                    // error={errorSecret ? errorSecret : ""}
+                    error={error.stripeTestSecKey ? error.stripeTestSecKey : ""}
                     onChange={handleChange}
                   />
                 </Box>
@@ -223,7 +317,9 @@ const Configuration = () => {
                     placeholder="Checkout Success Page Url"
                     required
                     value={stripeConfiguration.checkoutSuccessUrl}
-                    // error={errorUrl ? errorUrl : ""}
+                    error={
+                      error.checkoutSuccessUrl ? error.checkoutSuccessUrl : ""
+                    }
                     onChange={handleChange}
                   />
                 </Box>
@@ -236,6 +332,7 @@ const Configuration = () => {
                     required
                     placeholder="Choose your Currency"
                     clearLabel="Clear the Currency"
+                    error={error.currency ? error.currency : ""}
                     onClear={() =>
                       setStripeConfiguration({
                         ...stripeConfiguration,
@@ -262,7 +359,9 @@ const Configuration = () => {
                     placeholder="Payment Button Text"
                     required
                     value={stripeConfiguration.paymentButtonText}
-                    // error={errorUrl ? errorUrl : ""}
+                    error={
+                      error.paymentButtonText ? error.paymentButtonText : ""
+                    }
                     onChange={handleChange}
                   />
                 </Box>

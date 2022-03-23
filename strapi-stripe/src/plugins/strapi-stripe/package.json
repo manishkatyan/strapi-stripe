@@ -7,7 +7,9 @@
     "description": "Description of strapi-stripe plugin",
     "kind": "plugin"
   },
-  "dependencies": {},
+  "dependencies": {
+    "stripe": "^8.210.0"
+  },
   "author": {
     "name": "A Strapi developer"
   },

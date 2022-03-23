@@ -20,6 +20,7 @@ import { Tooltip } from "@strapi/design-system/Tooltip";
 import Information from "@strapi/icons/Information";
 import { NumberInput } from "@strapi/design-system/NumberInput";
 import { Textarea } from "@strapi/design-system/Textarea";
+import { createStripeProduct } from "../../utils/apiCalls";
 
 const CreateProduct = ({ isVisible, handleClose }) => {
   const [title, setTitle] = useState("");
@@ -52,7 +53,7 @@ const CreateProduct = ({ isVisible, handleClose }) => {
     setError({ ...error, price: "" });
   };
 
-  const handleClickSave = () => {
+  const handleClickSave = async () => {
     if (!title && !price && !url && !description) {
       setError({
         ...error,
@@ -94,15 +95,15 @@ const CreateProduct = ({ isVisible, handleClose }) => {
         description: "Description is required",
       });
     } else {
+      const response = await createStripeProduct(
+        title,
+        price,
+        url,
+        description
+      );
       console.log("Success");
       console.log(title, price, url, description);
     }
-  };
-
-  const toolTipStyle = {
-    border: "none",
-    padding: 0,
-    background: "transparent",
   };
 
   return (

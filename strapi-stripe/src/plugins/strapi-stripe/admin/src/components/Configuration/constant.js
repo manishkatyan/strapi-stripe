@@ -1,207 +1,145 @@
 const currencies = [
   {
     label: "USD - US Dollar",
-    value: "USD",
+    value: "usd",
   },
   {
     label: "AED - United Arab Emirates Dirham",
-    value: "AED",
+    value: "aed",
   },
-  {
-    label: "AFN - Afghan Afghani",
-    value: "AFN",
-  },
-  {
-    label: "ALL - Albanian Lek",
-    value: "ALL",
-  },
-  {
-    label: "AMD - Armenian Dram",
-    value: "AMD",
-  },
+
   {
     label: "ANG - Netherlands Antillean Guilder",
-    value: "ANG",
+    value: "ang",
   },
-  {
-    label: "AOA - Angolan Kwanza",
-    value: "AOA",
-  },
+
   {
     label: "ARS - Argentine Peso",
-    value: "ARS",
+    value: "ars",
   },
   {
     label: "AUD - Australian Dollar",
-    value: "AUD",
-  },
-  {
-    label: "AWG - Aruban Florin",
-    value: "AWG",
-  },
-  {
-    label: "AZN - Azerbaijani Manat",
-    value: "AZN",
-  },
-  {
-    label: "BAM - Bosnia-Herzegovina Convertible Mark",
-    value: "BAM",
-  },
-  {
-    label: "BBD - Barbadian Dollar",
-    value: "BBD",
+    value: "aud",
   },
   {
     label: "BDT - Bangladeshi Taka",
-    value: "BDT",
+    value: "bdt",
   },
   {
     label: "BGN - Bulgarian Lev",
-    value: "BGN",
+    value: "bgn",
   },
-  {
-    label: "BIF - Burundian Franc",
-    value: "BIF",
-  },
+
   {
     label: "BMD - Bermudan Dollar",
-    value: "BMD",
+    value: "bmd",
   },
-  {
-    label: "BND - Brunei Dollar",
-    value: "BND",
-  },
-  {
-    label: "BOB - Bolivian Boliviano",
-    value: "BOB",
-  },
+
   {
     label: "BRL - Brazilian Real",
-    value: "BRL",
+    value: "brl",
   },
-  {
-    label: "BSD - Bahamian Dollar",
-    value: "BSD",
-  },
-  {
-    label: "BWP - Botswanan Pula",
-    value: "BWP",
-  },
+
   {
     label: "CAD - Canadian Dollar",
-    value: "CAD",
+    value: "cad",
   },
   {
     label: "CHF - Swiss Franc",
-    value: "CHF",
+    value: "chf",
   },
-  {
-    label: "CNY - Chinese Yuan",
-    value: "CNY",
-  },
+
   {
     label: "COP - Colombian Peso",
-    value: "COP",
+    value: "cop",
   },
   {
     label: "EGP - Egyptian Pound",
-    value: "EGP",
+    value: "egp",
   },
   {
     label: "EUR - Euro",
-    value: "EUR",
+    value: "eur",
   },
   {
     label: "GBP - British Pound",
-    value: "GBP",
+    value: "gbp",
   },
   {
     label: "HKD - Hong Kong Dollar",
-    value: "HKD",
+    value: "hkd",
   },
-  {
-    label: "HUF - Hungarian Forint",
-    value: "HUF",
-  },
+
   {
     label: "IDR - Indonesian Rupiah",
-    value: "IDR",
+    value: "idr",
   },
   {
     label: "INR - Indian Rupee",
-    value: "INR",
+    value: "inr",
   },
   {
     label: "JPY - Japanese Yen",
-    value: "JPY",
+    value: "jpy",
   },
-  {
-    label: "KES - Kenyan Shilling",
-    value: "KES",
-  },
+
   {
     label: "KRW - South Korean Won",
-    value: "KRW",
+    value: "krw",
   },
-  {
-    label: "LBP - Lebanese Pound",
-    value: "LBP",
-  },
+
   {
     label: "LKR - Sri Lankan Rupee",
-    value: "LKR",
+    value: "lkr",
   },
   {
     label: "MXN - Mexican Peso",
-    value: "MXN",
+    value: "mxn",
   },
   {
     label: "MYR - Malaysian Ringitt",
-    value: "MYR",
+    value: "myr",
   },
-  {
-    label: "NAD - Namibian Dollar",
-    value: "NAD",
-  },
+
   {
     label: "NGN - Nigerian Naira",
-    value: "NGN",
+    value: "ngn",
   },
   {
     label: "NOK - Norweign Krone",
-    value: "NOK",
+    value: "nok",
   },
   {
     label: "NPR - Nepalese Rupee",
-    value: "NPR",
+    value: "npr",
   },
   {
     label: "NZD - New Zealand Dollar",
-    value: "NZD",
+    value: "nzd",
   },
   {
     label: "PHP - Philippine Piso",
-    value: "PHP",
+    value: "php",
   },
   {
     label: "PKR - Pakistani Rupee",
-    value: "PKR",
+    value: "pkr",
   },
   {
     label: "QAR - Qatari Rial",
-    value: "QAR",
+    value: "qar",
   },
   {
     label: "SAR - Saudi Riyal",
-    value: "SAR",
+    value: "sar",
   },
   {
     label: "SGD - Singapore Dollar",
-    value: "SGD",
+    value: "sgd",
   },
   {
     label: "THB - Thai Baht",
-    value: "THB",
+    value: "thb",
   },
 ];
 
