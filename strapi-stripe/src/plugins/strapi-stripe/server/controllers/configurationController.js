@@ -9,6 +9,7 @@ module.exports = {
       stripeTestPubKey,
       stripeTestSecKey,
       checkoutSuccessUrl,
+      checkoutCancelUrl,
       currency,
       paymentButtonText,
     } = ctx.request.body.data;
@@ -29,6 +30,7 @@ module.exports = {
         stripeTestPubKey,
         stripeTestSecKey,
         checkoutSuccessUrl,
+        checkoutCancelUrl,
         currency,
         paymentButtonText,
       },

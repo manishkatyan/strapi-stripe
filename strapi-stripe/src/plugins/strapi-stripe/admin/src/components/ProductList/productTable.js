@@ -24,14 +24,40 @@ import File from "@strapi/icons/File";
 import Gift from "@strapi/icons/Gift";
 import CarretUp from "@strapi/icons/CarretUp";
 import CarretDown from "@strapi/icons/CarretDown";
-import entries from "./constant";
+import copy from "copy-to-clipboard";
 
 const productPerPage = 6;
 
-const ProductTable = () => {
+const ProductTable = ({
+  products,
+  handleSortAscending,
+  handleSortDescending,
+  handleEditClick,
+}) => {
   const ROW_COUNT = 6;
   const COL_COUNT = 10;
   const [sortAscending, setSortAscending] = useState(true);
+
+  const handleSortCarretUp = () => {
+    setSortAscending(false);
+    handleSortDescending();
+  };
+
+  const handleSortCarretDown = () => {
+    setSortAscending(true);
+    handleSortAscending();
+  };
+
+  const handleClickLink = (productId) => {
+    const button = `Add button to your code.\n 
+              <button class="Your style" type="button" id="SS_ProductCheckout" 
+                      data-id=${productId} data-url=${window.location.origin}>
+                  PayNow
+                </button>
+               `;
+
+    copy(button);
+  };
 
   return (
     <>
@@ -43,14 +69,14 @@ const ProductTable = () => {
                 <Typography variant="sigma">Name</Typography>&nbsp;
                 {sortAscending ? (
                   <IconButton
-                    onClick={() => console.log("File")}
+                    onClick={handleSortCarretUp}
                     label="sort by Name"
                     noBorder
                     icon={<CarretUp />}
                   />
                 ) : (
                   <IconButton
-                    onClick={() => console.log("File")}
+                    onClick={handleSortCarretDown}
                     label="sort by Name"
                     noBorder
                     icon={<CarretDown />}
@@ -69,55 +95,66 @@ const ProductTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {entries.map((entry) => (
-              <Tr key={entry.id}>
-                <Td>
-                  <Typography variant="epsilon" textColor="neutral800">
-                    {entry.name}
-                  </Typography>
-                  <Box>
-                    <Typography variant="pi">{entry.date}</Typography>
-                  </Box>
-                </Td>
-                <Td>
-                  <Typography textColor="neutral800">
-                    &#36;{entry.price}
-                  </Typography>
-                </Td>
-                <Td>
-                  <Flex>
-                    <IconButton
-                      onClick={() => console.log("edit")}
-                      label="Copy Link Embed Code"
-                      icon={<Link />}
-                    />
-                    <Box paddingLeft={3}>
-                      <IconButton
-                        onClick={() => console.log("File")}
-                        label="Copy product Embed Code"
-                        icon={<Gift />}
-                      />
+            {products &&
+              products.map((product) => (
+                <Tr key={product.id}>
+                  <Td>
+                    <Typography
+                      variant="epsilon"
+                      textColor="neutral800"
+                      textTransform="capitalize"
+                    >
+                      {product.title}
+                    </Typography>
+                    <Box>
+                      <Typography variant="pi">
+                        {
+                          new Date(product.createdAt)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </Typography>
                     </Box>
-                  </Flex>
-                </Td>
-                <Td>
-                  <Flex>
-                    <IconButton
-                      onClick={() => console.log("edit")}
-                      label="Edit"
-                      icon={<Pencil />}
-                    />
-                    <Box paddingLeft={3}>
+                  </Td>
+                  <Td>
+                    <Typography textColor="neutral800">
+                      &#36;{product.price}
+                    </Typography>
+                  </Td>
+                  <Td>
+                    <Flex>
                       <IconButton
-                        onClick={() => console.log("File")}
-                        label="Report"
-                        icon={<File />}
+                        onClick={() => handleClickLink(product.id)}
+                        label="Copy Link Embed Code"
+                        icon={<Link />}
                       />
-                    </Box>
-                  </Flex>
-                </Td>
-              </Tr>
-            ))}
+                      <Box paddingLeft={3}>
+                        <IconButton
+                          onClick={() => console.log("File")}
+                          label="Copy product Embed Code"
+                          icon={<Gift />}
+                        />
+                      </Box>
+                    </Flex>
+                  </Td>
+                  <Td>
+                    <Flex>
+                      <IconButton
+                        onClick={() => handleEditClick(product.id)}
+                        label="Edit"
+                        icon={<Pencil />}
+                      />
+                      <Box paddingLeft={3}>
+                        <IconButton
+                          onClick={() => console.log("File")}
+                          label="Report"
+                          icon={<File />}
+                        />
+                      </Box>
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))}
           </Tbody>
         </Table>
       </Box>

@@ -29,6 +29,7 @@ module.exports = {
       type: "uid",
       targetField: "title",
       unique: true,
+      required: true,
       configurable: false,
     },
     description: {

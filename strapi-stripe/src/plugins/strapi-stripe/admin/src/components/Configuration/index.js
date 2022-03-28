@@ -34,6 +34,7 @@ const Configuration = () => {
     stripeTestPubKey: "",
     stripeTestSecKey: "",
     checkoutSuccessUrl: "",
+    checkoutCancelUrl: "",
     currency: undefined,
     paymentButtonText: "",
   });
@@ -47,6 +48,7 @@ const Configuration = () => {
     stripeTestPubKey: "",
     stripeTestSecKey: "",
     checkoutSuccessUrl: "",
+    checkoutCancelUrl: "",
     currency: "",
     paymentButtonText: "",
   });
@@ -61,6 +63,7 @@ const Configuration = () => {
         stripeTestPubKey,
         stripeTestSecKey,
         checkoutSuccessUrl,
+        checkoutCancelUrl,
         currency,
         paymentButtonText,
       } = response.data.response;
@@ -72,6 +75,7 @@ const Configuration = () => {
         stripeTestPubKey,
         stripeTestSecKey,
         checkoutSuccessUrl,
+        checkoutCancelUrl,
         currency,
         paymentButtonText,
       });
@@ -95,6 +99,8 @@ const Configuration = () => {
       setError({ ...error, stripeTestSecKey: "" });
     } else if (name === "checkoutSuccessUrl") {
       setError({ ...error, checkoutSuccessUrl: "" });
+    } else if (name === "checkoutCancelUrl") {
+      setError({ ...error, checkoutCancelUrl: "" });
     } else if (name === "paymentButtonText") {
       setError({ ...error, paymentButtonText: "" });
     }
@@ -108,6 +114,7 @@ const Configuration = () => {
       !stripeConfiguration.stripeTestPubKey &&
       !stripeConfiguration.stripeTestSecKey &&
       !stripeConfiguration.checkoutSuccessUrl &&
+      !stripeConfiguration.checkoutCancelUrl &&
       !stripeConfiguration.currency &&
       !stripeConfiguration.paymentButtonText
     ) {
@@ -118,6 +125,7 @@ const Configuration = () => {
         stripeTestPubKey: "Test Stripe Publishable Key is required",
         stripeTestSecKey: "Test Stripe Secret Key is required",
         checkoutSuccessUrl: "Checkout Success Page Url is required",
+        checkoutCancelUrl: "Checkout Cancel Page Url is required",
         currency: "Currency is required",
         paymentButtonText: "Payment Button Text is required",
       });
@@ -150,6 +158,12 @@ const Configuration = () => {
       setError({
         ...error,
         checkoutSuccessUrl: "Checkout Success Page Url is required",
+      });
+      setIsSubmitting(false);
+    } else if (!stripeConfiguration.checkoutCancelUrl) {
+      setError({
+        ...error,
+        checkoutCancelUrl: "Checkout Cancel Page Url is required",
       });
       setIsSubmitting(false);
     } else if (!stripeConfiguration.currency) {
@@ -326,6 +340,21 @@ const Configuration = () => {
               </GridItem>
               <GridItem col={6} s={12}>
                 <Box paddingTop={2} paddingBottom={2}>
+                  <TextInput
+                    name="checkoutCancelUrl"
+                    label="Checkout Cancel Page Url"
+                    placeholder="Checkout Cancel Page Url"
+                    required
+                    value={stripeConfiguration.checkoutCancelUrl}
+                    error={
+                      error.checkoutCancelUrl ? error.checkoutCancelUrl : ""
+                    }
+                    onChange={handleChange}
+                  />
+                </Box>
+              </GridItem>
+              <GridItem col={6} s={12}>
+                <Box paddingTop={2} paddingBottom={2}>
                   <Select
                     id="select1"
                     label="Choose your Currency"
@@ -387,12 +416,12 @@ const Configuration = () => {
                   href="https://support.stripe.com/questions/set-up-account-email-notifications"
                   isExternal
                 >
-                  Payment notification - Seller
+                  Setup seller notification
                 </Link>
               </GridItem>
               <GridItem col={6} s={12}>
                 <Link href=" https://stripe.com/docs/receipts" isExternal>
-                  Payment notification - Buyer
+                  Setup buyer notification
                 </Link>
               </GridItem>
             </Grid>
