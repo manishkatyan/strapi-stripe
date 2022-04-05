@@ -34,6 +34,7 @@ module.exports = ({ strapi }) => ({
           title,
           description,
           price: productPrice,
+          currency: stripeSettings.currency,
           productImage: url,
           stripeProductId: product.id,
           stripePriceId: price.id,
@@ -74,7 +75,7 @@ module.exports = ({ strapi }) => ({
       });
     return updateProductResponse;
   },
-  async createCheckoutSession(stripePriceId) {
+  async createCheckoutSession(stripePriceId, productId, productName) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
       type: "plugin",
@@ -98,7 +99,27 @@ module.exports = ({ strapi }) => ({
       mode: "payment",
       success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${stripeSettings.checkoutCancelUrl}`,
+      metadata: {
+        productId: `${productId}`,
+        productName: `${productName}`,
+      },
     });
+    return session;
+  },
+  async retrieveCheckoutSession(checkoutSessionId) {
+    const pluginStore = strapi.store({
+      environment: strapi.config.environment,
+      type: "plugin",
+      name: "strapi-stripe",
+    });
+    const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
+    let stripe;
+    if (stripeSettings.isLiveMode) {
+      stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+    } else {
+      stripe = new Stripe(stripeSettings.stripeTestSecKey);
+    }
+    const session = await stripe.checkout.sessions.retrieve(checkoutSessionId);
     return session;
   },
 });

@@ -1,10 +1,31 @@
+window.onload = () => {
+  // for product Checkout
+  const ssProduct = document.getElementById("SS_ProductCheckout");
+  if (ssProduct) {
+    ssProduct.addEventListener("click", () => {
+      SS_ProductCheckout();
+    });
+  }
+
+  // for storing product payment order in strapi
+  const params = new URLSearchParams(document.location.search);
+  const checkoutSessionId = params.get("sessionId");
+  if (checkoutSessionId) {
+    SS_GetProductPaymentDetails(checkoutSessionId);
+  }
+};
+
+// product Checkout logic
+
 function SS_ProductCheckout() {
   const strapiStripe = document.querySelector("#SS_ProductCheckout");
   const productId = strapiStripe.dataset.id;
+  // console.log(typeof productId);
   const baseUrl = strapiStripe.dataset.url;
+  localStorage.setItem("strapiStripeUrl", baseUrl);
   const getProductApi = baseUrl + "/strapi-stripe/getProduct/" + productId;
   const checkoutSessionUrl = baseUrl + "/strapi-stripe/createCheckoutSession/";
-
+  // console.log(getProductApi, checkoutSessionUrl);
   fetch(getProductApi, {
     method: "get",
     mode: "cors",
@@ -18,6 +39,8 @@ function SS_ProductCheckout() {
         method: "post",
         body: JSON.stringify({
           stripePriceId: response.stripePriceId,
+          productId: response.id,
+          productName: response.title,
         }),
         mode: "cors",
         headers: new Headers({
@@ -33,8 +56,50 @@ function SS_ProductCheckout() {
     });
 }
 
-document.getElementById("SS_ProductCheckout").addEventListener("click", () => {
-  SS_ProductCheckout();
-});
+//  storing product payment order in strapi logic
 
-// const urlString= window.location.href
+function SS_GetProductPaymentDetails(checkoutSessionId) {
+  const baseUrl = localStorage.getItem("strapiStripeUrl");
+  const retrieveCheckoutSessionUrl =
+    baseUrl + "/strapi-stripe/retrieveCheckoutSession/" + checkoutSessionId;
+  fetch(retrieveCheckoutSessionUrl, {
+    method: "get",
+    mode: "cors",
+    headers: new Headers({
+      "Content-Type": "application/json",
+    }),
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      if (response.payment_status === "paid") {
+        if (
+          window.performance
+            .getEntriesByType("navigation")
+            .map((nav) => nav.type)
+            .includes("reload")
+        ) {
+          console.info("website reloded");
+        } else {
+          // store payment in strapi
+          const stripePaymentUrl = baseUrl + "/strapi-stripe/stripePayment";
+          fetch(stripePaymentUrl, {
+            method: "post",
+            body: JSON.stringify({
+              txnDate: new Date(),
+              transactionId: response.id,
+              isTxnSuccessful: true,
+              txnMessage: response,
+              txnAmount: response.amount_total / 100,
+              customerName: response.customer_details.name,
+              customerEmail: response.customer_details.email,
+              stripeProduct: response.metadata.productId,
+            }),
+            mode: "cors",
+            headers: new Headers({
+              "Content-Type": "application/json",
+            }),
+          });
+        }
+      }
+    });
+}

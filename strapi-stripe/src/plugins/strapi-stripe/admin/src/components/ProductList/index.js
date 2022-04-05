@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Box } from "@strapi/design-system/Box";
 import { Typography } from "@strapi/design-system/Typography";
 import { Divider } from "@strapi/design-system/Divider";
@@ -15,22 +16,42 @@ import ProductTable from "./productTable";
 import {
   getStripeProduct,
   createStripeProduct,
-  getStripeProductAscending,
-  getStripeProductDescending,
   updateStripeProduct,
 } from "../../utils/apiCalls";
 import EditProduct from "./editProduct";
-
+const limit = 5;
 const ProductList = () => {
+  const search = useLocation().search;
+  const page = new URLSearchParams(search).get("page");
+  const pageNumber = page ? parseInt(page) : 1;
+
   const [isVisible, setIsVisible] = useState(false);
   const [productData, setProductData] = useState();
   const [isEditVisible, setEditVisible] = useState(false);
   const [productId, setProductId] = useState();
+  const [count, setCount] = useState();
+  const [sortAscendingName, setSortAscendingName] = useState(true);
+  const [sortAscendingPrice, setSortAscendingPrice] = useState(true);
+  const [sortOrderName, setSortOrderName] = useState(true);
+  const [sortOrderPrice, setSortOrderPrice] = useState(false);
+
+  const offset = pageNumber === 1 ? 0 : (pageNumber - 1) * limit;
 
   useEffect(async () => {
-    const response = await getStripeProduct();
-    setProductData(response.data);
-  }, [isVisible, isEditVisible]);
+    let sort, order;
+    if (sortOrderName) {
+      sort = "name";
+      order = sortAscendingName ? "asc" : "desc";
+    } else if (sortOrderPrice) {
+      sort = "price";
+      order = sortAscendingPrice ? "asc" : "desc";
+    }
+
+    const response = await getStripeProduct(offset, limit, sort, order);
+
+    setProductData(response.data.res);
+    setCount(response.data.count);
+  }, [isVisible, isEditVisible, offset, sortAscendingName, sortAscendingPrice]);
 
   const handleCloseModal = () => {
     setIsVisible(false);
@@ -48,14 +69,28 @@ const ProductList = () => {
     }
   };
 
-  const handleSortAscending = async () => {
-    const productAscending = await getStripeProductAscending();
-    setProductData(productAscending.data);
+  const handleSortAscendingName = () => {
+    setSortAscendingName(true);
+    sortOrderName(true);
+    sortOrderPrice(false);
   };
 
-  const handleSortDescending = async () => {
-    const productDescending = await getStripeProductDescending();
-    setProductData(productDescending.data);
+  const handleSortDescendingName = () => {
+    setSortAscendingName(false);
+    sortOrderName(true);
+    sortOrderPrice(false);
+  };
+
+  const handleSortAscendingPrice = () => {
+    setSortAscendingPrice(true);
+    setSortOrderName(false);
+    setSortOrderPrice(true);
+  };
+
+  const handleSortDescendingPrice = () => {
+    setSortAscendingPrice(false);
+    setSortOrderName(false);
+    setSortOrderPrice(true);
   };
 
   const handleEnableEditMode = async (id) => {
@@ -144,9 +179,15 @@ const ProductList = () => {
       <Box>
         <ProductTable
           products={productData}
-          handleSortAscending={handleSortAscending}
-          handleSortDescending={handleSortDescending}
+          handleSortAscendingName={handleSortAscendingName}
+          handleSortDescendingName={handleSortDescendingName}
           handleEditClick={(id) => handleEnableEditMode(id)}
+          totalCount={Math.ceil(count / limit)}
+          page={pageNumber}
+          sortAscendingName={sortAscendingName}
+          handleSortAscendingPrice={handleSortAscendingPrice}
+          handleSortDescendingPrice={handleSortDescendingPrice}
+          sortAscendingPrice={sortAscendingPrice}
         />
       </Box>
     </>

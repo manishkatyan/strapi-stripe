@@ -25,28 +25,13 @@ module.exports = [
   },
   {
     method: "GET",
-    path: "/getProduct",
+    path: "/getProduct/:offset/:limit/:sort/:order",
     handler: "stripeController.find",
     config: {
       auth: false,
     },
   },
-  {
-    method: "GET",
-    path: "/getProductAscending",
-    handler: "stripeController.sortAscending",
-    config: {
-      auth: false,
-    },
-  },
-  {
-    method: "GET",
-    path: "/getProductDescending",
-    handler: "stripeController.sortDescending",
-    config: {
-      auth: false,
-    },
-  },
+
   {
     method: "GET",
     path: "/getProduct/:id",
@@ -67,6 +52,31 @@ module.exports = [
     method: "POST",
     path: "/createCheckoutSession",
     handler: "stripeController.createCheckoutSession",
+    config: {
+      auth: false,
+    },
+  },
+
+  {
+    method: "GET",
+    path: "/retrieveCheckoutSession/:id",
+    handler: "stripeController.retrieveCheckoutSession",
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: "POST",
+    path: "/stripePayment",
+    handler: "stripeController.savePayment",
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: "GET",
+    path: "/getPayments/:id/:sort/:order/:offset/:limit",
+    handler: "stripeController.getProductPayments",
     config: {
       auth: false,
     },

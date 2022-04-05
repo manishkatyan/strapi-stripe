@@ -43,6 +43,12 @@ module.exports = {
       required: true,
       configurable: false,
     },
+    currency: {
+      type: "string",
+      min: 1,
+      required: true,
+      configurable: false,
+    },
     productImage: {
       type: "string",
       min: 3,

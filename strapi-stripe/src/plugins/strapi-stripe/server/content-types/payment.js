@@ -19,14 +19,14 @@ module.exports = {
     },
   },
   attributes: {
-    date: {
+    txnDate: {
       type: "datetime",
       required: true,
       configurable: false,
     },
     transactionId: {
-      type: "biginteger",
-      min: 1,
+      type: "string",
+      maxLength: 250,
       required: true,
       configurable: false,
     },
@@ -47,6 +47,16 @@ module.exports = {
     },
     txnAmount: {
       type: "decimal",
+      required: true,
+      configurable: false,
+    },
+    customerName: {
+      type: "string",
+      required: true,
+      configurable: false,
+    },
+    customerEmail: {
+      type: "string",
       required: true,
       configurable: false,
     },

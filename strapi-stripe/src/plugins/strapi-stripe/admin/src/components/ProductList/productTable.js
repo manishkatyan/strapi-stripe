@@ -9,8 +9,9 @@ import { Table, Thead, Tbody, Tr, Td, Th } from "@strapi/design-system/Table";
 import { Flex } from "@strapi/design-system/Flex";
 import { Box } from "@strapi/design-system/Box";
 import { IconButton } from "@strapi/design-system/IconButton";
-import { Button } from "@strapi/design-system/Button";
+import { Link, useRouteMatch } from "react-router-dom";
 import { Typography } from "@strapi/design-system/Typography";
+import ReactMarkdown from "react-markdown";
 import {
   Dots,
   NextLink,
@@ -19,55 +20,104 @@ import {
   PreviousLink,
 } from "@strapi/design-system/Pagination";
 import Pencil from "@strapi/icons/Pencil";
-import Link from "@strapi/icons/Link";
-import File from "@strapi/icons/File";
-import Gift from "@strapi/icons/Gift";
+import LinkIcon from "./linkIcon";
 import CarretUp from "@strapi/icons/CarretUp";
 import CarretDown from "@strapi/icons/CarretDown";
-import copy from "copy-to-clipboard";
-
-const productPerPage = 6;
+import { Badge } from "@strapi/design-system/Badge";
+import ChartPie from "@strapi/icons/ChartPie";
+import { currencies } from "./constant";
+import EmbedCodeModal from "./embedCodeModal";
 
 const ProductTable = ({
   products,
-  handleSortAscending,
-  handleSortDescending,
+  handleSortAscendingName,
+  handleSortDescendingName,
   handleEditClick,
+  totalCount,
+  page,
+  sortAscendingName,
+  handleSortAscendingPrice,
+  handleSortDescendingPrice,
+  sortAscendingPrice,
 }) => {
+  let { url } = useRouteMatch();
   const ROW_COUNT = 6;
   const COL_COUNT = 10;
-  const [sortAscending, setSortAscending] = useState(true);
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [productId, setIsProductId] = useState("");
 
   const handleSortCarretUp = () => {
-    setSortAscending(false);
-    handleSortDescending();
+    handleSortDescendingName();
   };
 
   const handleSortCarretDown = () => {
-    setSortAscending(true);
-    handleSortAscending();
+    handleSortAscendingName();
+  };
+
+  const handleSortCarretUpPrice = () => {
+    handleSortDescendingPrice();
+  };
+
+  const handleSortCarretDownPrice = () => {
+    handleSortAscendingPrice();
   };
 
   const handleClickLink = (productId) => {
-    const button = `Add button to your code.\n 
-              <button class="Your style" type="button" id="SS_ProductCheckout" 
-                      data-id=${productId} data-url=${window.location.origin}>
-                  PayNow
-                </button>
-               `;
+    setIsProductId(productId);
+    setIsVisible(true);
+  };
 
-    copy(button);
+  const handleCloseEmbedModal = () => {
+    setIsVisible(false);
+  };
+
+  const getProductPrice = (price, currency) => {
+    const currencyObj = currencies.find(
+      (item) => item.abbreviation.toLowerCase() === currency.toLowerCase()
+    );
+    const symbol = currencyObj.symbol;
+
+    const priceWithSymbol = (
+      <Flex>
+        <ReactMarkdown>{symbol}</ReactMarkdown>{" "}
+        <Box>{new Intl.NumberFormat().format(price)}</Box>
+      </Flex>
+    );
+    return priceWithSymbol;
+  };
+
+  const getDateTime = (date) => {
+    const dates = new Date(date);
+
+    // get the date as a string
+    const createdDate = dates.toDateString();
+
+    // get the time as a string
+    const createdTime = dates.toLocaleTimeString();
+    const dateTime = (
+      <Badge active>
+        {createdDate}&nbsp;&nbsp;&nbsp;{createdTime}
+      </Badge>
+    );
+
+    return dateTime;
   };
 
   return (
     <>
+      <EmbedCodeModal
+        productId={productId}
+        isVisibleEmbedCode={isVisible}
+        handleCloseEmbedCode={handleCloseEmbedModal}
+      />
       <Box padding={8} background="neutral100">
         <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
           <Thead>
             <Tr>
               <Th>
                 <Typography variant="sigma">Name</Typography>&nbsp;
-                {sortAscending ? (
+                {sortAscendingName ? (
                   <IconButton
                     onClick={handleSortCarretUp}
                     label="sort by Name"
@@ -85,6 +135,21 @@ const ProductTable = ({
               </Th>
               <Th>
                 <Typography variant="sigma">Price</Typography>
+                {sortAscendingPrice ? (
+                  <IconButton
+                    onClick={handleSortCarretUpPrice}
+                    label="sort by price"
+                    noBorder
+                    icon={<CarretUp />}
+                  />
+                ) : (
+                  <IconButton
+                    onClick={handleSortCarretDownPrice}
+                    label="sort by Name"
+                    noBorder
+                    icon={<CarretDown />}
+                  />
+                )}
               </Th>
               <Th>
                 <Typography variant="sigma">Embed Code</Typography>
@@ -108,34 +173,21 @@ const ProductTable = ({
                     </Typography>
                     <Box>
                       <Typography variant="pi">
-                        {
-                          new Date(product.createdAt)
-                            .toISOString()
-                            .split("T")[0]
-                        }
+                        {getDateTime(product.createdAt)}
                       </Typography>
                     </Box>
                   </Td>
                   <Td>
                     <Typography textColor="neutral800">
-                      &#36;{product.price}
+                      {getProductPrice(product.price, product.currency)}
                     </Typography>
                   </Td>
                   <Td>
-                    <Flex>
-                      <IconButton
-                        onClick={() => handleClickLink(product.id)}
-                        label="Copy Link Embed Code"
-                        icon={<Link />}
-                      />
-                      <Box paddingLeft={3}>
-                        <IconButton
-                          onClick={() => console.log("File")}
-                          label="Copy product Embed Code"
-                          icon={<Gift />}
-                        />
-                      </Box>
-                    </Flex>
+                    <IconButton
+                      onClick={() => handleClickLink(product.id)}
+                      label="Copy Link Embed Code"
+                      icon={<LinkIcon />}
+                    />
                   </Td>
                   <Td>
                     <Flex>
@@ -145,11 +197,12 @@ const ProductTable = ({
                         icon={<Pencil />}
                       />
                       <Box paddingLeft={3}>
-                        <IconButton
-                          onClick={() => console.log("File")}
-                          label="Report"
-                          icon={<File />}
-                        />
+                        <Link
+                          to={`${url}/report/${product.id}/${product.title}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <IconButton label="Report" icon={<ChartPie />} />
+                        </Link>
                       </Box>
                     </Flex>
                   </Td>
@@ -158,24 +211,31 @@ const ProductTable = ({
           </Tbody>
         </Table>
       </Box>
+
       <Flex justifyContent="end" paddingRight={8}>
-        <Pagination activePage={1} pageCount={26}>
-          <PreviousLink to="/1">Go to previous page</PreviousLink>
-          <PageLink number={1} to="/1">
-            Go to page 1
-          </PageLink>
-          <PageLink number={2} to="/2">
-            Go to page 2
-          </PageLink>
-          <Dots>And 23 other links</Dots>
-          <PageLink number={25} to="/25">
-            Go to page 3
-          </PageLink>
-          <PageLink number={26} to="/26">
-            Go to page 26
-          </PageLink>
-          <NextLink to="/3">Go to next page</NextLink>
-        </Pagination>
+        {totalCount ? (
+          <Pagination activePage={page} pageCount={totalCount}>
+            <PreviousLink to={`/plugins/strapi-stripe?page=${page - 1}`}>
+              Go to previous page
+            </PreviousLink>
+            {totalCount &&
+              [...Array(totalCount)].map((count, idx) => (
+                <PageLink
+                  key={idx}
+                  number={idx + 1}
+                  to={`/plugins/strapi-stripe?page=${idx + 1}`}
+                >
+                  Go to page 1
+                </PageLink>
+              ))}
+
+            <NextLink to={`/plugins/strapi-stripe?page=${page + 1}`}>
+              Go to next page
+            </NextLink>
+          </Pagination>
+        ) : (
+          ""
+        )}
       </Flex>
     </>
   );

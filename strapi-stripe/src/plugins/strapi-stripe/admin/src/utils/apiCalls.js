@@ -24,18 +24,11 @@ export async function createStripeProduct(title, price, url, description) {
   return response;
 }
 
-export async function getStripeProduct() {
-  const response = await axios.get("/strapi-stripe/getProduct");
-  return response;
-}
+export async function getStripeProduct(offset, limit, sort, order) {
+  const response = await axios.get(
+    `/strapi-stripe/getProduct/${offset}/${limit}/${sort}/${order}`
+  );
 
-export async function getStripeProductAscending() {
-  const response = await axios.get("/strapi-stripe/getProductAscending");
-  return response;
-}
-
-export async function getStripeProductDescending() {
-  const response = await axios.get("/strapi-stripe/getProductDescending");
   return response;
 }
 
@@ -57,5 +50,18 @@ export async function updateStripeProduct(
     description,
     stripeProductId,
   });
+  return response;
+}
+
+export async function getProductPayments(
+  productId,
+  sort,
+  order,
+  offset,
+  limit
+) {
+  const response = await axios.get(
+    `/strapi-stripe/getPayments/${productId}/${sort}/${order}/${offset}/${limit}`
+  );
   return response;
 }
