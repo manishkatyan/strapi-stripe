@@ -1,11 +1,11 @@
 /**
  *
- * This component is the responsible for opening modal when the Add Product
+ * This component is the responsible for opening modal when the edit
  * button clicks.
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ModalLayout,
   ModalBody,
@@ -20,13 +20,20 @@ import { Tooltip } from "@strapi/design-system/Tooltip";
 import Information from "@strapi/icons/Information";
 import { NumberInput } from "@strapi/design-system/NumberInput";
 import { Textarea } from "@strapi/design-system/Textarea";
-import { createStripeProduct } from "../../utils/apiCalls";
+import { getStripeProductProductById } from "../../utils/apiCalls";
 
-const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
+const EditProduct = ({
+  productId,
+  isEditVisible,
+  handleCloseEdit,
+  handleClickUpdateEdit,
+}) => {
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [stripeProductId, setStripeProductId] = useState("");
+
   const [error, setError] = useState({
     title: "",
     price: "",
@@ -34,11 +41,28 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
     description: "",
   });
 
+  useEffect(async () => {
+    const response = await getStripeProductProductById(productId);
+
+    if (response.status === 200 && response.data) {
+      const { title, price, productImage, description, stripeProductId } =
+        response.data;
+      setTitle(title);
+      setPrice(price);
+      setUrl(productImage);
+      setDescription(description);
+      setStripeProductId(stripeProductId);
+    }
+  }, [productId]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "title") {
       setTitle(value);
       setError({ ...error, title: "" });
+    } else if (name === "price") {
+      setPrice(value);
+      setError({ ...error, price: "" });
     } else if (name === "url") {
       setUrl(value);
       setError({ ...error, url: "" });
@@ -48,12 +72,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
     }
   };
 
-  const handleChangeNumber = (value) => {
-    setPrice(value);
-    setError({ ...error, price: "" });
-  };
-
-  const handleSaveProduct = async () => {
+  const handleUpdateProduct = async () => {
     if (!title && !price && !url && !description) {
       setError({
         ...error,
@@ -95,18 +114,20 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         description: "Description is required",
       });
     } else {
-      handleClickSave(title, price, url, description);
-      setTitle("");
-      setPrice();
-      setUrl("");
-      setDescription("");
+      handleClickUpdateEdit(
+        productId,
+        title,
+        url,
+        description,
+        stripeProductId
+      );
     }
   };
 
   return (
     <>
-      {isVisible && (
-        <ModalLayout onClose={handleClose} labelledBy="title">
+      {isEditVisible && (
+        <ModalLayout onClose={handleCloseEdit} labelledBy="title">
           <ModalHeader>
             <Typography
               fontWeight="bold"
@@ -125,20 +146,23 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                   placeholder="Enter title of the product"
                   label="Title"
                   name="title"
+                  value={title}
                   onChange={handleChange}
                   error={error.title ? error.title : ""}
                   required
                 />
               </GridItem>
               <GridItem col={6}>
-                <NumberInput
+                <TextInput
                   placeholder="Enter the price of the product"
+                  type="number"
                   label="Price"
                   name="price"
-                  onValueChange={(value) => handleChangeNumber(value)}
                   value={price}
+                  onChange={handleChange}
                   error={error.price ? error.price : ""}
                   required
+                  disabled
                 />
               </GridItem>
               <GridItem col={6}>
@@ -146,6 +170,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                   placeholder="Enter the image url of the product"
                   label="Image Url"
                   name="url"
+                  value={url}
                   onChange={handleChange}
                   error={error.url ? error.url : ""}
                   required
@@ -167,14 +192,14 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
           </ModalBody>
           <ModalFooter
             startActions={
-              <Button onClick={handleClose} variant="tertiary">
+              <Button onClick={handleCloseEdit} variant="tertiary">
                 Cancel
               </Button>
             }
             endActions={
               <>
-                <Button variant="default" onClick={handleSaveProduct}>
-                  Save
+                <Button variant="default" onClick={handleUpdateProduct}>
+                  Update
                 </Button>
               </>
             }
@@ -185,4 +210,4 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

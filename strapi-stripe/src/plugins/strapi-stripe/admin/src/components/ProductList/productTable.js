@@ -4,144 +4,240 @@
  *
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { Table, Thead, Tbody, Tr, Td, Th } from "@strapi/design-system/Table";
 import { Flex } from "@strapi/design-system/Flex";
 import { Box } from "@strapi/design-system/Box";
 import { IconButton } from "@strapi/design-system/IconButton";
-import { Button } from "@strapi/design-system/Button";
-import { VisuallyHidden } from "@strapi/design-system/VisuallyHidden";
+import { Link, useRouteMatch } from "react-router-dom";
 import { Typography } from "@strapi/design-system/Typography";
-import { Avatar } from "@strapi/design-system/Avatar";
-import Pencil from "@strapi/icons/Pencil";
-import Dashboard from "@strapi/icons/Dashboard";
-import Link from "@strapi/icons/Link";
-import File from "@strapi/icons/File";
+import ReactMarkdown from "react-markdown";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardCheckbox,
-  CardAction,
-  CardAsset,
-  CardTimer,
-  CardContent,
-  CardBadge,
-  CardTitle,
-  CardSubtitle,
-} from "@strapi/design-system/Card";
+  Dots,
+  NextLink,
+  PageLink,
+  Pagination,
+  PreviousLink,
+} from "@strapi/design-system/Pagination";
+import Pencil from "@strapi/icons/Pencil";
+import LinkIcon from "./linkIcon";
+import CarretUp from "@strapi/icons/CarretUp";
+import CarretDown from "@strapi/icons/CarretDown";
+import { Badge } from "@strapi/design-system/Badge";
+import ChartPie from "@strapi/icons/ChartPie";
+import { currencies } from "./constant";
+import EmbedCodeModal from "./embedCodeModal";
 
-const ProductTable = () => {
+const ProductTable = ({
+  products,
+  handleSortAscendingName,
+  handleSortDescendingName,
+  handleEditClick,
+  totalCount,
+  page,
+  sortAscendingName,
+  handleSortAscendingPrice,
+  handleSortDescendingPrice,
+  sortAscendingPrice,
+}) => {
+  let { url } = useRouteMatch();
   const ROW_COUNT = 6;
   const COL_COUNT = 10;
-  const entry = {
-    cover:
-      "http://localhost:1337/uploads/user_9_93c4fd1239.jpg?updated_at=2022-03-18T17:30:48.910Z",
-    name: "product",
-    price: 100,
-    contact: "stripe product",
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [productId, setIsProductId] = useState("");
+
+  const handleSortCarretUp = () => {
+    handleSortDescendingName();
   };
-  const entries = [];
 
-  for (let i = 0; i < 5; i++) {
-    entries.push({ ...entry, id: i });
-  }
+  const handleSortCarretDown = () => {
+    handleSortAscendingName();
+  };
 
-  const imageStyle = {
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    padding: "5px",
-    width: "60px",
+  const handleSortCarretUpPrice = () => {
+    handleSortDescendingPrice();
+  };
+
+  const handleSortCarretDownPrice = () => {
+    handleSortAscendingPrice();
+  };
+
+  const handleClickLink = (productId) => {
+    setIsProductId(productId);
+    setIsVisible(true);
+  };
+
+  const handleCloseEmbedModal = () => {
+    setIsVisible(false);
+  };
+
+  const getProductPrice = (price, currency) => {
+    const currencyObj = currencies.find(
+      (item) => item.abbreviation.toLowerCase() === currency.toLowerCase()
+    );
+    const symbol = currencyObj.symbol;
+
+    const priceWithSymbol = (
+      <Flex>
+        <ReactMarkdown>{symbol}</ReactMarkdown>{" "}
+        <Box>{new Intl.NumberFormat().format(price)}</Box>
+      </Flex>
+    );
+    return priceWithSymbol;
+  };
+
+  const getDateTime = (date) => {
+    const dates = new Date(date);
+
+    // get the date as a string
+    const createdDate = dates.toDateString();
+
+    // get the time as a string
+    const createdTime = dates.toLocaleTimeString();
+    const dateTime = (
+      <Badge active>
+        {createdDate}&nbsp;&nbsp;&nbsp;{createdTime}
+      </Badge>
+    );
+
+    return dateTime;
   };
 
   return (
-    <Box padding={8} background="neutral100">
-      <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
-        <Thead>
-          <Tr>
-            <Th>
-              <Typography variant="sigma">SL No</Typography>
-            </Th>
-            <Th>
-              <Typography variant="sigma">Photo</Typography>
-            </Th>
-            <Th>
-              <Typography variant="sigma">Name</Typography>
-            </Th>
-            <Th>
-              <Typography variant="sigma">Price</Typography>
-            </Th>
-            <Th>
-              <Typography variant="sigma">Embed Code</Typography>
-            </Th>
-            <Th>
-              <VisuallyHidden>Actions</VisuallyHidden>
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {entries.map((entry) => (
-            <Tr key={entry.id}>
-              <Td>
-                <Typography textColor="neutral800">{entry.id + 1}</Typography>
-              </Td>
-              <Td>
-                {/* <Avatar src={entry.cover} alt={entry.contact} /> */}
-                <Box>
-                  <img src={entry.cover} alt="product" style={imageStyle} />
-                </Box>
-              </Td>
-              <Td>
-                <Typography textColor="neutral800">
-                  {entry.name + (entry.id + 1)}
-                </Typography>
-              </Td>
-              <Td>
-                <Typography textColor="neutral800">
-                  &#36;&nbsp;{entry.price}
-                </Typography>
-              </Td>
-              <Td>
-                <Flex>
-                  <Box paddingRight={2}>
-                    <Typography textColor="neutral800">
-                      <Button variant="secondary" endIcon={<Link />}>
-                        Payment Button
-                      </Button>
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography textColor="neutral800">
-                      <Button variant="secondary" endIcon={<Dashboard />}>
-                        Product List
-                      </Button>
-                    </Typography>
-                  </Box>
-                </Flex>
-              </Td>
-              <Td>
-                <Flex>
+    <>
+      <EmbedCodeModal
+        productId={productId}
+        isVisibleEmbedCode={isVisible}
+        handleCloseEmbedCode={handleCloseEmbedModal}
+      />
+      <Box padding={8} background="neutral100">
+        <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
+          <Thead>
+            <Tr>
+              <Th>
+                <Typography variant="sigma">Name</Typography>&nbsp;
+                {sortAscendingName ? (
                   <IconButton
-                    onClick={() => console.log("edit")}
-                    label="Edit"
-                    // noBorder
-                    icon={<Pencil />}
+                    onClick={handleSortCarretUp}
+                    label="sort by Name"
+                    noBorder
+                    icon={<CarretUp />}
                   />
-                  <Box paddingLeft={3}>
-                    <IconButton
-                      onClick={() => console.log("File")}
-                      label="Report"
-                      // noBorder
-                      icon={<File />}
-                    />
-                  </Box>
-                </Flex>
-              </Td>
+                ) : (
+                  <IconButton
+                    onClick={handleSortCarretDown}
+                    label="sort by Name"
+                    noBorder
+                    icon={<CarretDown />}
+                  />
+                )}
+              </Th>
+              <Th>
+                <Typography variant="sigma">Price</Typography>
+                {sortAscendingPrice ? (
+                  <IconButton
+                    onClick={handleSortCarretUpPrice}
+                    label="sort by price"
+                    noBorder
+                    icon={<CarretUp />}
+                  />
+                ) : (
+                  <IconButton
+                    onClick={handleSortCarretDownPrice}
+                    label="sort by Name"
+                    noBorder
+                    icon={<CarretDown />}
+                  />
+                )}
+              </Th>
+              <Th>
+                <Typography variant="sigma">Embed Code</Typography>
+              </Th>
+              <Th>
+                <Typography variant="sigma">Actions</Typography>
+              </Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
+          </Thead>
+          <Tbody>
+            {products &&
+              products.map((product) => (
+                <Tr key={product.id}>
+                  <Td>
+                    <Typography
+                      variant="epsilon"
+                      textColor="neutral800"
+                      textTransform="capitalize"
+                    >
+                      {product.title}
+                    </Typography>
+                    <Box>
+                      <Typography variant="pi">
+                        {getDateTime(product.createdAt)}
+                      </Typography>
+                    </Box>
+                  </Td>
+                  <Td>
+                    <Typography textColor="neutral800">
+                      {getProductPrice(product.price, product.currency)}
+                    </Typography>
+                  </Td>
+                  <Td>
+                    <IconButton
+                      onClick={() => handleClickLink(product.id)}
+                      label="Copy Link Embed Code"
+                      icon={<LinkIcon />}
+                    />
+                  </Td>
+                  <Td>
+                    <Flex>
+                      <IconButton
+                        onClick={() => handleEditClick(product.id)}
+                        label="Edit"
+                        icon={<Pencil />}
+                      />
+                      <Box paddingLeft={3}>
+                        <Link
+                          to={`${url}/report/${product.id}/${product.title}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <IconButton label="Report" icon={<ChartPie />} />
+                        </Link>
+                      </Box>
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))}
+          </Tbody>
+        </Table>
+      </Box>
+
+      <Flex justifyContent="end" paddingRight={8}>
+        {totalCount ? (
+          <Pagination activePage={page} pageCount={totalCount}>
+            <PreviousLink to={`/plugins/strapi-stripe?page=${page - 1}`}>
+              Go to previous page
+            </PreviousLink>
+            {totalCount &&
+              [...Array(totalCount)].map((count, idx) => (
+                <PageLink
+                  key={idx}
+                  number={idx + 1}
+                  to={`/plugins/strapi-stripe?page=${idx + 1}`}
+                >
+                  Go to page 1
+                </PageLink>
+              ))}
+
+            <NextLink to={`/plugins/strapi-stripe?page=${page + 1}`}>
+              Go to next page
+            </NextLink>
+          </Pagination>
+        ) : (
+          ""
+        )}
+      </Flex>
+    </>
   );
 };
 

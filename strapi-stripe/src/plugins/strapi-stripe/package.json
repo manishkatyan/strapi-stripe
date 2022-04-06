@@ -7,7 +7,10 @@
     "description": "Description of strapi-stripe plugin",
     "kind": "plugin"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-markdown": "^8.0.2",
+    "stripe": "^8.210.0"
+  },
   "author": {
     "name": "A Strapi developer"
   },
