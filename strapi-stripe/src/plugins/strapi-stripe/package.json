@@ -8,6 +8,7 @@
     "kind": "plugin"
   },
   "dependencies": {
+    "react-markdown": "^8.0.2",
     "stripe": "^8.210.0"
   },
   "author": {
