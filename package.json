@@ -1,6 +1,6 @@
 {
   "name": "strapi-stripe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integrate Stripe into Strapi CMS.",
   "strapi": {
     "name": "strapi-stripe",
@@ -8,7 +8,7 @@
     "kind": "plugin"
   },
   "dependencies": {
-    "react-markdown": "^8.0.2",
+    "html-react-parser": "^1.4.10",
     "stripe": "^8.210.0"
   },
   "author": {
