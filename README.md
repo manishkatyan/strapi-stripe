@@ -18,11 +18,11 @@ You can run it in test mode by specifying test API keys in the plugin settings.
 
 It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhere on your site for any products that you sell online.
 
-<a href="https://www.npmjs.com/package/bigbluebutton-strapi">
-<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/bbb-strapi?label=npm&logo=npm">
+<a href="https://www.npmjs.com/package/strapi-stripe">
+<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
 </a>
-<a href="https://www.npmjs.org/package/bigbluebutton-strapi">
-<img src="https://img.shields.io/npm/dm/bigbluebutton-strapi.svg" alt="Monthly download on NPM" />
+<a href="https://www.npmjs.org/package/strapi-stripe">
+<img src="https://img.shields.io/npm/dm/strapi-stripe.svg" alt="Monthly download on NPM" />
 </a>
 
 <br/><br/>
