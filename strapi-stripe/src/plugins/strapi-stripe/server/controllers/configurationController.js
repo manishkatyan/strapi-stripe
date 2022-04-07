@@ -13,7 +13,6 @@ module.exports = {
       currency,
       paymentButtonText,
     } = ctx.request.body.data;
-    console.log("inController", isLiveMode, stripeLivePubKey);
 
     const pluginStore = strapi.store({
       environment: strapi.config.environment,

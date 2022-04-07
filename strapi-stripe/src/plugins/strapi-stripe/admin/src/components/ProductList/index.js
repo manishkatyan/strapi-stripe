@@ -127,13 +127,11 @@ const ProductList = () => {
   return (
     <>
       <Box paddingTop={6} paddingLeft={8}>
-        <Typography variant="alpha">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </Typography>
+        <Typography variant="alpha">Stripe Payment</Typography>
         <Box>
           <Typography variant="omega">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            The Stripe Payments plugin allows you to accept credit card payments
+            via Stripe payment gateway on your Strapi site easily.
           </Typography>
         </Box>
       </Box>

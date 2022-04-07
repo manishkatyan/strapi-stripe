@@ -19,6 +19,8 @@ import {
   Pagination,
   PreviousLink,
 } from "@strapi/design-system/Pagination";
+import ExclamationMarkCircle from "@strapi/icons/ExclamationMarkCircle";
+import { EmptyStateLayout } from "@strapi/design-system/EmptyStateLayout";
 import Pencil from "@strapi/icons/Pencil";
 import LinkIcon from "./linkIcon";
 import CarretUp from "@strapi/icons/CarretUp";
@@ -112,104 +114,113 @@ const ProductTable = ({
         handleCloseEmbedCode={handleCloseEmbedModal}
       />
       <Box padding={8} background="neutral100">
-        <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
-          <Thead>
-            <Tr>
-              <Th>
-                <Typography variant="sigma">Name</Typography>&nbsp;
-                {sortAscendingName ? (
-                  <IconButton
-                    onClick={handleSortCarretUp}
-                    label="sort by Name"
-                    noBorder
-                    icon={<CarretUp />}
-                  />
-                ) : (
-                  <IconButton
-                    onClick={handleSortCarretDown}
-                    label="sort by Name"
-                    noBorder
-                    icon={<CarretDown />}
-                  />
-                )}
-              </Th>
-              <Th>
-                <Typography variant="sigma">Price</Typography>
-                {sortAscendingPrice ? (
-                  <IconButton
-                    onClick={handleSortCarretUpPrice}
-                    label="sort by price"
-                    noBorder
-                    icon={<CarretUp />}
-                  />
-                ) : (
-                  <IconButton
-                    onClick={handleSortCarretDownPrice}
-                    label="sort by Name"
-                    noBorder
-                    icon={<CarretDown />}
-                  />
-                )}
-              </Th>
-              <Th>
-                <Typography variant="sigma">Embed Code</Typography>
-              </Th>
-              <Th>
-                <Typography variant="sigma">Actions</Typography>
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {products &&
-              products.map((product) => (
-                <Tr key={product.id}>
-                  <Td>
-                    <Typography
-                      variant="epsilon"
-                      textColor="neutral800"
-                      textTransform="capitalize"
-                    >
-                      {product.title}
-                    </Typography>
-                    <Box>
-                      <Typography variant="pi">
-                        {getDateTime(product.createdAt)}
-                      </Typography>
-                    </Box>
-                  </Td>
-                  <Td>
-                    <Typography textColor="neutral800">
-                      {getProductPrice(product.price, product.currency)}
-                    </Typography>
-                  </Td>
-                  <Td>
+        {products && products.length > 0 ? (
+          <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
+            <Thead>
+              <Tr>
+                <Th>
+                  <Typography variant="sigma">Name</Typography>&nbsp;
+                  {sortAscendingName ? (
                     <IconButton
-                      onClick={() => handleClickLink(product.id)}
-                      label="Copy Link Embed Code"
-                      icon={<LinkIcon />}
+                      onClick={handleSortCarretUp}
+                      label="sort by Name"
+                      noBorder
+                      icon={<CarretUp />}
                     />
-                  </Td>
-                  <Td>
-                    <Flex>
-                      <IconButton
-                        onClick={() => handleEditClick(product.id)}
-                        label="Edit"
-                        icon={<Pencil />}
-                      />
-                      <Box paddingLeft={3}>
-                        <Link
-                          to={`${url}/report/${product.id}/${product.title}`}
-                          style={{ textDecoration: "none" }}
-                        >
-                          <IconButton label="Report" icon={<ChartPie />} />
-                        </Link>
+                  ) : (
+                    <IconButton
+                      onClick={handleSortCarretDown}
+                      label="sort by Name"
+                      noBorder
+                      icon={<CarretDown />}
+                    />
+                  )}
+                </Th>
+                <Th>
+                  <Typography variant="sigma">Price</Typography>
+                  {sortAscendingPrice ? (
+                    <IconButton
+                      onClick={handleSortCarretUpPrice}
+                      label="sort by price"
+                      noBorder
+                      icon={<CarretUp />}
+                    />
+                  ) : (
+                    <IconButton
+                      onClick={handleSortCarretDownPrice}
+                      label="sort by Name"
+                      noBorder
+                      icon={<CarretDown />}
+                    />
+                  )}
+                </Th>
+                <Th>
+                  <Typography variant="sigma">Embed Code</Typography>
+                </Th>
+                <Th>
+                  <Typography variant="sigma">Actions</Typography>
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {products &&
+                products.map((product) => (
+                  <Tr key={product.id}>
+                    <Td>
+                      <Typography
+                        variant="epsilon"
+                        textColor="neutral800"
+                        textTransform="capitalize"
+                      >
+                        {product.title}
+                      </Typography>
+                      <Box>
+                        <Typography variant="pi">
+                          {getDateTime(product.createdAt)}
+                        </Typography>
                       </Box>
-                    </Flex>
-                  </Td>
-                </Tr>
-              ))}
-          </Tbody>
-        </Table>
+                    </Td>
+                    <Td>
+                      <Typography textColor="neutral800">
+                        {getProductPrice(product.price, product.currency)}
+                      </Typography>
+                    </Td>
+                    <Td>
+                      <IconButton
+                        onClick={() => handleClickLink(product.id)}
+                        label="Copy Link Embed Code"
+                        icon={<LinkIcon />}
+                      />
+                    </Td>
+                    <Td>
+                      <Flex>
+                        <IconButton
+                          onClick={() => handleEditClick(product.id)}
+                          label="Edit"
+                          icon={<Pencil />}
+                        />
+                        <Box paddingLeft={3}>
+                          <Link
+                            to={`${url}/report/${product.id}/${product.title}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <IconButton label="Report" icon={<ChartPie />} />
+                          </Link>
+                        </Box>
+                      </Flex>
+                    </Td>
+                  </Tr>
+                ))}
+            </Tbody>
+          </Table>
+        ) : (
+          <Box padding={4} background="neutral100">
+            <EmptyStateLayout
+              icon={<ExclamationMarkCircle />}
+              content="You dont have any product"
+            />
+          </Box>
+        )}
       </Box>
 
       <Flex justifyContent="end" paddingRight={8}>

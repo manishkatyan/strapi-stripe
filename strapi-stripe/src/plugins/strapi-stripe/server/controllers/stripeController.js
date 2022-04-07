@@ -12,7 +12,7 @@ module.exports = {
   async find(ctx) {
     const { offset, limit, sort, order } = ctx.params;
     let needToshort;
-    if (sort === "price") {
+    if (sort === "name") {
       needToshort = { title: `${order}` };
     } else if (sort === "price") {
       needToshort = { price: `${order}` };

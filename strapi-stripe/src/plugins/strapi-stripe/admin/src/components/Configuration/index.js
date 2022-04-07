@@ -285,8 +285,8 @@ const Configuration = () => {
                 <Box paddingTop={5} paddingBottom={2}>
                   <TextInput
                     name="stripeTestPubKey"
-                    label="Test Stripe Publishable Key"
                     placeholder="Test Stripe Publishable Key"
+                    label="Test Stripe Publishable Key"
                     required
                     value={stripeConfiguration.stripeTestPubKey}
                     error={error.stripeTestPubKey ? error.stripeTestPubKey : ""}
@@ -327,7 +327,7 @@ const Configuration = () => {
                 <Box paddingTop={2} paddingBottom={2}>
                   <TextInput
                     name="checkoutSuccessUrl"
-                    label="Checkout Success Page Url"
+                    label="Payment Success Page Url"
                     placeholder="Checkout Success Page Url"
                     required
                     value={stripeConfiguration.checkoutSuccessUrl}
@@ -335,6 +335,7 @@ const Configuration = () => {
                       error.checkoutSuccessUrl ? error.checkoutSuccessUrl : ""
                     }
                     onChange={handleChange}
+                    hint="Redirected to the success page after the  payment successfull"
                   />
                 </Box>
               </GridItem>
@@ -342,7 +343,7 @@ const Configuration = () => {
                 <Box paddingTop={2} paddingBottom={2}>
                   <TextInput
                     name="checkoutCancelUrl"
-                    label="Checkout Cancel Page Url"
+                    label="Payment Cancel Page Url"
                     placeholder="Checkout Cancel Page Url"
                     required
                     value={stripeConfiguration.checkoutCancelUrl}
@@ -350,6 +351,7 @@ const Configuration = () => {
                       error.checkoutCancelUrl ? error.checkoutCancelUrl : ""
                     }
                     onChange={handleChange}
+                    hint="Redirected to the cancel page after the  payment failed"
                   />
                 </Box>
               </GridItem>

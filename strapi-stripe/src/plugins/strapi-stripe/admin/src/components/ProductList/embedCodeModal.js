@@ -29,24 +29,35 @@ const EmbedCodeModal = ({
       {isVisibleEmbedCode && (
         <ModalLayout onClose={handleCloseEmbedCode} labelledBy="title">
           <ModalHeader>
-            <Typography
-              fontWeight="bold"
-              textColor="neutral800"
-              as="h2"
-              id="title"
-            >
-              Embed Code
-            </Typography>
+            <Flex direction="column" alignItems="start">
+              <Box>
+                <Typography
+                  fontWeight="bold"
+                  variant="beta"
+                  textColor="neutral800"
+                  as="h2"
+                  id="title"
+                >
+                  Embed Code
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="omega">
+                  Enable the Stripe Payment button in your frontend app by
+                  following the simple steps mentioned below:
+                </Typography>
+              </Box>
+            </Flex>
           </ModalHeader>
           <ModalBody>
             <Flex alignItems="top">
               <Box paddingRight={2}>
-                <Typography variant="epsilon">Step1:</Typography>
+                <Typography variant="epsilon">Step&nbsp;1:</Typography>
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Add this script tag, in product page, stripe susccess page,
-                  and stripe cancel page.if you already added ignore this step.
+                  Embed the script tag in the html header section of your
+                  product list, payment success and payment failure pages:
                 </Typography>
               </Box>
             </Flex>
@@ -69,11 +80,38 @@ const EmbedCodeModal = ({
             </Box>
             <Flex alignItems="top">
               <Box paddingRight={2}>
-                <Typography variant="epsilon">Step2:</Typography>
+                <Typography variant="epsilon">Step&nbsp;2a:</Typography>
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Use this api end point to get product Detail.
+                  Show the “Buy Now” button next to your product details on the
+                  product list page.
+                </Typography>
+              </Box>
+            </Flex>
+            <Box
+              background="neutral100"
+              padding={2}
+              marginTop={4}
+              marginBottom={4}
+            >
+              <Typography>
+                {`
+                <button class="css style" type="button" id="SS_ProductCheckout"  data-id="${productId}" data-url="${window.location.origin}">
+                Buy Now
+                </button>
+                `}
+              </Typography>
+            </Box>
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;2b:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Optionally, you can fetch product details such as title,
+                  description, image and price from the API end-point mentioned
+                  below and show them.
                 </Typography>
               </Box>
             </Flex>
@@ -106,38 +144,16 @@ const EmbedCodeModal = ({
                 </AccordionContent>
               </Accordion>
             </Box>
+
             <Flex alignItems="top">
               <Box paddingRight={2}>
-                <Typography variant="epsilon">Step3:</Typography>
+                <Typography variant="epsilon">Step&nbsp;3:</Typography>
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Add Payment button to your code.
-                </Typography>
-              </Box>
-            </Flex>
-            <Box
-              background="neutral100"
-              padding={2}
-              marginTop={4}
-              marginBottom={4}
-            >
-              <Typography>
-                {`
-                <button class="Your style" type="button" id="SS_ProductCheckout"  data-id="${productId}" data-url="${window.location.origin}">
-                PayNow
-                </button>
-                `}
-              </Typography>
-            </Box>
-            <Flex alignItems="top">
-              <Box paddingRight={2}>
-                <Typography variant="epsilon">Step4:</Typography>
-              </Box>
-              <Box>
-                <Typography variant="epsilon">
-                  If you want to show the extra information in success page,
-                  payment details,etc. Use this api end point.
+                  Optionally, you can show payment transaction status and
+                  details on your payment success (or error) page. Use the API
+                  call mentioned below:
                 </Typography>
               </Box>
             </Flex>
