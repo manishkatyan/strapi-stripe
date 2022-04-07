@@ -11,7 +11,7 @@ import { Box } from "@strapi/design-system/Box";
 import { IconButton } from "@strapi/design-system/IconButton";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Typography } from "@strapi/design-system/Typography";
-import ReactMarkdown from "react-markdown";
+import parse from "html-react-parser";
 import {
   Dots,
   NextLink,
@@ -82,7 +82,7 @@ const ProductTable = ({
 
     const priceWithSymbol = (
       <Flex>
-        <ReactMarkdown>{symbol}</ReactMarkdown>{" "}
+        <span>{parse(symbol)}</span>
         <Box>{new Intl.NumberFormat().format(price)}</Box>
       </Flex>
     );

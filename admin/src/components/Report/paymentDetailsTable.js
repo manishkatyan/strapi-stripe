@@ -5,7 +5,7 @@ import { Typography } from "@strapi/design-system/Typography";
 import { Divider } from "@strapi/design-system/Divider";
 import { Flex } from "@strapi/design-system/Flex";
 import { Badge } from "@strapi/design-system/Badge";
-import ReactMarkdown from "react-markdown";
+import parse from "html-react-parser";
 import { useParams, useLocation } from "react-router-dom";
 import { Breadcrumbs, Crumb } from "@strapi/design-system/Breadcrumbs";
 import { Stack } from "@strapi/design-system/Stack";
@@ -83,7 +83,7 @@ const PaymentDetailsTable = () => {
 
     const txnAmountWithCurrency = (
       <Flex>
-        <ReactMarkdown>{symbol}</ReactMarkdown>
+        <span>{symbol ? parse(symbol) : ""}</span>
         <Box>{new Intl.NumberFormat().format(txnAmount)}</Box>
       </Flex>
     );

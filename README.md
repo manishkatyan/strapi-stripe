@@ -18,12 +18,12 @@ You can run it in test mode by specifying test API keys in the plugin settings.
 
 It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhere on your site for any products that you sell online.
 
-<!-- <a href="https://www.npmjs.com/package/bigbluebutton-strapi">
+<a href="https://www.npmjs.com/package/bigbluebutton-strapi">
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/bbb-strapi?label=npm&logo=npm">
 </a>
 <a href="https://www.npmjs.org/package/bigbluebutton-strapi">
 <img src="https://img.shields.io/npm/dm/bigbluebutton-strapi.svg" alt="Monthly download on NPM" />
-</a> -->
+</a>
 
 <br/><br/>
 
@@ -41,7 +41,7 @@ It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhe
 
 <br/><br/>
 
-<img style="width: 100%; height: auto;" src="static/stripe_payment.gif" alt="stripe-payment" /> <br/>
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
 
 <br/><br/>
 
@@ -111,7 +111,7 @@ You can easily configure the Strapi-Stripe plugin to connect with your Stripe Ac
 - Click on save to save the Stripe Confiiguration.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="static/stripe-configuration.gif" alt="stripe-Configuration" />
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-configuration.gif" alt="strapi-stripe-Configuration" />
 <br/><br/>
 
 <br/>
@@ -124,7 +124,7 @@ Once successfully Configured stripe in strapi settting, now you can create produ
 - Enter Title,Price,Image Url,Description. Click on Save, it will create product both in strapi and stripe.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="static/product_create.gif" alt="stripe-product-create" />
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
 <br/><br/>
 
 <br/>
@@ -142,7 +142,7 @@ Once Product creates, click on Embed Code,It gives all the necessary Code to emb
 
 Once you Embed code to your front-end application, its ready to accept the payments from Stripe.
 <br/><br/>
-<img style="width: 100%; height: auto;" src="static/stripe_payment.gif" alt="stripe-product-create" />
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" />
 <br/><br/>
 
 <br/>
@@ -153,7 +153,7 @@ Strapi-Stripe Plugin also Provides Payment Transaction history. for future Refer
 
 - click on Report Icon in the action column.
   <br/><br/>
-  <img style="width: 100%; height: auto;" src="static/payment_report.gif" alt="stripe-product-create" />
+  <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
   <br/><br/>
 
 <br/>
