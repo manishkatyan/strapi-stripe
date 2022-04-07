@@ -1,0 +1,225 @@
+import React, { useState } from "react";
+import {
+  ModalLayout,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from "@strapi/design-system/ModalLayout";
+import { Typography } from "@strapi/design-system/Typography";
+import { Button } from "@strapi/design-system/Button";
+import { Flex } from "@strapi/design-system/Flex";
+import { Box } from "@strapi/design-system/Box";
+import { stripeResponse, ProductRespone } from "./constant";
+import {
+  Accordion,
+  AccordionToggle,
+  AccordionContent,
+  AccordionGroup,
+} from "@strapi/design-system/Accordion";
+
+const EmbedCodeModal = ({
+  productId,
+  isVisibleEmbedCode,
+  handleCloseEmbedCode,
+}) => {
+  const [expandProduct, setExpandProduct] = useState(false);
+  const [expandPayment, setExpandPayment] = useState(false);
+  return (
+    <>
+      {isVisibleEmbedCode && (
+        <ModalLayout onClose={handleCloseEmbedCode} labelledBy="title">
+          <ModalHeader>
+            <Flex direction="column" alignItems="start">
+              <Box>
+                <Typography
+                  fontWeight="bold"
+                  variant="beta"
+                  textColor="neutral800"
+                  as="h2"
+                  id="title"
+                >
+                  Embed Code
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="omega">
+                  Enable the Stripe Payment button in your frontend app by
+                  following the simple steps mentioned below:
+                </Typography>
+              </Box>
+            </Flex>
+          </ModalHeader>
+          <ModalBody>
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;1:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Embed the script tag in the html header section of your
+                  product list, payment success and payment failure pages:
+                </Typography>
+              </Box>
+            </Flex>
+            <Box
+              background="neutral100"
+              padding={2}
+              marginTop={4}
+              marginBottom={4}
+            >
+              <Typography>
+                {`
+                <script
+                  type="text/javascript"
+                  src="${window.location.origin}/plugins/strapi-stripe/static/stripe.js"
+                >
+                  
+                </script>
+                `}
+              </Typography>
+            </Box>
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;2a:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Show the “Buy Now” button next to your product details on the
+                  product list page.
+                </Typography>
+              </Box>
+            </Flex>
+            <Box
+              background="neutral100"
+              padding={2}
+              marginTop={4}
+              marginBottom={4}
+            >
+              <Typography>
+                {`
+                <button class="css style" type="button" id="SS_ProductCheckout"  data-id="${productId}" data-url="${window.location.origin}">
+                Buy Now
+                </button>
+                `}
+              </Typography>
+            </Box>
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;2b:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Optionally, you can fetch product details such as title,
+                  description, image and price from the API end-point mentioned
+                  below and show them.
+                </Typography>
+              </Box>
+            </Flex>
+            <Box
+              background="neutral100"
+              padding={2}
+              marginTop={4}
+              marginBottom={4}
+            >
+              <Typography>
+                {`const response = await axios.get(
+                   " ${window.location.origin}/strapi-stripe/getProduct/${productId}"
+                  ) `}
+              </Typography>
+            </Box>
+            <Box padding={4} background="neutral100" marginBottom={4}>
+              <Accordion
+                expanded={expandProduct}
+                onToggle={() => setExpandProduct((s) => !s)}
+                id="acc-1"
+                size="S"
+              >
+                <AccordionToggle title="Sample Product response object" />
+                <AccordionContent>
+                  <Box padding={3}>
+                    <Typography>
+                      <pre>{JSON.stringify(ProductRespone, null, 2)}</pre>
+                    </Typography>
+                  </Box>
+                </AccordionContent>
+              </Accordion>
+            </Box>
+
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;3:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Optionally, you can show payment transaction status and
+                  details on your payment success (or error) page. Use the API
+                  call mentioned below:
+                </Typography>
+              </Box>
+            </Flex>
+            <Box
+              background="neutral100"
+              padding={2}
+              marginTop={4}
+              marginBottom={4}
+            >
+              <Box>
+                <Typography>
+                  {`
+                  const params = new URLSearchParams(document.location.search);
+                  `}
+                </Typography>
+              </Box>
+              <br />
+              <Box>
+                <Typography>
+                  {`const checkoutSessionId = params.get("sessionId");`}
+                </Typography>
+              </Box>
+              <br />
+
+              <Typography>
+                {`const response = await axios.get(${
+                  window.location.origin
+                }/strapi-stripe/retrieveCheckoutSession/${"$"}{checkoutSessionId}
+                    )
+                   `}
+              </Typography>
+            </Box>
+            <Box padding={4} background="neutral100">
+              <Accordion
+                expanded={expandPayment}
+                onToggle={() => setExpandPayment((s) => !s)}
+                id="acc-1"
+                size="S"
+              >
+                <AccordionToggle title="Sample stripe payment response object" />
+                <AccordionContent>
+                  <Box padding={3}>
+                    <Typography>
+                      <pre>{JSON.stringify(stripeResponse, null, 2)}</pre>
+                    </Typography>
+                  </Box>
+                </AccordionContent>
+              </Accordion>
+            </Box>
+          </ModalBody>
+          <ModalFooter
+            startActions={
+              <Button onClick={handleCloseEmbedCode} variant="tertiary">
+                Cancel
+              </Button>
+            }
+            endActions={
+              <>
+                <Button onClick={handleCloseEmbedCode}>Finish</Button>
+              </>
+            }
+          />
+        </ModalLayout>
+      )}
+    </>
+  );
+};
+
+export default EmbedCodeModal;

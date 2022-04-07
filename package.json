@@ -1,0 +1,43 @@
+{
+  "name": "strapi-stripe",
+  "version": "1.0.0",
+  "description": "Integrate Stripe into Strapi CMS.",
+  "strapi": {
+    "name": "strapi-stripe",
+    "description": "Integrate Stripe into Strapi CMS.",
+    "kind": "plugin"
+  },
+  "dependencies": {
+    "react-markdown": "^8.0.2",
+    "stripe": "^8.210.0"
+  },
+  "author": {
+    "name": "HigherEdLab.com",
+    "email": "support@higheredlab.com",
+    "url": "https://higheredlab.com/"
+  },
+  "homepage": "https://github.com/manishkatyan/strapi-stripe#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manishkatyan/strapi-stripe.git"
+  },
+  "maintainers": [
+    {
+      "name": "HigherEdLab.com",
+      "email": "support@higheredlab.com",
+      "url": "https://higheredlab.com/"
+    }
+  ],
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "keywords": [
+    "strapi",
+    "strapi-plugin",
+    "plugin",
+    "strapi-stripe",
+    "stripe"
+  ],
+  "license": "MIT"
+}
