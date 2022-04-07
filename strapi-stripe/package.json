@@ -1,31 +1,43 @@
 {
   "name": "strapi-stripe",
-  "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
-  "scripts": {
-    "develop": "strapi develop",
-    "start": "strapi start",
-    "build": "strapi build",
-    "strapi": "strapi"
+  "version": "1.0.0",
+  "description": "Integrate Stripe into Strapi CMS.",
+  "strapi": {
+    "name": "strapi-stripe",
+    "description": "Integrate Stripe into Strapi CMS.",
+    "kind": "plugin"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@strapi/plugin-i18n": "4.1.5",
-    "@strapi/plugin-users-permissions": "4.1.5",
-    "@strapi/strapi": "4.1.5",
     "react-markdown": "^8.0.2",
-    "sqlite3": "5.0.2"
+    "stripe": "^8.210.0"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "HigherEdLab.com",
+    "email": "support@higheredlab.com",
+    "url": "https://higheredlab.com/"
   },
-  "strapi": {
-    "uuid": "6f1eb557-be9f-4475-b5ea-fa230cbabd8b"
+  "homepage": "https://github.com/manishkatyan/strapi-stripe#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manishkatyan/strapi-stripe.git"
   },
+  "maintainers": [
+    {
+      "name": "HigherEdLab.com",
+      "email": "support@higheredlab.com",
+      "url": "https://higheredlab.com/"
+    }
+  ],
   "engines": {
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
+  "keywords": [
+    "strapi",
+    "strapi-plugin",
+    "plugin",
+    "strapi-stripe",
+    "stripe"
+  ],
   "license": "MIT"
 }
