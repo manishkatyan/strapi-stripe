@@ -8,7 +8,7 @@
 
 The Stripe Payments plugin allows you to accept credit card payments via Stripe payment gateway on your Strapi site with surprising ease and efficiency.
 
-Setting up the plugin is super easy and takes just a few minutes. 
+Setting up the plugin is super easy and can be completed within 10 minutes. 
 
 1. After installing the plugin, enter your Stripe API credentials in the plugin Settings.
 1. You would create the products, for which the plugin will automtically generate the payment button code. 
