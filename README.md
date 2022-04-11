@@ -30,15 +30,15 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 ## ✨ Features
 
-- Quick installation and setup.
-- Easily take payment for a product that you sell on your site.
-- Create buy buttons for your products or services on the fly and embed it anywhere on your site using a user-friendly embed code.
-- Ability to add multiple “Buy Now” buttons to a page.
-- View transaction details for all your products from your Strapi admin dashboard.
-- Ability to specify a custom name, photo and description for a product.
-- Ability to configure a notification email to be sent to the buyer and seller after the purchase.
-- Ability to customize the message on the Checkout Result page.
-- Ability to configure the currency type for the payment.
+1. Quick installation and setup.
+1. Easily accept online payment for any products (or services) you want to sell on your Strapi site.
+1. Automatically creates payment buttons for you to embed anywhere on your site.
+1. Add multiple “Buy Now” payment buttons on a page.
+1. View transaction details for all your products from your Strapi admin dashboard.
+1. Ability to specify a custom name, image and description for a product.
+1. Ability to configure notification emails to be sent to the buyer and seller (aka you) after the purchase.
+1. Ability to customize the message on the checkout result page.
+1. Ability to configure the currency type for the payment.
 
 <br/><br/>
 
