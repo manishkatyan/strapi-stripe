@@ -151,7 +151,7 @@ Your product listing page is where you would show all your products for your cus
 
 <br/>
 
-## Accept Online Payment
+## Accept Online Payments
 
 After you embedding the Payment Button on your product list page, you are ready to accept online payments.
 
