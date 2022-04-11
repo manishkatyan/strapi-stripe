@@ -1,4 +1,4 @@
-# Strapi-stripe
+# Stripe Payment plugin for Strapi
 
 [Stripe](https://stripe.com/) Online payment processing for internet businesses. It's a suite of payment APIs that powers commerce for online businesses of all sizes.
 
