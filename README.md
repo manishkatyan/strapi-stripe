@@ -35,10 +35,11 @@ That's all you need to do to turn your Strapi website or application into an e-c
 1. Automatically creates payment buttons for you to embed anywhere on your site.
 1. Add multiple “Buy Now” payment buttons on a page.
 1. View transaction details for all your products from your Strapi admin dashboard.
-1. Ability to specify a custom name, image and description for a product.
-1. Ability to configure notification emails to be sent to the buyer and seller (aka you) after the purchase.
-1. Ability to customize the message on the checkout result page.
-1. Ability to configure the currency type for the payment.
+1. Specify a custom name, image and description for a product.
+1. Setup email notification to the buyer and seller (aka you) after the purchase.
+1. Customize the message on the checkout result page.
+1. Configure the currency type for the payment.
+1. Run in test mode for debudding
 
 <br/><br/>
 
