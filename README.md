@@ -120,12 +120,16 @@ You can easily configure the Stripe Payments plugin to connect with your Stripe 
 
 ## Create a Product
 
-After configuring Stripe, you can create products. The products that you would create via the plugin will also automatically get created in Stripe.
+After configuring Stripe, you can create products. 
 
-- Click on Stripe in the **Plugins** section.
-- Click on Add Product.
-- Enter Title, Price, Image URL and Description. 
-- Click on Save button to create a product.
+The products that you would create via the plugin will also automatically get created in Stripe.
+
+Follow the steps below to create a product: 
+
+1. Click on Stripe in the **Plugins** section.
+1. Click on Add Product.
+1. Enter Title, Price, Image URL and Description. 
+1. Click on Save button to create a product.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
