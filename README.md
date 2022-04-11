@@ -17,7 +17,7 @@ Setting up the plugin is super easy and can be completed within 10 minutes.
 1. On making payment, your customer is redirected back to your checkout result page that you can customize.
 1. Every transaction is recorded, giving you visibility and insights.
 
-That's all you need to do to start accepting payment on your Stripe website!
+That's all you need to do to turn your Strapi website or application into an e-commerce site!
 
 <a href="https://www.npmjs.com/package/strapi-stripe">
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
