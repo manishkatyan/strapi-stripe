@@ -155,10 +155,6 @@ Your product listing page is where you would show all your products for your cus
 
 After you embedding the Payment Button on your product list page, you are ready to accept online payments.
 
-<br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" />
-<br/><br/>
-
 <br/>
 
 ## Payment Reports
