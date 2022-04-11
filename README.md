@@ -11,10 +11,10 @@ The Stripe Payments plugin allows you to accept credit card payments via Stripe 
 Setting up the plugin is super easy and takes just a few minutes. 
 
 1. After installing the plugin, enter your Stripe API credentials in the plugin Settings.
-1. You would create the products that to sell online, for which the plugin will automtically generate code to embed the payment buttons. 
-1. You would embed the automatically generated payment button code next to the product that you want to sell online.
-1. On clicking the payment button, your customer will be redirected to the payment page, securely hosted by Stripe, to make online payment. 
-1. After maling payment, your customer is redirected to the checkout result page for success (or failure) message and next steps that you can customize.
+1. You would create the products, for which the plugin will automtically generate the payment button code. 
+1. You would embed the payment button code on your product listing page for customers to make online payments. 
+1. After clicking on the payment button, your customer will be redirected to the payment page, securely hosted by Stripe, to make online payment. 
+1. After making payment, your customer is redirected back to your checkout result page for success (or failure) message and the next steps that you can customize.
 1. Every transaction is recorded in the Report section, giving you visibility acorss all transactions.
 
 That's all you need to do to start accepting payment on your Stripe website!
