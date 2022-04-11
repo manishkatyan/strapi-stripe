@@ -139,9 +139,11 @@ Follow the steps below to create a product:
 
 ## Embed Payment Button Code
 
-After adding a product, click on the Embed Code icon. 
+After creating a product, click on the Embed Code icon. 
 
-You would see a popup with the easy-to-follow steps to embed the Payment Button on your product listing page.
+You would see a popup with easy-to-follow steps to embed the Payment button on your product listing page.
+
+Your product listing page is where you would show all your products for your customers to browse through and purcase. Setting up the product listing page is beyond the scope of this plugin as that would depend on your choice for the frontend. 
 
 - Embed the script tag to Your product listing, payment success and payment failure pages.
 - Embed the Payment Button Code on your product listing page.
