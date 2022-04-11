@@ -111,10 +111,10 @@ Now you are ready to accept online payment via Stripe on your Strapi website ðŸŽ
 
 You can easily configure the Stripe Payments plugin to connect with your Stripe Account.
 
-- Go to `Strapi Settings -> STRIPE -> Configuration`.
+- Go to `Strapi Settings -> Stripe -> Configuration`.
 - On the configiration page, Enter All the fields.
-- You can toggle between Stripe test mode and Stripe Live mode. Using Live Mode CheckBox.
-- Click on save to save the Stripe Confiiguration.
+- Using `Live Mode` checkBox, you can easily toggle between Stripe Test and Live mode.
+- Click on Save to save the Stripe confiiguration.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-configuration.gif" alt="strapi-stripe-Configuration" />
@@ -122,13 +122,14 @@ You can easily configure the Stripe Payments plugin to connect with your Stripe 
 
 <br/>
 
-## Create Product
+## Create a Product
 
-Once successfully Configured stripe in strapi settting, now you can create products in stripe.
+After configuring Stripe, you can create products. The products that you would create via the plugin will also automatically get created in Stripe.
 
-- click on Stripe in the **Plugins** section.click on Add Product.
+- Click on Stripe in the **Plugins** section.
+- Click on Add Product.
 - Enter Title, Price, Image URL and Description. 
-- Click on Save button to create a product in Strapi as well as Stripe.
+- Click on Save button to create a product.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
@@ -136,18 +137,21 @@ Once successfully Configured stripe in strapi settting, now you can create produ
 
 <br/>
 
-## Embed code
+## Embed Payment Button Code
 
-Once you add a product, click on the Embed Code. You would see a popup with the easy-to-follow steps to embed the payment button on your Stripe frontend application.
+After adding a product, click on the Embed Code icon. 
 
-- Embed the Script tag to Your Product page, Payment Success page and Payment failure page.
-- Embed the Payment button Code on your Product page.
+You would see a popup with the easy-to-follow steps to embed the Payment Button on your product listing page.
+
+- Embed the script tag to Your product listing, payment success and payment failure pages.
+- Embed the Payment Button Code on your product listing page.
+- You can customize the text of the Payment Button (example - Buy Now, Pay Now) and style using the appropriate css. 
 
 <br/>
 
-## Stripe Payment
+## Accept Online Payment
 
-After you Embed the Payment button code to your Stripe frontend application, you are ready to accept online payments.
+After you embedding the Payment Button on your product list page, you are ready to accept online payments.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" />
@@ -155,14 +159,13 @@ After you Embed the Payment button code to your Stripe frontend application, you
 
 <br/>
 
-## Stripe Payment Report
+## Payment Reports
 
-The Stripe Payments plugin also provides the payment transaction history. To view the transaction report: 
+The Stripe Payments plugin also provides the payment transaction report. To view the transaction report, click on Report Icon in the action column.
 
-- click on Report Icon in the action column.
-  <br/><br/>
-  <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
-  <br/><br/>
+<br/><br/>
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
+<br/><br/>
 
 <br/>
 
