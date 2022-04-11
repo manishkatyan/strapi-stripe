@@ -4,7 +4,7 @@
 
 [Strapi](https://strapi.io/) is the leading open-source headless Content Management System. It’s 100% JavaScript, fully customizable and developer-first.
 
-## Oberview: Start accepting online payments
+## Overview: Start accepting online payments
 
 The Stripe Payments plugin enables you to accept debit and credit card payments on your Stripe website and application.
 
