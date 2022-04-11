@@ -2,11 +2,11 @@
 
 [Stripe](https://stripe.com/) Online payment processing for internet businesses. It's a suite of payment APIs that powers commerce for online businesses of all sizes.
 
-[Strapi](https://strapi.io/) is the leading open-source headless CMS. It’s 100% JavaScript, fully customizable and developer-first.
+[Strapi](https://strapi.io/) is the leading open-source headless Content Management System. It’s 100% JavaScript, fully customizable and developer-first.
 
 ## Oberview: Start accepting online payments
 
-The Stripe Payments plugin allows you to accept credit card payments via Stripe payment gateway on your Strapi site with surprising ease and efficiency.
+The Stripe Payments plugin enables you to accept debit and credit card payments on your Stripe website and application.
 
 Setting up the plugin is super easy and can be completed within 10 minutes. 
 
