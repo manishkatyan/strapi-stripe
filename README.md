@@ -75,7 +75,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 - Strapi v4.1.5 (recently tested)
 - Strapi v4.x
 
-> The BigBlueButton-Strapi plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
+> The Stripe Payments plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
 
 <br/><br/>
 
@@ -89,7 +89,7 @@ Use **npm** to install this plugin within your Strapi project (recommended).
 npm i strapi-stripe
 ```
 
-After successful installation you would need to build a fresh package that includes the BigBlueButton-Strapi plugin UI. Please execute the commands below:
+After successful installation you would need to build a fresh package that includes the Stripe Payments plugin UI. Please execute the commands below:
 
 ```bash
 # with npm (option 1)
@@ -103,13 +103,13 @@ $ npx strapi  develop
 
 The **Stripe** plugin should appear in the **Plugins** section of Strapi sidebar after you run app again.
 
-Now you are ready to launch your Stripe Payment 🎉
+Now you are ready to accept online payment via Stripe on your Strapi website 🎉
 
 <br/><br/>
 
 ## 🔧 Configuration
 
-You can easily configure the Strapi-Stripe plugin to connect with your Stripe Account.
+You can easily configure the Stripe Payments plugin to connect with your Stripe Account.
 
 - Go to `Strapi Settings -> STRIPE -> Configuration`.
 - On the configiration page, Enter All the fields.
@@ -127,7 +127,8 @@ You can easily configure the Strapi-Stripe plugin to connect with your Stripe Ac
 Once successfully Configured stripe in strapi settting, now you can create products in stripe.
 
 - click on Stripe in the **Plugins** section.click on Add Product.
-- Enter Title,Price,Image Url,Description. Click on Save, it will create product both in strapi and stripe.
+- Enter Title, Price, Image URL and Description. 
+- Click on Save button to create a product in Strapi as well as Stripe.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
@@ -137,16 +138,17 @@ Once successfully Configured stripe in strapi settting, now you can create produ
 
 ## Embed code
 
-Once Product creates, click on Embed Code,It gives all the necessary Code to embed On Your Front-End Application.
+Once you add a product, click on the Embed Code. You would see a popup with the easy-to-follow steps to embed the payment button on your Stripe frontend application.
 
-- Embed Script tag to Your Produuct page,Payment Success page,Payment failure page.
-- Embed Payment Button Code in your Product page.
+- Embed the Script tag to Your Product page, Payment Success page and Payment failure page.
+- Embed the Payment button Code on your Product page.
 
 <br/>
 
 ## Stripe Payment
 
-Once you Embed code to your front-end application, its ready to accept the payments from Stripe.
+After you Embed the Payment button code to your Stripe frontend application, you are ready to accept online payments.
+
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" />
 <br/><br/>
@@ -155,7 +157,7 @@ Once you Embed code to your front-end application, its ready to accept the payme
 
 ## Stripe Payment Report
 
-Strapi-Stripe Plugin also Provides Payment Transaction history. for future Reference
+The Stripe Payments plugin also provides the payment transaction history. To view the transaction report: 
 
 - click on Report Icon in the action column.
   <br/><br/>
