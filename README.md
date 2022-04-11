@@ -55,7 +55,7 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 ## 🖐 Requirements
 
-The requireemnts to install the Strapi-Stripe plugin is same as those to install Strapi.
+The requirements to install the Stripe Payments plugin is the same as those to install Strapi.
 
 Please refer to the official Strapi installation requirement doc here: [Installation Requirements](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html).
 
@@ -77,7 +77,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 ## ⏳ Installation
 
-Use **npm** to install this plugin within your Strapi project (recommended).
+Use **npm** to install this plugin within your Strapi project.
 
 [Refer to this doc to install npm](https://docs.npmjs.com/cli/v6/commands/npm-install)
 
@@ -85,7 +85,7 @@ Use **npm** to install this plugin within your Strapi project (recommended).
 npm i strapi-stripe
 ```
 
-After successful installation you would need to build a fresh package that includes the Stripe Payments plugin UI. Please execute the commands below:
+After successful installation you would need to build a fresh package that includes the Stripe Payments plugin UI. Execute the commands below:
 
 ```bash
 # with npm (option 1)
@@ -97,9 +97,9 @@ $ npx strapi  build
 $ npx strapi  develop
 ```
 
-The **Stripe** plugin should appear in the **Plugins** section of Strapi sidebar after you run app again.
+The **Stripe** Payments plugin should appear in the **Plugins** section of the Strapi sidebar after you run the app again.
 
-Now you are ready to accept online payment via Stripe on your Strapi website 🎉
+Now you are ready to accept online payments via Stripe on your Strapi website 🎉
 
 <br/><br/>
 
