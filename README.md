@@ -43,7 +43,7 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 <br/><br/>
 
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-features.gif" alt="strapi-stripe-payment" /> <br/>
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
 
 <br/><br/>
 
