@@ -6,17 +6,23 @@
 
 ## Stripe Payment
 
-The Stripe Payments plugin allows you to accept credit card payments via Stripe payment gateway on your Strapi site easily.
+The Stripe Payments plugin allows you to accept credit card payments via Stripe payment gateway on your Strapi site with surprising ease and efficiency.
 
-Your customers will be redirected to the “Checkout Result” page after the credit card payment. This page shows them the details of the transaction (the item that they just paid for).
+Setting up the plugin is super easy. 
 
-The transaction info is also captured in the Report section of the plugin. You can view all the payments you received from your Strapi admin dashboard.
+After installing the plugin, enter your Stripe API credentials in the plugin Settings.
 
-The setup is very easy. Once you have installed the plugin, all you need to do is enter your Stripe API credentials in the plugin settings and your website will be ready to accept credit card payments.
+You create the products that you want to sell online. The plugin will automtically generate code to embed the payment button for those products. 
 
-You can run it in test mode by specifying test API keys in the plugin settings.
+You would embed the automatically generated payment button code next to the product that you want to sell online.
 
-It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhere on your site for any products that you sell online.
+On clicking the payment button, your customer will be redirected to the payment page, securely hosted by Stripe, to make online payment. 
+
+After payment success (or failure), your customer is redirected to the easily customizable `Checkout Result` page to get more information about the transaction.
+
+Eevry transaction is recorded in the Report section of the plugin, giving you an overview of all transactions
+
+To test the plugin, you can toggle the test mode, prividing test API credentials from Stripe.
 
 <a href="https://www.npmjs.com/package/strapi-stripe">
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
