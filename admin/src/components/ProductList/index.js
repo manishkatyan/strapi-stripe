@@ -9,8 +9,6 @@ import { useLocation } from "react-router-dom";
 import { Box } from "@strapi/design-system/Box";
 import { Typography } from "@strapi/design-system/Typography";
 import { Divider } from "@strapi/design-system/Divider";
-import { Flex } from "@strapi/design-system/Flex";
-import { Button } from "@strapi/design-system/Button";
 import CreateProduct from "../CreateProduct";
 import ProductTable from "./productTable";
 import {
@@ -124,9 +122,11 @@ const ProductList = () => {
     }
   };
 
+  const handleClickCreateProduct = () => setIsVisible((prev) => !prev);
+
   return (
     <>
-      <Box paddingTop={6} paddingLeft={8}>
+      <Box paddingTop={6} paddingLeft={7}>
         <Typography variant="alpha">Stripe Payment</Typography>
         <Box>
           <Typography variant="omega">
@@ -138,41 +138,36 @@ const ProductList = () => {
       <Box padding={3}>
         <Divider />
       </Box>
-      <Flex justifyContent="end" paddingRight={10} paddingTop={4}>
-        <Button onClick={() => setIsVisible((prev) => !prev)}>
-          Add Product
-        </Button>
 
-        <CreateProduct
-          isVisible={isVisible}
-          handleClose={handleCloseModal}
-          handleClickSave={(title, price, url, description) =>
-            handleSaveProduct(title, price, url, description)
-          }
-        />
-        <EditProduct
-          productId={productId}
-          isEditVisible={isEditVisible}
-          handleCloseEdit={handleCloseEditModal}
-          handleClickUpdateEdit={(
+      <CreateProduct
+        isVisible={isVisible}
+        handleClose={handleCloseModal}
+        handleClickSave={(title, price, url, description) =>
+          handleSaveProduct(title, price, url, description)
+        }
+      />
+      <EditProduct
+        productId={productId}
+        isEditVisible={isEditVisible}
+        handleCloseEdit={handleCloseEditModal}
+        handleClickUpdateEdit={(
+          productId,
+          title,
+          price,
+          url,
+          description,
+          stripeProductId
+        ) =>
+          handleUpdateProduct(
             productId,
             title,
             price,
             url,
             description,
             stripeProductId
-          ) =>
-            handleUpdateProduct(
-              productId,
-              title,
-              price,
-              url,
-              description,
-              stripeProductId
-            )
-          }
-        />
-      </Flex>
+          )
+        }
+      />
 
       <Box>
         <ProductTable
@@ -186,6 +181,7 @@ const ProductList = () => {
           handleSortAscendingPrice={handleSortAscendingPrice}
           handleSortDescendingPrice={handleSortDescendingPrice}
           sortAscendingPrice={sortAscendingPrice}
+          handleClickCreateProduct={handleClickCreateProduct}
         />
       </Box>
     </>

@@ -14,8 +14,6 @@ import { HeaderLayout, ContentLayout } from "@strapi/design-system/Layout";
 import { Main } from "@strapi/design-system/Main";
 import { TextInput } from "@strapi/design-system/TextInput";
 import { Typography } from "@strapi/design-system/Typography";
-import Information from "@strapi/icons/Information";
-import CheckCircle from "@strapi/icons/CheckCircle";
 import { Alert } from "@strapi/design-system/Alert";
 import { Checkbox } from "@strapi/design-system/Checkbox";
 import { Select, Option } from "@strapi/design-system/Select";
@@ -124,8 +122,8 @@ const Configuration = () => {
         stripeLiveSecKey: "Live Stripe Secret Key is required",
         stripeTestPubKey: "Test Stripe Publishable Key is required",
         stripeTestSecKey: "Test Stripe Secret Key is required",
-        checkoutSuccessUrl: "Checkout Success Page Url is required",
-        checkoutCancelUrl: "Checkout Cancel Page Url is required",
+        checkoutSuccessUrl: "Checkout Success Page URL is required",
+        checkoutCancelUrl: "Checkout Cancel Page URL is required",
         currency: "Currency is required",
         paymentButtonText: "Payment Button Text is required",
       });
@@ -157,13 +155,13 @@ const Configuration = () => {
     } else if (!stripeConfiguration.checkoutSuccessUrl) {
       setError({
         ...error,
-        checkoutSuccessUrl: "Checkout Success Page Url is required",
+        checkoutSuccessUrl: "Checkout Success Page URL is required",
       });
       setIsSubmitting(false);
     } else if (!stripeConfiguration.checkoutCancelUrl) {
       setError({
         ...error,
-        checkoutCancelUrl: "Checkout Cancel Page Url is required",
+        checkoutCancelUrl: "Checkout Cancel Page URL is required",
       });
       setIsSubmitting(false);
     } else if (!stripeConfiguration.currency) {
@@ -222,18 +220,25 @@ const Configuration = () => {
             ""
           )}
         </Box>
-        <Box shadow="tableShadow" background="neutral0" padding={3}>
+        <Box
+          shadow="tableShadow"
+          background="neutral0"
+          paddingTop={6}
+          paddingLeft={7}
+          paddingRight={7}
+          paddingBottom={6}
+          hasRadius
+        >
           <Box>
             <Typography variant="delta">Credentials</Typography>
           </Box>
-          <Box paddingBottom={2}>
+          <Box paddingBottom={2} paddingTop={1}>
             <Typography variant="omega">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Configure your stripe publishable and secret Key.
             </Typography>
           </Box>
-          <Box paddingTop={2} paddingLeft={2} paddingRight={2}>
-            <Grid gap={5}>
+          <Box paddingTop={2}>
+            <Grid gap={4}>
               <GridItem col={12} s={12}>
                 <Box paddingTop={3}>
                   <Checkbox
@@ -279,8 +284,8 @@ const Configuration = () => {
               </GridItem>
             </Grid>
           </Box>
-          <Box paddingBottom={2} paddingLeft={2} paddingRight={2}>
-            <Grid gap={5}>
+          <Box paddingBottom={2}>
+            <Grid gap={4}>
               <GridItem col={6} s={12}>
                 <Box paddingTop={5} paddingBottom={2}>
                   <TextInput
@@ -311,31 +316,33 @@ const Configuration = () => {
           </Box>
         </Box>
         <br />
-        <Box shadow="tableShadow" background="neutral0" padding={3}>
-          <Box>
+        <Box
+          shadow="tableShadow"
+          background="neutral0"
+          paddingTop={6}
+          paddingLeft={7}
+          paddingRight={7}
+          paddingBottom={6}
+          hasRadius
+        >
+          <Box paddingBottom={2}>
             <Typography variant="delta">Global Setting</Typography>
           </Box>
-          <Box paddingBottom={2}>
-            <Typography variant="omega">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Typography>
-          </Box>
-          <Box paddingTop={2} paddingLeft={2} paddingRight={2}>
-            <Grid gap={5}>
+
+          <Box paddingTop={2}>
+            <Grid gap={4}>
               <GridItem col={6} s={12}>
                 <Box paddingTop={2} paddingBottom={2}>
                   <TextInput
                     name="checkoutSuccessUrl"
-                    label="Payment Success Page Url"
-                    placeholder="Checkout Success Page Url"
+                    label="Payment Success Page URL"
                     required
                     value={stripeConfiguration.checkoutSuccessUrl}
                     error={
                       error.checkoutSuccessUrl ? error.checkoutSuccessUrl : ""
                     }
                     onChange={handleChange}
-                    hint="Redirected to the success page after the  payment successfull"
+                    hint="Redirects to the success page after the  payment successful"
                   />
                 </Box>
               </GridItem>
@@ -343,20 +350,19 @@ const Configuration = () => {
                 <Box paddingTop={2} paddingBottom={2}>
                   <TextInput
                     name="checkoutCancelUrl"
-                    label="Payment Cancel Page Url"
-                    placeholder="Checkout Cancel Page Url"
+                    label="Payment Cancel Page URL"
                     required
                     value={stripeConfiguration.checkoutCancelUrl}
                     error={
                       error.checkoutCancelUrl ? error.checkoutCancelUrl : ""
                     }
                     onChange={handleChange}
-                    hint="Redirected to the cancel page after the  payment failed"
+                    hint="Redirects to the cancel page after the  payment failed"
                   />
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
+                <Box paddingBottom={2}>
                   <Select
                     id="select1"
                     label="Choose your Currency"
@@ -383,7 +389,7 @@ const Configuration = () => {
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
+                <Box paddingBottom={2}>
                   <TextInput
                     name="paymentButtonText"
                     label="Payment Button Text"
@@ -401,18 +407,21 @@ const Configuration = () => {
           </Box>
         </Box>
         <br />
-        <Box shadow="tableShadow" background="neutral0" padding={3}>
-          <Box>
+        <Box
+          shadow="tableShadow"
+          background="neutral0"
+          paddingTop={6}
+          paddingLeft={7}
+          paddingRight={7}
+          paddingBottom={6}
+          hasRadius
+        >
+          <Box paddingBottom={2}>
             <Typography variant="delta">Email Settings</Typography>
           </Box>
-          <Box paddingBottom={2}>
-            <Typography variant="omega">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Typography>
-          </Box>
-          <Box paddingTop={2} paddingLeft={2} paddingRight={2}>
-            <Grid gap={5}>
+
+          <Box paddingTop={2}>
+            <Grid gap={4}>
               <GridItem col={6} s={12}>
                 <Link
                   href="https://support.stripe.com/questions/set-up-account-email-notifications"
