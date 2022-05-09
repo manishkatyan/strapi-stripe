@@ -30,6 +30,7 @@ import {
 import ExclamationMarkCircle from "@strapi/icons/ExclamationMarkCircle";
 import { EmptyStateLayout } from "@strapi/design-system/EmptyStateLayout";
 import { VisuallyHidden } from "@strapi/design-system/VisuallyHidden";
+import { Button } from "@strapi/design-system/Button";
 import Pencil from "@strapi/icons/Pencil";
 import LinkIcon from "./linkIcon";
 import CarretUp from "@strapi/icons/CarretUp";
@@ -239,10 +240,19 @@ const ProductTable = ({
             </Tbody>
           </Table>
         ) : (
-          <Box padding={4} background="neutral100">
+          <Box>
             <EmptyStateLayout
               icon={<ExclamationMarkCircle />}
               content="You dont have any product"
+              action={
+                <Button
+                  variant="secondary"
+                  startIcon={<Plus />}
+                  onClick={handleClickCreateProduct}
+                >
+                  Create your first product
+                </Button>
+              }
             />
           </Box>
         )}
