@@ -17,7 +17,7 @@ import {
   updateStripeProduct,
 } from "../../utils/apiCalls";
 import EditProduct from "./editProduct";
-const limit = 5;
+const limit = 4;
 const ProductList = () => {
   const search = useLocation().search;
   const page = new URLSearchParams(search).get("page");

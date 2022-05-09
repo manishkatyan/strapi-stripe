@@ -39,6 +39,7 @@ import Plus from "@strapi/icons/Plus";
 import ChartPie from "@strapi/icons/ChartPie";
 import { currencies } from "./constant";
 import EmbedCodeModal from "./embedCodeModal";
+import SettingLink from "./SettingLink";
 
 const ProductTable = ({
   products,
@@ -272,6 +273,10 @@ const ProductTable = ({
           ""
         )}
       </Flex>
+      <br />
+      <Box paddingTop={6} paddingBottom={6} paddingLeft={7} paddingRight={7}>
+        <SettingLink />
+      </Box>
     </>
   );
 };
