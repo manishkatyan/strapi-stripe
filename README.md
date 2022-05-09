@@ -1,22 +1,23 @@
-# Strapi-stripe
+# Stripe Payment plugin for Strapi
 
 [Stripe](https://stripe.com/) Online payment processing for internet businesses. It's a suite of payment APIs that powers commerce for online businesses of all sizes.
 
-[Strapi](https://strapi.io/) is the leading open-source headless CMS. It’s 100% JavaScript, fully customizable and developer-first.
+[Strapi](https://strapi.io/) is the leading open-source headless Content Management System. It’s 100% JavaScript, fully customizable and developer-first.
 
-## Stripe Payment
+## Overview: Start accepting online payments
 
-The Stripe Payments plugin allows you to accept credit card payments via Stripe payment gateway on your Strapi site easily.
+The Stripe Payments plugin enables you to accept debit and credit card payments on your Strapi website or app.
 
-Your customers will be redirected to the “Checkout Result” page after the credit card payment. This page shows them the details of the transaction (the item that they just paid for).
+Setting up the plugin is super easy and can be completed within 10 minutes. 
 
-The transaction info is also captured in the Report section of the plugin. You can view all the payments you received from your Strapi admin dashboard.
+1. Enter your Stripe API credentials.
+1. Create some products, for which the plugin will automtically generate the payment button code. 
+1. Embed the payment button code on your product listing page. 
+1. On clicking the payment button, your customer will be redirected to the payment page, securely hosted by Stripe. 
+1. On making payment, your customer is redirected back to your checkout result page that you can customize.
+1. Every transaction is recorded, giving you visibility and insights.
 
-The setup is very easy. Once you have installed the plugin, all you need to do is enter your Stripe API credentials in the plugin settings and your website will be ready to accept credit card payments.
-
-You can run it in test mode by specifying test API keys in the plugin settings.
-
-It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhere on your site for any products that you sell online.
+That's all you need to do to turn your Strapi website or application into an e-commerce site!
 
 <a href="https://www.npmjs.com/package/strapi-stripe">
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
@@ -29,15 +30,16 @@ It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhe
 
 ## ✨ Features
 
-- Quick installation and setup.
-- Easily take payment for a product that you sell on your site.
-- Create buy buttons for your products or services on the fly and embed it anywhere on your site using a user-friendly embed code.
-- Ability to add multiple “Buy Now” buttons to a page.
-- View transaction details for all your products from your Strapi admin dashboard.
-- Ability to specify a custom name, photo and description for a product.
-- Ability to configure a notification email to be sent to the buyer and seller after the purchase.
-- Ability to customize the message on the Checkout Result page.
-- Ability to configure the currency type for the payment.
+1. Quick installation and setup.
+1. Easily accept online payment for any products (or services) you want to sell on your Strapi site.
+1. Automatically creates payment buttons for you to embed anywhere on your site.
+1. Add multiple “Buy Now” payment buttons on a page.
+1. View transaction details for all your products from your Strapi admin dashboard.
+1. Specify a custom name, image and description for a product.
+1. Setup email notification to the buyer and seller (aka you) after the purchase.
+1. Customize the message on the checkout result page.
+1. Configure the currency type for the payment.
+1. Run in test mode for debudding
 
 <br/><br/>
 
@@ -53,7 +55,7 @@ It has a simple embed code that lets you put Stripe “Buy Now” buttons anywhe
 
 ## 🖐 Requirements
 
-The requireemnts to install the Strapi-Stripe plugin is same as those to install Strapi.
+The requirements to install the Stripe Payments plugin is the same as those to install Strapi.
 
 Please refer to the official Strapi installation requirement doc here: [Installation Requirements](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html).
 
@@ -69,13 +71,13 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 - Strapi v4.1.5 (recently tested)
 - Strapi v4.x
 
-> The BigBlueButton-Strapi plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
+> The Stripe Payments plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
 
 <br/><br/>
 
 ## ⏳ Installation
 
-Use **npm** to install this plugin within your Strapi project (recommended).
+Use **npm** to install this plugin within your Strapi project.
 
 [Refer to this doc to install npm](https://docs.npmjs.com/cli/v6/commands/npm-install)
 
@@ -83,7 +85,7 @@ Use **npm** to install this plugin within your Strapi project (recommended).
 npm i strapi-stripe
 ```
 
-After successful installation you would need to build a fresh package that includes the BigBlueButton-Strapi plugin UI. Please execute the commands below:
+After successful installation you would need to build a fresh package that includes the Stripe Payments plugin UI. Execute the commands below:
 
 ```bash
 # with npm (option 1)
@@ -95,20 +97,20 @@ $ npx strapi  build
 $ npx strapi  develop
 ```
 
-The **Stripe** plugin should appear in the **Plugins** section of Strapi sidebar after you run app again.
+The **Stripe** Payments plugin should appear in the **Plugins** section of the Strapi sidebar after you run the app again.
 
-Now you are ready to launch your Stripe Payment 🎉
+Now you are ready to accept online payments via Stripe on your Strapi website 🎉
 
 <br/><br/>
 
 ## 🔧 Configuration
 
-You can easily configure the Strapi-Stripe plugin to connect with your Stripe Account.
+You can easily configure the Stripe Payments plugin to connect with your Stripe Account.
 
-- Go to `Strapi Settings -> STRIPE -> Configuration`.
+- Go to `Strapi Settings -> Stripe -> Configuration`.
 - On the configiration page, Enter All the fields.
-- You can toggle between Stripe test mode and Stripe Live mode. Using Live Mode CheckBox.
-- Click on save to save the Stripe Confiiguration.
+- Using `Live Mode` checkBox, you can easily toggle between Stripe Test and Live mode.
+- Click on Save to save the Stripe confiiguration.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-configuration.gif" alt="strapi-stripe-Configuration" />
@@ -116,12 +118,18 @@ You can easily configure the Strapi-Stripe plugin to connect with your Stripe Ac
 
 <br/>
 
-## Create Product
+## Create a Product
 
-Once successfully Configured stripe in strapi settting, now you can create products in stripe.
+After configuring Stripe, you can create products. 
 
-- click on Stripe in the **Plugins** section.click on Add Product.
-- Enter Title,Price,Image Url,Description. Click on Save, it will create product both in strapi and stripe.
+The products that you would create via the plugin will also automatically get created in Stripe.
+
+Follow the steps below to create a product: 
+
+1. Click on Stripe in the **Plugins** section.
+1. Click on Add Product.
+1. Enter Title, Price, Image URL and Description. 
+1. Click on Save button to create a product.
 
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
@@ -129,32 +137,33 @@ Once successfully Configured stripe in strapi settting, now you can create produ
 
 <br/>
 
-## Embed code
+## Embed Payment Button Code
 
-Once Product creates, click on Embed Code,It gives all the necessary Code to embed On Your Front-End Application.
+After creating a product, click on the Embed Code icon. 
 
-- Embed Script tag to Your Produuct page,Payment Success page,Payment failure page.
-- Embed Payment Button Code in your Product page.
+You would see a popup with easy-to-follow steps, detailed below, to embed the Payment button on your product listing page.
 
-<br/>
+- Embed the script tag to Your product listing, payment success and payment failure pages.
+- Embed the Payment Button Code on your product listing page.
+- You can customize the text of the Payment Button (example - Buy Now, Pay Now) and style using the appropriate css. 
 
-## Stripe Payment
-
-Once you Embed code to your front-end application, its ready to accept the payments from Stripe.
-<br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" />
-<br/><br/>
+Your product listing page is where you would show all your products for your customers to browse through and purcase. Setting up the product listing page is beyond the scope of this plugin as that would depend on your choice for the frontend. 
 
 <br/>
 
-## Stripe Payment Report
+## Accept Online Payments
 
-Strapi-Stripe Plugin also Provides Payment Transaction history. for future Reference
+After you embedding the Payment Button on your product list page, you are ready to accept online payments.
 
-- click on Report Icon in the action column.
-  <br/><br/>
-  <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
-  <br/><br/>
+<br/>
+
+## Payment Reports
+
+The Stripe Payments plugin also provides the payment transaction report. To view the transaction report, click on Report Icon in the action column.
+
+<br/><br/>
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
+<br/><br/>
 
 <br/>
 
