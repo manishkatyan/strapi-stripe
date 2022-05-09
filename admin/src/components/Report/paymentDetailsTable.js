@@ -99,7 +99,7 @@ const PaymentDetailsTable = () => {
     // get the time as a string
     const paymentTime = dates.toLocaleTimeString();
     const dateTime = (
-      <Badge active>
+      <Badge>
         {paymentDate}&nbsp;&nbsp;&nbsp;{paymentTime}
       </Badge>
     );
@@ -150,15 +150,15 @@ const PaymentDetailsTable = () => {
 
   const ROW_COUNT = 6;
   const COL_COUNT = 10;
-  console.log(payments);
+
   return (
     <>
-      <Box paddingLeft={6} paddingTop={4}>
+      <Box paddingLeft={7} paddingTop={6}>
         <Link to="/plugins/strapi-stripe" startIcon={<ArrowLeft />}>
           Back
         </Link>
       </Box>
-      <Box paddingTop={6} paddingLeft={8}>
+      <Box paddingTop={4} paddingLeft={7}>
         <Stack horizontal spacing={3}>
           <Breadcrumbs label="Category model, name field">
             <Crumb>
@@ -173,7 +173,13 @@ const PaymentDetailsTable = () => {
       <Box padding={3}>
         <Divider />
       </Box>
-      <Box padding={8} background="neutral100">
+      <Box
+        paddingTop={6}
+        paddingBottom={6}
+        paddingLeft={7}
+        paddingRight={7}
+        background="neutral100"
+      >
         {payments && payments.length > 0 ? (
           <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
             <Thead>
@@ -269,7 +275,7 @@ const PaymentDetailsTable = () => {
             </Tbody>
           </Table>
         ) : (
-          <Box padding={4} background="neutral100">
+          <Box background="neutral100">
             <EmptyStateLayout
               icon={<ExclamationMarkCircle />}
               content="This product dont have any transaction"

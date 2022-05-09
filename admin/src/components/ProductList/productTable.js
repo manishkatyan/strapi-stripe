@@ -5,7 +5,15 @@
  */
 
 import React, { useState } from "react";
-import { Table, Thead, Tbody, Tr, Td, Th } from "@strapi/design-system/Table";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  Th,
+  TFooter,
+} from "@strapi/design-system/Table";
 import { Flex } from "@strapi/design-system/Flex";
 import { Box } from "@strapi/design-system/Box";
 import { IconButton } from "@strapi/design-system/IconButton";
@@ -21,14 +29,17 @@ import {
 } from "@strapi/design-system/Pagination";
 import ExclamationMarkCircle from "@strapi/icons/ExclamationMarkCircle";
 import { EmptyStateLayout } from "@strapi/design-system/EmptyStateLayout";
+import { VisuallyHidden } from "@strapi/design-system/VisuallyHidden";
 import Pencil from "@strapi/icons/Pencil";
 import LinkIcon from "./linkIcon";
 import CarretUp from "@strapi/icons/CarretUp";
 import CarretDown from "@strapi/icons/CarretDown";
 import { Badge } from "@strapi/design-system/Badge";
+import Plus from "@strapi/icons/Plus";
 import ChartPie from "@strapi/icons/ChartPie";
 import { currencies } from "./constant";
 import EmbedCodeModal from "./embedCodeModal";
+import SettingLink from "./SettingLink";
 
 const ProductTable = ({
   products,
@@ -41,6 +52,7 @@ const ProductTable = ({
   handleSortAscendingPrice,
   handleSortDescendingPrice,
   sortAscendingPrice,
+  handleClickCreateProduct,
 }) => {
   let { url } = useRouteMatch();
   const ROW_COUNT = 6;
@@ -98,7 +110,7 @@ const ProductTable = ({
     // get the time as a string
     const createdTime = dates.toLocaleTimeString();
     const dateTime = (
-      <Badge active>
+      <Badge>
         {createdDate}&nbsp;&nbsp;&nbsp;{createdTime}
       </Badge>
     );
@@ -113,9 +125,23 @@ const ProductTable = ({
         isVisibleEmbedCode={isVisible}
         handleCloseEmbedCode={handleCloseEmbedModal}
       />
-      <Box padding={8} background="neutral100">
+      <Box
+        paddingTop={6}
+        paddingBottom={6}
+        paddingLeft={7}
+        paddingRight={7}
+        background="neutral100"
+      >
         {products && products.length > 0 ? (
-          <Table colCount={COL_COUNT} rowCount={ROW_COUNT}>
+          <Table
+            colCount={COL_COUNT}
+            rowCount={ROW_COUNT}
+            footer={
+              <TFooter icon={<Plus />} onClick={handleClickCreateProduct}>
+                Create New Product
+              </TFooter>
+            }
+          >
             <Thead>
               <Tr>
                 <Th>
@@ -154,11 +180,9 @@ const ProductTable = ({
                     />
                   )}
                 </Th>
+
                 <Th>
-                  <Typography variant="sigma">Embed Code</Typography>
-                </Th>
-                <Th>
-                  <Typography variant="sigma">Actions</Typography>
+                  <VisuallyHidden>Actions</VisuallyHidden>
                 </Th>
               </Tr>
             </Thead>
@@ -185,20 +209,21 @@ const ProductTable = ({
                         {getProductPrice(product.price, product.currency)}
                       </Typography>
                     </Td>
+
                     <Td>
-                      <IconButton
-                        onClick={() => handleClickLink(product.id)}
-                        label="Copy Link Embed Code"
-                        icon={<LinkIcon />}
-                      />
-                    </Td>
-                    <Td>
-                      <Flex>
+                      <Flex justifyContent="end">
                         <IconButton
-                          onClick={() => handleEditClick(product.id)}
-                          label="Edit"
-                          icon={<Pencil />}
+                          onClick={() => handleClickLink(product.id)}
+                          label="Embed Code"
+                          icon={<LinkIcon />}
                         />
+                        <Box paddingLeft={3}>
+                          <IconButton
+                            onClick={() => handleEditClick(product.id)}
+                            label="Edit"
+                            icon={<Pencil />}
+                          />
+                        </Box>
                         <Box paddingLeft={3}>
                           <Link
                             to={`${url}/report/${product.id}/${product.title}`}
@@ -248,6 +273,10 @@ const ProductTable = ({
           ""
         )}
       </Flex>
+      <br />
+      <Box paddingTop={6} paddingBottom={6} paddingLeft={7} paddingRight={7}>
+        <SettingLink />
+      </Box>
     </>
   );
 };
