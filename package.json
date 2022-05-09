@@ -1,9 +1,7 @@
 {
   "name": "strapi-stripe",
-
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Integrate Stripe payments into Strapi website or app",
-
   "strapi": {
     "name": "strapi-stripe",
     "description": "Integrate Stripe payments into Strapi website or app",
