@@ -63,11 +63,6 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 <br/><br/>
 
-## ⚙️ Versions
-
-- **Strapi v4**
-
-<br/><br/>
 
 ## 🖐 Requirements
 
