@@ -1,10 +1,10 @@
 {
   "name": "strapi-stripe",
-  "version": "1.6.0",
-  "description": "Integrate Stripe payments into Strapi website or app",
+  "version": "1.7.0",
+  "description": "Online payments made simple, secure and fast. This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.",
   "strapi": {
     "name": "strapi-stripe",
-    "description": "Integrate Stripe payments into Strapi website or app",
+    "description": "Online payments made simple, secure and fast. This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.",
     "kind": "plugin"
   },
   "dependencies": {
@@ -33,11 +33,35 @@
     "npm": ">=6.0.0"
   },
   "keywords": [
+    "strapi stripe",
+    "stripe nodejs",
+    "stripe javascript",
+    "payment processing",
+    "pay",
+    "charge",
+    "merchant",
+    "payment integration",
+    "via stripe",
+    "gpay",
+    "apple pay",
+    "digital payment",
+    "checkout",
+    "payment",
+    "intent",
+    "element",
+    "e-commerce",
+    "online payment",
+    "stripe",
     "strapi",
-    "strapi-plugin",
-    "plugin",
-    "strapi-stripe",
-    "stripe"
+    "headless CMS",
+    "secure payment",
+    "open-source",
+    "credit card",
+    "subscribe",
+    "credit",
+    "debit",
+    "card",
+    "gateway"
   ],
   "license": "MIT"
 }

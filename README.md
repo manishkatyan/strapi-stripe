@@ -1,3 +1,32 @@
+<p align="center">
+  <a href="https://github.com/manishkatyan/strapi-stripe">
+    <img src="https://market.strapi.io/_next/image?url=https%3A%2F%2Fdl.airtable.com%2F.attachments%2Fb3ba9ad9cdecd7c29df4c545e967b329%2Fc8800dbd%2Fstrapi-stripe.png%3Fts%3D1652175992%26userId%3DusrUa8HWbsGCCzcQm%26cs%3D909cf89d3c6e3854&w=96&q=75" width="318px" alt="Stripe logo" />
+  </a>
+  <a href="https://github.com/manishkatyan/strapi-stripe">
+    <img src="https://market.strapi.io/_next/image?url=https%3A%2F%2Fdl.airtable.com%2F.attachments%2Fb3ba9ad9cdecd7c29df4c545e967b329%2Fc8800dbd%2Fstrapi-stripe.png%3Fts%3D1652175992%26userId%3DusrUa8HWbsGCCzcQm%26cs%3D909cf89d3c6e3854&w=96&q=75" width="318px" alt="Stripe logo" />
+  </a>
+</p>
+
+<h3 align="center">Online payments made simple, secure and fast.</h3>
+<p align="center">This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.</p>
+
+<br />
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/strapi-stripe">
+<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
+</a>
+<a href="https://www.npmjs.org/package/strapi-stripe">
+<img src="https://img.shields.io/npm/dm/strapi-stripe.svg" alt="Monthly download on NPM" />
+</a>
+</p>
+
+<br>
+
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
+
+<br/><br/>
+
 # Stripe Payment plugin for Strapi
 
 [Stripe](https://stripe.com/) Online payment processing for internet businesses. It's a suite of payment APIs that powers commerce for online businesses of all sizes.
@@ -8,23 +37,16 @@
 
 The Stripe Payments plugin enables you to accept debit and credit card payments on your Strapi website or app.
 
-Setting up the plugin is super easy and can be completed within 10 minutes. 
+Setting up the plugin is super easy and can be completed within 10 minutes.
 
 1. Enter your Stripe API credentials.
-1. Create some products, for which the plugin will automtically generate the payment button code. 
-1. Embed the payment button code on your product listing page. 
-1. On clicking the payment button, your customer will be redirected to the payment page, securely hosted by Stripe. 
+1. Create some products, for which the plugin will automtically generate the payment button code.
+1. Embed the payment button code on your product listing page.
+1. On clicking the payment button, your customer will be redirected to the payment page, securely hosted by Stripe.
 1. On making payment, your customer is redirected back to your checkout result page that you can customize.
 1. Every transaction is recorded, giving you visibility and insights.
 
 That's all you need to do to turn your Strapi website or application into an e-commerce site!
-
-<a href="https://www.npmjs.com/package/strapi-stripe">
-<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/manishkatyan/strapi-stripe?label=npm&logo=npm">
-</a>
-<a href="https://www.npmjs.org/package/strapi-stripe">
-<img src="https://img.shields.io/npm/dm/strapi-stripe.svg" alt="Monthly download on NPM" />
-</a>
 
 <br/><br/>
 
@@ -40,10 +62,6 @@ That's all you need to do to turn your Strapi website or application into an e-c
 1. Customize the message on the checkout result page.
 1. Configure the currency type for the payment.
 1. Run in test mode for debudding
-
-<br/><br/>
-
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
 
 <br/><br/>
 
@@ -120,34 +138,34 @@ You can easily configure the Stripe Payments plugin to connect with your Stripe 
 
 ## Create a Product
 
-After configuring Stripe, you can create products. 
+After configuring Stripe, you can create products.
 
 The products that you would create via the plugin will also automatically get created in Stripe.
 
-Follow the steps below to create a product: 
+Follow the steps below to create a product:
 
 1. Click on Stripe in the **Plugins** section.
 1. Click on Add Product.
-1. Enter Title, Price, Image URL and Description. 
+1. Enter Title, Price, Image URL and Description.
 1. Click on Save button to create a product.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create.gif" alt="strapi-stripe-product-create" />
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create-v2.gif" alt="strapi-stripe-product-create" />
 <br/><br/>
 
 <br/>
 
 ## Embed Payment Button Code
 
-After creating a product, click on the Embed Code icon. 
+After creating a product, click on the Embed Code icon.
 
 You would see a popup with easy-to-follow steps, detailed below, to embed the Payment button on your product listing page.
 
 - Embed the script tag to Your product listing, payment success and payment failure pages.
 - Embed the Payment Button Code on your product listing page.
-- You can customize the text of the Payment Button (example - Buy Now, Pay Now) and style using the appropriate css. 
+- You can customize the text of the Payment Button (example - Buy Now, Pay Now) and style using the appropriate css.
 
-Your product listing page is where you would show all your products for your customers to browse through and purcase. Setting up the product listing page is beyond the scope of this plugin as that would depend on your choice for the frontend. 
+Your product listing page is where you would show all your products for your customers to browse through and purcase. Setting up the product listing page is beyond the scope of this plugin as that would depend on your choice for the frontend.
 
 <br/>
 
@@ -162,7 +180,7 @@ After you embedding the Payment Button on your product list page, you are ready 
 The Stripe Payments plugin also provides the payment transaction report. To view the transaction report, click on Report Icon in the action column.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report.gif" alt="strapi-stripe-payment-report" />
+<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report-v2.gif" alt="strapi-stripe-payment-report" />
 <br/><br/>
 
 <br/>
