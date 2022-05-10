@@ -2,9 +2,7 @@
   <a href="https://github.com/manishkatyan/strapi-stripe">
     <img src="https://market.strapi.io/_next/image?url=https%3A%2F%2Fdl.airtable.com%2F.attachments%2Fb3ba9ad9cdecd7c29df4c545e967b329%2Fc8800dbd%2Fstrapi-stripe.png%3Fts%3D1652175992%26userId%3DusrUa8HWbsGCCzcQm%26cs%3D909cf89d3c6e3854&w=96&q=75" width="318px" alt="Stripe logo" />
   </a>
-  <a href="https://github.com/manishkatyan/strapi-stripe">
-    <img src="https://market.strapi.io/_next/image?url=https%3A%2F%2Fdl.airtable.com%2F.attachments%2Fb3ba9ad9cdecd7c29df4c545e967b329%2Fc8800dbd%2Fstrapi-stripe.png%3Fts%3D1652175992%26userId%3DusrUa8HWbsGCCzcQm%26cs%3D909cf89d3c6e3854&w=96&q=75" width="318px" alt="Stripe logo" />
-  </a>
+ 
 </p>
 
 <h3 align="center">Online payments made simple, secure and fast.</h3>
@@ -27,7 +25,7 @@
 
 <br/><br/>
 
-# Stripe Payment plugin for Strapi
+## Stripe Payment plugin for Strapi
 
 [Stripe](https://stripe.com/) Online payment processing for internet businesses. It's a suite of payment APIs that powers commerce for online businesses of all sizes.
 
