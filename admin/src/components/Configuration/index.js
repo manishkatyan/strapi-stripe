@@ -257,7 +257,7 @@ const Configuration = () => {
               </GridItem>
 
               <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
+                <Box paddingTop={2} paddingBottom={3}>
                   <TextInput
                     name="stripeLivePubKey"
                     label="Live Stripe Publishable Key"
@@ -270,7 +270,7 @@ const Configuration = () => {
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={2}>
+                <Box paddingTop={2} paddingBottom={3}>
                   <TextInput
                     name="stripeLiveSecKey"
                     placeholder="Live Stripe Secret Key"
@@ -282,12 +282,8 @@ const Configuration = () => {
                   />
                 </Box>
               </GridItem>
-            </Grid>
-          </Box>
-          <Box paddingBottom={2}>
-            <Grid gap={4}>
               <GridItem col={6} s={12}>
-                <Box paddingTop={5} paddingBottom={2}>
+                <Box paddingBottom={2}>
                   <TextInput
                     name="stripeTestPubKey"
                     placeholder="Test Stripe Publishable Key"
@@ -300,7 +296,7 @@ const Configuration = () => {
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
-                <Box paddingTop={5} paddingBottom={2}>
+                <Box paddingBottom={2}>
                   <TextInput
                     name="stripeTestSecKey"
                     placeholder="Test Stripe Secret Key"
