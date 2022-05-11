@@ -1,5 +1,5 @@
 <div align="center">
-    <h2>Stripe Payments</h2>
+   <img alt="stripe payment title" src="https://higheredlab.com/wp-content/uploads/stripe-payments-title.png">
 </div>
 
 <h3 align="center">Online payments made simple, secure and fast.</h3>
@@ -59,7 +59,6 @@ That's all you need to do to turn your Strapi website or application into an e-c
 1. Run in test mode for debudding
 
 <br/><br/>
-
 
 ## 🖐 Requirements
 
