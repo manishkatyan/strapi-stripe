@@ -1,8 +1,8 @@
-<p align="center">
+<div align="center">
     <img src="https://market.strapi.io/_next/image?url=https%3A%2F%2Fdl.airtable.com%2F.attachments%2Fb3ba9ad9cdecd7c29df4c545e967b329%2Fc8800dbd%2Fstrapi-stripe.png%3Fts%3D1652175992%26userId%3DusrUa8HWbsGCCzcQm%26cs%3D909cf89d3c6e3854&w=96&q=75" style="display:inline-block; width: 100px; height: 85px;" alt="Stripe logo" />
-    <div style="font:size: 40px; display:inline-block">Stripe Payments</div>
+    <div style="font:size: 100px; display:inline-block">Stripe Payments</div>
  
-</p>
+</div>
 
 <h3 align="center">Online payments made simple, secure and fast.</h3>
 <p align="center">This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.</p>
