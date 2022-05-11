@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="stripe payment title" width: 100px; src="https://higheredlab.com/wp-content/uploads/strapi-stripe-logo.png">
+   <img alt="stripe payment title" width="75" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-logo-150x150.png">
 </div>
 
 <h1 align="center">Online payments made simple, secure and fast.</h1>
