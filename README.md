@@ -2,8 +2,8 @@
    <img alt="stripe payment title" width="75" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-logo-150x150.png">
 </div>
 
-<h1>Stripe Payments</h1>
-<h3 align="center">Online payments made simple, secure and fast.</h3>
+<h2 align="center">Stripe Payments</h2>
+<p align="center">Online payments made simple, secure and fast.</p>
 <p align="center">This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.</p>
 
 <br />
