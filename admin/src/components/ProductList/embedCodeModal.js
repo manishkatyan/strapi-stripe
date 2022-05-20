@@ -130,7 +130,7 @@ const EmbedCodeModal = ({
             <Box padding={4} background="neutral100" marginBottom={4}>
               <Accordion
                 expanded={expandProduct}
-                onToggle={() => setExpandProduct((s) => !s)}
+                toggle={() => setExpandProduct((s) => !s)}
                 id="acc-1"
                 size="S"
               >
@@ -189,7 +189,7 @@ const EmbedCodeModal = ({
             <Box padding={4} background="neutral100">
               <Accordion
                 expanded={expandPayment}
-                onToggle={() => setExpandPayment((s) => !s)}
+                toggle={() => setExpandPayment((s) => !s)}
                 id="acc-1"
                 size="S"
               >
