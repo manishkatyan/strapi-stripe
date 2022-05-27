@@ -3,7 +3,7 @@ module.exports = {
     tableName: "StrapiStripeProduct",
     singularName: "strapi-stripe-product", // kebab-case mandatory
     pluralName: "strapi-stripe-products", // kebab-case mandatory
-    displayName: "StrapiStripeProduct",
+    displayName: "Product",
     description: "Stripe Products",
     kind: "collectionType",
   },
