@@ -3,7 +3,7 @@ module.exports = {
     tableName: "StrapiStripePayment",
     singularName: "strapi-stripe-payment", // kebab-case mandatory
     pluralName: "strapi-stripe-payments", // kebab-case mandatory
-    displayName: "StrapiStripePayment",
+    displayName: "Payment",
     description: "Stripe Payment",
     kind: "collectionType",
   },
