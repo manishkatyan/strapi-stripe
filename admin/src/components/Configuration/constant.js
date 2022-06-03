@@ -4,6 +4,10 @@ const currencies = [
     value: "usd",
   },
   {
+    label: "ALL - Albania Lek",
+    value: "all",
+  },
+  {
     label: "AED - United Arab Emirates Dirham",
     value: "aed",
   },
@@ -18,8 +22,16 @@ const currencies = [
     value: "ars",
   },
   {
+    label: "AWG - Aruba Guilder",
+    value: "awg",
+  },
+  {
     label: "AUD - Australian Dollar",
     value: "aud",
+  },
+  {
+    label: "BBD - Barbados Dollar",
+    value: "bbd",
   },
   {
     label: "BDT - Bangladeshi Taka",
@@ -116,6 +128,10 @@ const currencies = [
   {
     label: "NZD - New Zealand Dollar",
     value: "nzd",
+  },
+  {
+    label: "PLN - Poland Zloty",
+    value: "pln",
   },
   {
     label: "PHP - Philippine Piso",
