@@ -434,6 +434,26 @@ const Configuration = () => {
             </Grid>
           </Box>
         </Box>
+        <br />
+        <Box
+          shadow="tableShadow"
+          background="neutral0"
+          paddingTop={6}
+          paddingLeft={7}
+          paddingRight={7}
+          paddingBottom={6}
+          hasRadius
+        >
+          <Box paddingTop={2}>
+            <Grid gap={4}>
+              <GridItem col={6} s={12}>
+                <Typography variant="pi">
+                  Need help? Contact us at : support@higheredlab.com
+                </Typography>
+              </GridItem>
+            </Grid>
+          </Box>
+        </Box>
       </ContentLayout>
     </Main>
   );
