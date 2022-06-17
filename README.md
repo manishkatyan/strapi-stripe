@@ -142,7 +142,7 @@ Follow the steps below to create a product:
 1. Click on create button to create a product or subscription.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="/static/strapi-stripe-create" alt="strapi-stripe-product-create" />
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-create.gif" alt="strapi-stripe-product-create" />
 <br/><br/>
 
 <br/>
