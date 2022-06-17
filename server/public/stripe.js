@@ -20,12 +20,12 @@ window.onload = () => {
 function SS_ProductCheckout() {
   const strapiStripe = document.querySelector("#SS_ProductCheckout");
   const productId = strapiStripe.dataset.id;
-  // console.log(typeof productId);
+
   const baseUrl = strapiStripe.dataset.url;
   localStorage.setItem("strapiStripeUrl", baseUrl);
   const getProductApi = baseUrl + "/strapi-stripe/getProduct/" + productId;
   const checkoutSessionUrl = baseUrl + "/strapi-stripe/createCheckoutSession/";
-  // console.log(getProductApi, checkoutSessionUrl);
+
   fetch(getProductApi, {
     method: "get",
     mode: "cors",
@@ -39,6 +39,8 @@ function SS_ProductCheckout() {
         method: "post",
         body: JSON.stringify({
           stripePriceId: response.stripePriceId,
+          stripePlanId: response.stripePlanId,
+          isSubscription: response.isSubscription,
           productId: response.id,
           productName: response.title,
         }),

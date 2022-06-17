@@ -2,11 +2,29 @@
 
 module.exports = {
   createProduct: async (ctx) => {
-    const { title, price, url, description } = ctx.request.body;
+    const {
+      title,
+      price,
+      imageId,
+      imageUrl,
+      description,
+      isSubscription,
+      paymentInterval,
+      trialPeriodDays,
+    } = ctx.request.body;
     const stripeProductResponse = await strapi
       .plugin("strapi-stripe")
       .service("stripeService")
-      .createProduct(title, price, url, description);
+      .createProduct(
+        title,
+        price,
+        imageId,
+        imageUrl,
+        description,
+        isSubscription,
+        paymentInterval,
+        trialPeriodDays
+      );
     ctx.send(stripeProductResponse, 200);
   },
   async find(ctx) {
@@ -37,26 +55,46 @@ module.exports = {
     const { id } = ctx.params;
     const res = await strapi
       .query("plugin::strapi-stripe.strapi-stripe-product")
-      .findOne({ where: { id: id } });
+      .findOne({ where: { id: id }, populate: true });
     ctx.body = res;
   },
   updateProduct: async (ctx) => {
     const { id } = ctx.params;
-    const { title, url, description, stripeProductId } = ctx.request.body;
+    const { title, url, description, productImage, stripeProductId } =
+      ctx.request.body;
     const updateProductResponse = await strapi
       .plugin("strapi-stripe")
       .service("stripeService")
-      .updateProduct(id, title, url, description, stripeProductId);
+      .updateProduct(
+        id,
+        title,
+        url,
+        description,
+        productImage,
+        stripeProductId
+      );
     ctx.send(updateProductResponse, 200);
   },
 
   createCheckoutSession: async (ctx) => {
-    const { stripePriceId, productId, productName } = ctx.request.body;
+    const {
+      stripePriceId,
+      stripePlanId,
+      isSubscription,
+      productId,
+      productName,
+    } = ctx.request.body;
 
     const checkoutSessionResponse = await strapi
       .plugin("strapi-stripe")
       .service("stripeService")
-      .createCheckoutSession(stripePriceId, productId, productName);
+      .createCheckoutSession(
+        stripePriceId,
+        stripePlanId,
+        isSubscription,
+        productId,
+        productName
+      );
     ctx.send(checkoutSessionResponse, 200);
   },
   retrieveCheckoutSession: async (ctx) => {

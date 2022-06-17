@@ -148,6 +148,22 @@ const PaymentDetailsTable = () => {
     setSortOrderTxnDate(true);
   };
 
+  const getPaymentMode = (isSubscription, interval) => {
+    let mode;
+    if (!isSubscription && !interval) {
+      mode = "One-Time";
+    } else if (isSubscription && interval) {
+      if (interval === "month") {
+        mode = "Monthly";
+      } else if (interval === "year") {
+        mode = "Year";
+      } else if (interval === "week") {
+        mode = "Weekly";
+      }
+    }
+    return mode;
+  };
+
   const ROW_COUNT = 6;
   const COL_COUNT = 10;
 
@@ -161,12 +177,8 @@ const PaymentDetailsTable = () => {
       <Box paddingTop={4} paddingLeft={7}>
         <Stack horizontal spacing={3}>
           <Breadcrumbs label="Category model, name field">
-            <Crumb>
-              <Typography variant="beta">{productName}</Typography>
-            </Crumb>
-            <Crumb>
-              <Typography variant="beta">Transaction Details</Typography>
-            </Crumb>
+            <Crumb>{productName}</Crumb>
+            <Crumb>Transaction Details</Crumb>
           </Breadcrumbs>
         </Stack>
       </Box>
@@ -221,7 +233,10 @@ const PaymentDetailsTable = () => {
                   )}
                 </Th>
                 <Th>
-                  <Typography variant="sigma">Txn Amount</Typography>
+                  <Typography variant="sigma">Payment Type</Typography>
+                </Th>
+                <Th>
+                  <Typography variant="sigma">Transaction Amount</Typography>
                 </Th>
                 <Th>
                   <Typography variant="sigma">Purchased Date</Typography>
@@ -255,6 +270,14 @@ const PaymentDetailsTable = () => {
                     <Td>
                       <Typography textColor="neutral800">
                         {payment.customerEmail}
+                      </Typography>
+                    </Td>
+                    <Td>
+                      <Typography textColor="neutral800">
+                        {getPaymentMode(
+                          payment.stripeProduct.isSubscription,
+                          payment.stripeProduct.interval
+                        )}
                       </Typography>
                     </Td>
                     <Td>

@@ -2,7 +2,6 @@ import instance from "./axiosInstance";
 const axios = instance;
 
 export async function saveStripeConfiguration(data) {
-  console.log("stripe Configuration", data);
   const response = await axios.put("/strapi-stripe/updateSettings", {
     data,
   });
@@ -14,12 +13,25 @@ export async function getStripeConfiguration() {
   return response;
 }
 
-export async function createStripeProduct(title, price, url, description) {
+export async function createStripeProduct(
+  title,
+  price,
+  imageId,
+  imageUrl,
+  description,
+  isSubscription,
+  paymentInterval,
+  trialPeriodDays
+) {
   const response = await axios.post("/strapi-stripe/createProduct", {
     title,
     price,
-    url,
+    imageId,
+    imageUrl,
     description,
+    isSubscription,
+    paymentInterval,
+    trialPeriodDays,
   });
   return response;
 }
@@ -42,12 +54,14 @@ export async function updateStripeProduct(
   title,
   url,
   description,
+  productImage,
   stripeProductId
 ) {
   const response = await axios.put(`/strapi-stripe/updateProduct/${id}`, {
     title,
     url,
     description,
+    productImage,
     stripeProductId,
   });
   return response;
@@ -63,5 +77,12 @@ export async function getProductPayments(
   const response = await axios.get(
     `/strapi-stripe/getPayments/${productId}/${sort}/${order}/${offset}/${limit}`
   );
+  return response;
+}
+
+export async function uploadFiles(files) {
+  const formDocument = new FormData();
+  formDocument.append("files", files[0]);
+  const response = await axios.post(`/upload`, formDocument);
   return response;
 }

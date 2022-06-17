@@ -15,9 +15,10 @@ import { Main } from "@strapi/design-system/Main";
 import { TextInput } from "@strapi/design-system/TextInput";
 import { Typography } from "@strapi/design-system/Typography";
 import { Alert } from "@strapi/design-system/Alert";
-import { Checkbox } from "@strapi/design-system/Checkbox";
 import { Select, Option } from "@strapi/design-system/Select";
 import { Link } from "@strapi/design-system/Link";
+import { Switch } from "@strapi/design-system/Switch";
+import { Flex } from "@strapi/design-system/Flex";
 import currencies from "./constant";
 import {
   saveStripeConfiguration,
@@ -34,7 +35,6 @@ const Configuration = () => {
     checkoutSuccessUrl: "",
     checkoutCancelUrl: "",
     currency: undefined,
-    paymentButtonText: "",
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -48,7 +48,6 @@ const Configuration = () => {
     checkoutSuccessUrl: "",
     checkoutCancelUrl: "",
     currency: "",
-    paymentButtonText: "",
   });
 
   useEffect(async () => {
@@ -63,7 +62,6 @@ const Configuration = () => {
         checkoutSuccessUrl,
         checkoutCancelUrl,
         currency,
-        paymentButtonText,
       } = response.data.response;
       setStripeConfiguration({
         ...stripeConfiguration,
@@ -75,7 +73,6 @@ const Configuration = () => {
         checkoutSuccessUrl,
         checkoutCancelUrl,
         currency,
-        paymentButtonText,
       });
     }
   }, []);
@@ -99,8 +96,6 @@ const Configuration = () => {
       setError({ ...error, checkoutSuccessUrl: "" });
     } else if (name === "checkoutCancelUrl") {
       setError({ ...error, checkoutCancelUrl: "" });
-    } else if (name === "paymentButtonText") {
-      setError({ ...error, paymentButtonText: "" });
     }
   };
 
@@ -113,8 +108,7 @@ const Configuration = () => {
       !stripeConfiguration.stripeTestSecKey &&
       !stripeConfiguration.checkoutSuccessUrl &&
       !stripeConfiguration.checkoutCancelUrl &&
-      !stripeConfiguration.currency &&
-      !stripeConfiguration.paymentButtonText
+      !stripeConfiguration.currency
     ) {
       setError({
         ...error,
@@ -125,7 +119,6 @@ const Configuration = () => {
         checkoutSuccessUrl: "Checkout Success Page URL is required",
         checkoutCancelUrl: "Checkout Cancel Page URL is required",
         currency: "Currency is required",
-        paymentButtonText: "Payment Button Text is required",
       });
       setIsSubmitting(false);
     } else if (!stripeConfiguration.stripeLivePubKey) {
@@ -168,12 +161,6 @@ const Configuration = () => {
       setError({
         ...error,
         currency: "Currency is required",
-      });
-      setIsSubmitting(false);
-    } else if (!stripeConfiguration.paymentButtonText) {
-      setError({
-        ...error,
-        paymentButtonText: "Payment Button Text is required",
       });
       setIsSubmitting(false);
     } else {
@@ -241,18 +228,25 @@ const Configuration = () => {
             <Grid gap={4}>
               <GridItem col={12} s={12}>
                 <Box paddingTop={3}>
-                  <Checkbox
-                    hint="Check this to run the transaction in live mode. When unchecked it will run in test mode."
-                    onValueChange={(value) =>
-                      setStripeConfiguration({
-                        ...stripeConfiguration,
-                        isLiveMode: value,
-                      })
-                    }
-                    value={stripeConfiguration.isLiveMode}
-                  >
-                    Live Mode
-                  </Checkbox>
+                  <Flex alignItems="center">
+                    <Box paddingRight={4}>
+                      <Typography variant="delta">Live Mode</Typography>
+                    </Box>
+
+                    <Switch
+                      label="Live Mode"
+                      visibleLabels
+                      offLabel="Stripe is in test mode"
+                      onLabel="Stripe is ready to accept payment"
+                      selected={stripeConfiguration.isLiveMode}
+                      onChange={() => {
+                        setStripeConfiguration({
+                          ...stripeConfiguration,
+                          isLiveMode: !stripeConfiguration.isLiveMode,
+                        });
+                      }}
+                    />
+                  </Flex>
                 </Box>
               </GridItem>
 
@@ -361,9 +355,9 @@ const Configuration = () => {
                 <Box paddingBottom={2}>
                   <Select
                     id="select1"
-                    label="Choose your Currency"
+                    label="Choose Currency"
                     required
-                    placeholder="Choose your Currency"
+                    placeholder="Choose Currency"
                     clearLabel="Clear the Currency"
                     error={error.currency ? error.currency : ""}
                     onClear={() =>
@@ -382,21 +376,6 @@ const Configuration = () => {
                         </Option>
                       ))}
                   </Select>
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingBottom={2}>
-                  <TextInput
-                    name="paymentButtonText"
-                    label="Payment Button Text"
-                    placeholder="Payment Button Text"
-                    required
-                    value={stripeConfiguration.paymentButtonText}
-                    error={
-                      error.paymentButtonText ? error.paymentButtonText : ""
-                    }
-                    onChange={handleChange}
-                  />
                 </Box>
               </GridItem>
             </Grid>

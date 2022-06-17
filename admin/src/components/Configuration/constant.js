@@ -146,6 +146,10 @@ const currencies = [
     value: "qar",
   },
   {
+    label: "ZAR - South Africa Rand",
+    value: "zar",
+  },
+  {
     label: "SAR - Saudi Riyal",
     value: "sar",
   },
@@ -154,8 +158,20 @@ const currencies = [
     value: "sgd",
   },
   {
+    label: "SEK - Sweden Krona",
+    value: "sek",
+  },
+  {
     label: "THB - Thai Baht",
     value: "thb",
+  },
+  {
+    label: "VND - Viet Nam Dong",
+    value: "vnd",
+  },
+  {
+    label: "ZWD - Zimbabwe Dollar",
+    value: "zwd",
   },
 ];
 

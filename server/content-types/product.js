@@ -50,9 +50,21 @@ module.exports = {
       configurable: false,
     },
     productImage: {
-      type: "string",
-      min: 3,
+      type: "media",
       required: true,
+      configurable: false,
+    },
+    isSubscription: {
+      type: "boolean",
+      default: false,
+      configurable: false,
+    },
+    interval: {
+      type: "string",
+      configurable: false,
+    },
+    trialPeriodDays: {
+      type: "integer",
       configurable: false,
     },
     stripeProductId: {
@@ -64,7 +76,11 @@ module.exports = {
     stripePriceId: {
       type: "string",
       min: 3,
-      required: true,
+      configurable: false,
+    },
+    stripePlanId: {
+      type: "string",
+      min: 3,
       configurable: false,
     },
     stripePayment: {

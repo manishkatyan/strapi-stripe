@@ -595,11 +595,7 @@ export const currencies = [
     abbreviation: "TTD",
     symbol: "&#84;&#84;&#36;",
   },
-  {
-    currency: "Turkey Lira",
-    abbreviation: "TRY",
-    symbol: null,
-  },
+
   {
     currency: "Turkey Lira",
     abbreviation: "TRL",

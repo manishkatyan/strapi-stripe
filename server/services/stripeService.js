@@ -3,12 +3,22 @@
 const Stripe = require("stripe");
 
 module.exports = ({ strapi }) => ({
-  async createProduct(title, productPrice, url, description) {
+  async createProduct(
+    title,
+    productPrice,
+    imageId,
+    imageUrl,
+    description,
+    isSubscription,
+    paymentInterval,
+    trialPeriodDays
+  ) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
       type: "plugin",
       name: "strapi-stripe",
     });
+
     const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
     let stripe;
     if (stripeSettings.isLiveMode) {
@@ -20,31 +30,58 @@ module.exports = ({ strapi }) => ({
     const product = await stripe.products.create({
       name: title,
       description: description,
-      images: [url],
+      images: [imageUrl],
     });
-    const price = await stripe.prices.create({
-      unit_amount: productPrice * 100,
-      currency: stripeSettings.currency,
-      product: product.id,
-    });
-    const create = await strapi
-      .query("plugin::strapi-stripe.strapi-stripe-product")
-      .create({
-        data: {
-          title,
-          description,
-          price: productPrice,
-          currency: stripeSettings.currency,
-          productImage: url,
-          stripeProductId: product.id,
-          stripePriceId: price.id,
-        },
-        populate: true,
-      });
 
-    return create;
+    const createproduct = async (productId, priceId, planId) => {
+      const create = await strapi
+        .query("plugin::strapi-stripe.strapi-stripe-product")
+        .create({
+          data: {
+            title,
+            description,
+            price: productPrice,
+            currency: stripeSettings.currency,
+            productImage: imageId,
+            isSubscription,
+            interval: paymentInterval,
+            trialPeriodDays,
+            stripeProductId: productId,
+            stripePriceId: priceId,
+            stripePlanId: planId,
+          },
+          populate: true,
+        });
+      return create;
+    };
+
+    if (isSubscription) {
+      const plan = await stripe.plans.create({
+        amount: productPrice * 100,
+        currency: stripeSettings.currency,
+        interval: paymentInterval,
+        product: product.id,
+        trial_period_days: trialPeriodDays,
+      });
+      createproduct(product.id, "", plan.id);
+    } else {
+      const price = await stripe.prices.create({
+        unit_amount: productPrice * 100,
+        currency: stripeSettings.currency,
+        product: product.id,
+      });
+      createproduct(product.id, price.id, "");
+    }
+    return product;
   },
-  async updateProduct(id, title, url, description, stripeProductId) {
+  async updateProduct(
+    id,
+    title,
+    url,
+    description,
+    productImage,
+    stripeProductId
+  ) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
       type: "plugin",
@@ -70,12 +107,18 @@ module.exports = ({ strapi }) => ({
         data: {
           title,
           description,
-          productImage: url,
+          productImage,
         },
       });
     return updateProductResponse;
   },
-  async createCheckoutSession(stripePriceId, productId, productName) {
+  async createCheckoutSession(
+    stripePriceId,
+    stripePlanId,
+    isSubscription,
+    productId,
+    productName
+  ) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
       type: "plugin",
@@ -88,15 +131,24 @@ module.exports = ({ strapi }) => ({
     } else {
       stripe = new Stripe(stripeSettings.stripeTestSecKey);
     }
+    let priceId, paymentMode;
+    if (isSubscription) {
+      priceId = stripePlanId;
+      paymentMode = "subscription";
+    } else {
+      priceId = stripePriceId;
+      paymentMode = "payment";
+    }
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-          price: stripePriceId,
+          price: priceId,
           quantity: 1,
         },
       ],
-      mode: "payment",
+      mode: paymentMode,
+      payment_method_types: ["card"],
       success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${stripeSettings.checkoutCancelUrl}`,
       metadata: {

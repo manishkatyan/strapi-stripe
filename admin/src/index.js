@@ -13,7 +13,7 @@ export default {
       icon: PluginIcon,
       intlLabel: {
         id: `${pluginId}.plugin.name`,
-        defaultMessage: "Stripe",
+        defaultMessage: "Payment",
       },
       Component: async () => {
         const component = await import(
@@ -35,7 +35,7 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.plugin.name`,
-          defaultMessage: "Stripe",
+          defaultMessage: "Payment",
         },
       },
       [
