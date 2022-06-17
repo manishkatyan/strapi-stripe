@@ -17,7 +17,8 @@ import {
   updateStripeProduct,
 } from "../../utils/apiCalls";
 import EditProduct from "./editProduct";
-const limit = 4;
+
+const limit = 5;
 const ProductList = () => {
   const search = useLocation().search;
   const page = new URLSearchParams(search).get("page");
@@ -55,12 +56,25 @@ const ProductList = () => {
     setIsVisible(false);
   };
 
-  const handleSaveProduct = async (title, price, url, description) => {
+  const handleSaveProduct = async (
+    title,
+    price,
+    imageId,
+    imageUrl,
+    description,
+    isSubscription,
+    paymentInterval,
+    trialPeriodDays
+  ) => {
     const createProduct = await createStripeProduct(
       title,
       price,
-      url,
-      description
+      imageId,
+      imageUrl,
+      description,
+      isSubscription,
+      paymentInterval,
+      trialPeriodDays
     );
     if (createProduct?.data?.id) {
       setIsVisible(false);
@@ -103,17 +117,17 @@ const ProductList = () => {
   const handleUpdateProduct = async (
     productId,
     title,
-    price,
     url,
     description,
+    productImageId,
     stripeProductId
   ) => {
     const updateProduct = await updateStripeProduct(
       productId,
       title,
-      price,
       url,
       description,
+      productImageId,
       stripeProductId
     );
 
@@ -125,25 +139,43 @@ const ProductList = () => {
   const handleClickCreateProduct = () => setIsVisible((prev) => !prev);
 
   return (
-    <>
+    <Box>
       <Box paddingTop={6} paddingLeft={7}>
-        <Typography variant="alpha">Stripe Payment</Typography>
+        <Typography variant="alpha">Payment via Stripe</Typography>
         <Box>
           <Typography variant="omega">
-            The Stripe Payments plugin allows you to accept credit card payments
-            via Stripe payment gateway on your Strapi site easily.
+            The payment plugin enables you to accept online payments using
+            Credit Card, Apple pay and Google pay on your Strapi website or app
+            via Stripe.
           </Typography>
         </Box>
       </Box>
       <Box padding={3}>
         <Divider />
       </Box>
-
       <CreateProduct
         isVisible={isVisible}
         handleClose={handleCloseModal}
-        handleClickSave={(title, price, url, description) =>
-          handleSaveProduct(title, price, url, description)
+        handleClickSave={(
+          title,
+          price,
+          imageId,
+          imageUrl,
+          description,
+          isSubscription,
+          paymentInterval,
+          trialPeriodDays
+        ) =>
+          handleSaveProduct(
+            title,
+            price,
+            imageId,
+            imageUrl,
+            description,
+            isSubscription,
+            paymentInterval,
+            trialPeriodDays
+          )
         }
       />
       <EditProduct
@@ -153,17 +185,17 @@ const ProductList = () => {
         handleClickUpdateEdit={(
           productId,
           title,
-          price,
           url,
           description,
+          productImageId,
           stripeProductId
         ) =>
           handleUpdateProduct(
             productId,
             title,
-            price,
             url,
             description,
+            productImageId,
             stripeProductId
           )
         }
@@ -184,7 +216,7 @@ const ProductList = () => {
           handleClickCreateProduct={handleClickCreateProduct}
         />
       </Box>
-    </>
+    </Box>
   );
 };
 

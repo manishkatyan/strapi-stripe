@@ -21,6 +21,7 @@ const EmbedCodeModal = ({
   productId,
   isVisibleEmbedCode,
   handleCloseEmbedCode,
+  isSubscription,
 }) => {
   const [expandProduct, setExpandProduct] = useState(false);
   const [expandPayment, setExpandPayment] = useState(false);
@@ -97,8 +98,10 @@ const EmbedCodeModal = ({
             >
               <Typography>
                 {`
-                <button class="css style" type="button" id="SS_ProductCheckout"  data-id="${productId}" data-url="${window.location.origin}">
-                Buy Now
+                <button class="css style" type="button" id="SS_ProductCheckout"  data-id="${productId}" data-url="${
+                  window.location.origin
+                }">
+                ${isSubscription ? "Subscribe" : "BuyNow"}
                 </button>
                 `}
               </Typography>

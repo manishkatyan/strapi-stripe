@@ -27,7 +27,6 @@ import {
   Pagination,
   PreviousLink,
 } from "@strapi/design-system/Pagination";
-import ExclamationMarkCircle from "@strapi/icons/ExclamationMarkCircle";
 import { EmptyStateLayout } from "@strapi/design-system/EmptyStateLayout";
 import { VisuallyHidden } from "@strapi/design-system/VisuallyHidden";
 import { Button } from "@strapi/design-system/Button";
@@ -61,6 +60,7 @@ const ProductTable = ({
 
   const [isVisible, setIsVisible] = useState(false);
   const [productId, setIsProductId] = useState("");
+  const [isSubscription, setIsSubscription] = useState(false);
 
   const handleSortCarretUp = () => {
     handleSortDescendingName();
@@ -78,8 +78,9 @@ const ProductTable = ({
     handleSortAscendingPrice();
   };
 
-  const handleClickLink = (productId) => {
+  const handleClickLink = (productId, isSubscription) => {
     setIsProductId(productId);
+    setIsSubscription(isSubscription);
     setIsVisible(true);
   };
 
@@ -119,12 +120,41 @@ const ProductTable = ({
     return dateTime;
   };
 
+  const getPaymentMode = (isSubscription, interval) => {
+    let mode;
+    if (!isSubscription && !interval) {
+      mode = "One-Time";
+    } else if (isSubscription && interval) {
+      if (interval === "month") {
+        mode = "Monthly";
+      } else if (interval === "year") {
+        mode = "Year";
+      } else if (interval === "week") {
+        mode = "Weekly";
+      }
+    }
+    return mode;
+  };
+
+  const getTrialPeriodDays = (trialPeriodDays, isSubscription) => {
+    let trialDays;
+    if (isSubscription && trialPeriodDays) {
+      trialDays = trialPeriodDays;
+    } else if (isSubscription && !trialPeriodDays) {
+      trialDays = 0;
+    } else if (!isSubscription && !trialPeriodDays) {
+      trialDays = "NA";
+    }
+    return trialDays;
+  };
+
   return (
     <>
       <EmbedCodeModal
         productId={productId}
         isVisibleEmbedCode={isVisible}
         handleCloseEmbedCode={handleCloseEmbedModal}
+        isSubscription={isSubscription}
       />
       <Box
         paddingTop={6}
@@ -139,7 +169,7 @@ const ProductTable = ({
             rowCount={ROW_COUNT}
             footer={
               <TFooter icon={<Plus />} onClick={handleClickCreateProduct}>
-                Create New Product
+                Create New Product / Subscription
               </TFooter>
             }
           >
@@ -181,7 +211,12 @@ const ProductTable = ({
                     />
                   )}
                 </Th>
-
+                <Th>
+                  <Typography variant="sigma">Payment Mode</Typography>
+                </Th>
+                <Th>
+                  <Typography variant="sigma">Trial Days</Typography>
+                </Th>
                 <Th>
                   <VisuallyHidden>Actions</VisuallyHidden>
                 </Th>
@@ -210,11 +245,28 @@ const ProductTable = ({
                         {getProductPrice(product.price, product.currency)}
                       </Typography>
                     </Td>
-
+                    <Td>
+                      <Typography textColor="neutral800">
+                        {getPaymentMode(
+                          product.isSubscription,
+                          product.interval
+                        )}
+                      </Typography>
+                    </Td>
+                    <Td>
+                      <Typography textColor="neutral800">
+                        {getTrialPeriodDays(
+                          product.trialPeriodDays,
+                          product.isSubscription
+                        )}
+                      </Typography>
+                    </Td>
                     <Td>
                       <Flex justifyContent="end">
                         <IconButton
-                          onClick={() => handleClickLink(product.id)}
+                          onClick={() =>
+                            handleClickLink(product.id, product.isSubscription)
+                          }
                           label="Embed Code"
                           icon={<LinkIcon />}
                         />
@@ -242,15 +294,15 @@ const ProductTable = ({
         ) : (
           <Box>
             <EmptyStateLayout
-              icon={<ExclamationMarkCircle />}
-              content="You dont have any product"
+              icon=""
+              content=""
               action={
                 <Button
                   variant="secondary"
                   startIcon={<Plus />}
                   onClick={handleClickCreateProduct}
                 >
-                  Create your first product
+                  Create your first Product / Subscription
                 </Button>
               }
             />

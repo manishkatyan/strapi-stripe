@@ -16,11 +16,12 @@ import { Button } from "@strapi/design-system/Button";
 import { Typography } from "@strapi/design-system/Typography";
 import { Grid, GridItem } from "@strapi/design-system/Grid";
 import { TextInput } from "@strapi/design-system/TextInput";
-import { Tooltip } from "@strapi/design-system/Tooltip";
-import Information from "@strapi/icons/Information";
-import { NumberInput } from "@strapi/design-system/NumberInput";
+import { Loader } from "@strapi/design-system/Loader";
+import { Flex } from "@strapi/design-system/Flex";
+import { Box } from "@strapi/design-system/Box";
+import { Select, Option } from "@strapi/design-system/Select";
 import { Textarea } from "@strapi/design-system/Textarea";
-import { getStripeProductProductById } from "../../utils/apiCalls";
+import { getStripeProductProductById, uploadFiles } from "../../utils/apiCalls";
 
 const EditProduct = ({
   productId,
@@ -32,7 +33,14 @@ const EditProduct = ({
   const [price, setPrice] = useState("");
   const [url, setUrl] = useState("");
   const [description, setDescription] = useState("");
-  const [stripeProductId, setStripeProductId] = useState("");
+  const [stripeProduct, setStripeProduct] = useState("");
+  const [paymentType, setIsPaymentType] = useState("");
+  const [paymentInterval, setPaymentInterval] = useState("");
+  const [trialPeriodDays, setTrialPeriodDays] = useState("");
+  const [image, setImage] = useState({});
+  const [upload, setUpload] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [productImageId, setProductImageId] = useState("");
 
   const [error, setError] = useState({
     title: "",
@@ -43,15 +51,31 @@ const EditProduct = ({
 
   useEffect(async () => {
     const response = await getStripeProductProductById(productId);
-
     if (response.status === 200 && response.data) {
-      const { title, price, productImage, description, stripeProductId } =
-        response.data;
+      const {
+        title,
+        price,
+        productImage,
+        description,
+        stripeProductId,
+        isSubScription,
+        interval,
+        trialPeriodDays,
+      } = response.data;
       setTitle(title);
       setPrice(price);
-      setUrl(productImage);
+      setUrl(`${window.location.origin}${productImage.url}`);
+      setProductImageId(productImage.id);
       setDescription(description);
-      setStripeProductId(stripeProductId);
+      setStripeProduct(stripeProductId);
+      if (isSubScription) {
+        setIsPaymentType("subscription");
+      } else {
+        setIsPaymentType("oneTime");
+      }
+      setPaymentInterval(interval);
+
+      setTrialPeriodDays(trialPeriodDays);
     }
   }, [productId]);
 
@@ -63,9 +87,8 @@ const EditProduct = ({
     } else if (name === "price") {
       setPrice(value);
       setError({ ...error, price: "" });
-    } else if (name === "url") {
-      setUrl(value);
-      setError({ ...error, url: "" });
+    } else if (name === "image") {
+      setImage(event.target.files);
     } else if (name === "description") {
       setDescription(value);
       setError({ ...error, description: "" });
@@ -73,12 +96,11 @@ const EditProduct = ({
   };
 
   const handleUpdateProduct = async () => {
-    if (!title && !price && !url && !description) {
+    if (!title && !price && !description) {
       setError({
         ...error,
         title: "Title is required",
         price: "Price is required",
-        url: "Image Url is required",
         description: "Description is required",
       });
     } else if (!title) {
@@ -86,7 +108,6 @@ const EditProduct = ({
         ...error,
         title: "Title is required",
         price: "",
-        url: "",
         description: "",
       });
     } else if (!price) {
@@ -94,15 +115,6 @@ const EditProduct = ({
         ...error,
         title: "",
         price: "Price is required",
-        url: "",
-        description: "",
-      });
-    } else if (!url) {
-      setError({
-        ...error,
-        title: "",
-        price: "",
-        url: "Image Url is required",
         description: "",
       });
     } else if (!description) {
@@ -110,17 +122,40 @@ const EditProduct = ({
         ...error,
         title: "",
         price: "",
-        url: "",
         description: "Description is required",
       });
     } else {
-      handleClickUpdateEdit(
-        productId,
-        title,
-        url,
-        description,
-        stripeProductId
-      );
+      let imageId, imageUrl;
+      if (image.length > 0) {
+        setUpload(true);
+        setUploadMessage("Uploading Product image");
+
+        const response = await uploadFiles(image);
+
+        if (response.data[0].id) {
+          imageUrl = `${window.location.origin}${response.data[0].url}`;
+          imageId = response.data[0].id;
+        }
+        handleClickUpdateEdit(
+          productId,
+          title,
+          imageUrl,
+          description,
+          imageId,
+          stripeProduct
+        );
+      } else {
+        handleClickUpdateEdit(
+          productId,
+          title,
+          url,
+          description,
+          productImageId,
+          stripeProduct
+        );
+      }
+
+      setUpload(false);
     }
   };
 
@@ -136,21 +171,24 @@ const EditProduct = ({
               id="title"
               variant="beta"
             >
-              Add Product
+              Edit Product
             </Typography>
           </ModalHeader>
           <ModalBody>
             <Grid gap={5}>
               <GridItem col={6}>
-                <TextInput
-                  placeholder="Enter title of the product"
-                  label="Title"
-                  name="title"
-                  value={title}
-                  onChange={handleChange}
-                  error={error.title ? error.title : ""}
+                <Select
+                  id="select1"
+                  label="Payment Type"
                   required
-                />
+                  clearLabel="Clear the payment type"
+                  hint="Ex:One-Time or Subscription"
+                  disabled
+                  value={paymentType}
+                >
+                  <Option value="oneTime">One-Time</Option>
+                  <Option value="subscription">Subscription</Option>
+                </Select>
               </GridItem>
               <GridItem col={6}>
                 <TextInput
@@ -167,18 +205,31 @@ const EditProduct = ({
               </GridItem>
               <GridItem col={6}>
                 <TextInput
-                  placeholder="Enter the image url of the product"
-                  label="Image Url"
-                  name="url"
-                  value={url}
+                  label="Title"
+                  name="title"
+                  value={title}
                   onChange={handleChange}
-                  error={error.url ? error.url : ""}
+                  error={error.title ? error.title : ""}
                   required
                 />
               </GridItem>
+
               <GridItem col={6}>
+                <Typography variant="pi" fontWeight="bold">
+                  Image
+                </Typography>
+
+                <Box paddingTop={3}>
+                  <input
+                    type="file"
+                    name="image"
+                    onChange={handleChange}
+                    accept="image/*"
+                  />
+                </Box>
+              </GridItem>
+              <GridItem col={12}>
                 <Textarea
-                  placeholder="Enter the product description"
                   label="Description"
                   name="description"
                   onChange={handleChange}
@@ -187,6 +238,29 @@ const EditProduct = ({
                 >
                   {description}
                 </Textarea>
+              </GridItem>
+              <GridItem col={6}>
+                <Select
+                  id="select2"
+                  label="Payment Interval"
+                  disabled
+                  clearLabel="Clear the payment interval "
+                  hint="Subscription billing frequency: weekly, monthly or yearly."
+                  value={paymentInterval}
+                >
+                  <Option value="month">Month</Option>
+                  <Option value="year">Year</Option>
+                  <Option value="week">Week</Option>
+                </Select>
+              </GridItem>
+              <GridItem col={6}>
+                <TextInput
+                  label="Trial Period Days"
+                  name="trialPeriodDays"
+                  disabled
+                  hint="Free trial period for the subscription."
+                  value={trialPeriodDays ? trialPeriodDays : ""}
+                />
               </GridItem>
             </Grid>
           </ModalBody>
@@ -197,11 +271,18 @@ const EditProduct = ({
               </Button>
             }
             endActions={
-              <>
+              upload ? (
+                <Flex justifyContent="center">
+                  <Loader small>Loading......</Loader>
+                  <Typography fontWeight="bold" textColor="primary600" as="h2">
+                    {uploadMessage ? uploadMessage : ""}
+                  </Typography>
+                </Flex>
+              ) : (
                 <Button variant="default" onClick={handleUpdateProduct}>
                   Update
                 </Button>
-              </>
+              )
             }
           />
         </ModalLayout>
