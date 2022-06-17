@@ -104,7 +104,7 @@ $ npx strapi  build
 $ npx strapi  develop
 ```
 
-The **Stripe** Payments plugin should appear in the **Plugins** section of the Strapi sidebar after you run the app again.
+The **Payment** plugin should appear in the **Plugins** section of the Strapi sidebar after you run the app again.
 
 Now you are ready to accept online payments via Stripe on your Strapi website ðŸŽ‰
 
@@ -114,13 +114,13 @@ Now you are ready to accept online payments via Stripe on your Strapi website ðŸ
 
 You can easily configure the Stripe Payments plugin to connect with your Stripe Account.
 
-- Go to `Strapi Settings -> Stripe -> Configuration`.
+- Go to `Strapi Settings -> Payment -> Configuration`.
 - On the configiration page, Enter All the fields.
-- Using `Live Mode` checkBox, you can easily toggle between Stripe Test and Live mode.
+- Using `Live Mode` Switch Box, you can easily toggle between Stripe Test and Live mode.
 - Click on Save to save the Stripe confiiguration.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-configuration.gif" alt="strapi-stripe-Configuration" />
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-configuration.gif" alt="strapi-stripe-Configuration" />
 <br/><br/>
 
 <br/>
@@ -129,17 +129,20 @@ You can easily configure the Stripe Payments plugin to connect with your Stripe 
 
 After configuring Stripe, you can create products.
 
-The products that you would create via the plugin will also automatically get created in Stripe.
+The products or subscription that you would create via the plugin will also automatically get created in Stripe.
 
 Follow the steps below to create a product:
 
-1. Click on Stripe in the **Plugins** section.
+1. Click on Payment in the **Plugins** section.
 1. Click on Add Product.
-1. Enter Title, Price, Image URL and Description.
-1. Click on Save button to create a product.
+1. choose Payment type,One-Time or Subscription.
+   - For One-Time, you would charge your customer only one-time.
+   - For a subscription, you would charge your customer every month.
+1. Enter all the required fields.
+1. Click on create button to create a product or subscription.
 
 <br/><br/>
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-product_create-v2.gif" alt="strapi-stripe-product-create" />
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-create.gif" alt="strapi-stripe-product-create" />
 <br/><br/>
 
 <br/>
