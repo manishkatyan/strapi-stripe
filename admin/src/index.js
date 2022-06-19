@@ -1,8 +1,8 @@
-import { prefixPluginTranslations } from "@strapi/helper-plugin";
-import pluginPkg from "../../package.json";
-import pluginId from "./pluginId";
-import Initializer from "./components/Initializer";
-import PluginIcon from "./components/PluginIcon";
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import pluginPkg from '../../package.json';
+import pluginId from './pluginId';
+import Initializer from './components/Initializer';
+import PluginIcon from './components/PluginIcon';
 
 const name = pluginPkg.strapi.name;
 
@@ -13,12 +13,10 @@ export default {
       icon: PluginIcon,
       intlLabel: {
         id: `${pluginId}.plugin.name`,
-        defaultMessage: "Payment",
+        defaultMessage: 'Payment',
       },
       Component: async () => {
-        const component = await import(
-          /* webpackChunkName: "[request]" */ "./pages/App"
-        );
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
 
         return component;
       },
@@ -35,21 +33,21 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.plugin.name`,
-          defaultMessage: "Payment",
+          defaultMessage: 'Payment',
         },
       },
       [
         {
           intlLabel: {
             id: `${pluginId}.plugin.name`,
-            defaultMessage: "Configuration",
+            defaultMessage: 'Configuration',
           },
-          id: "Stripe-Configuration",
+          id: 'Stripe-Configuration',
           to: `/settings/${pluginId}`,
           // permissions: pluginPermissions.settingsRoles,
           Component: async () => {
             const component = await import(
-              /* webpackChunkName: "stripe-page" */ "./pages/Settings"
+              /* webpackChunkName: "stripe-page" */ './pages/Settings'
             );
 
             return component;
@@ -65,10 +63,10 @@ export default {
     });
   },
 
-  bootstrap(app) {},
+  bootstrap() {},
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
-      locales.map((locale) => {
+      locales.map(locale => {
         return import(`./translations/${locale}.json`)
           .then(({ default: data }) => {
             return {

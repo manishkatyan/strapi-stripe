@@ -4,25 +4,21 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Box } from "@strapi/design-system/Box";
-import { Typography } from "@strapi/design-system/Typography";
-import { Divider } from "@strapi/design-system/Divider";
-import CreateProduct from "../CreateProduct";
-import ProductTable from "./productTable";
-import {
-  getStripeProduct,
-  createStripeProduct,
-  updateStripeProduct,
-} from "../../utils/apiCalls";
-import EditProduct from "./editProduct";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Box } from '@strapi/design-system/Box';
+import { Typography } from '@strapi/design-system/Typography';
+import { Divider } from '@strapi/design-system/Divider';
+import CreateProduct from '../CreateProduct';
+import ProductTable from './productTable';
+import { getStripeProduct, createStripeProduct, updateStripeProduct } from '../../utils/apiCalls';
+import EditProduct from './editProduct';
 
 const limit = 5;
 const ProductList = () => {
   const search = useLocation().search;
-  const page = new URLSearchParams(search).get("page");
-  const pageNumber = page ? parseInt(page) : 1;
+  const page = new URLSearchParams(search).get('page');
+  const pageNumber = page ? parseInt(page, 10) : 1;
 
   const [isVisible, setIsVisible] = useState(false);
   const [productData, setProductData] = useState();
@@ -36,20 +32,24 @@ const ProductList = () => {
 
   const offset = pageNumber === 1 ? 0 : (pageNumber - 1) * limit;
 
-  useEffect(async () => {
-    let sort, order;
-    if (sortOrderName) {
-      sort = "name";
-      order = sortAscendingName ? "asc" : "desc";
-    } else if (sortOrderPrice) {
-      sort = "price";
-      order = sortAscendingPrice ? "asc" : "desc";
-    }
+  useEffect(() => {
+    (async () => {
+      let sort;
+      let order;
 
-    const response = await getStripeProduct(offset, limit, sort, order);
+      if (sortOrderName) {
+        sort = 'name';
+        order = sortAscendingName ? 'asc' : 'desc';
+      } else if (sortOrderPrice) {
+        sort = 'price';
+        order = sortAscendingPrice ? 'asc' : 'desc';
+      }
 
-    setProductData(response.data.res);
-    setCount(response.data.count);
+      const response = await getStripeProduct(offset, limit, sort, order);
+
+      setProductData(response.data.res);
+      setCount(response.data.count);
+    })();
   }, [isVisible, isEditVisible, offset, sortAscendingName, sortAscendingPrice]);
 
   const handleCloseModal = () => {
@@ -76,6 +76,7 @@ const ProductList = () => {
       paymentInterval,
       trialPeriodDays
     );
+
     if (createProduct?.data?.id) {
       setIsVisible(false);
     }
@@ -105,7 +106,7 @@ const ProductList = () => {
     setSortOrderPrice(true);
   };
 
-  const handleEnableEditMode = async (id) => {
+  const handleEnableEditMode = async id => {
     setProductId(id);
     setEditVisible(true);
   };
@@ -136,7 +137,7 @@ const ProductList = () => {
     }
   };
 
-  const handleClickCreateProduct = () => setIsVisible((prev) => !prev);
+  const handleClickCreateProduct = () => setIsVisible(prev => !prev);
 
   return (
     <Box>
@@ -144,9 +145,8 @@ const ProductList = () => {
         <Typography variant="alpha">Payment via Stripe</Typography>
         <Box>
           <Typography variant="omega">
-            The payment plugin enables you to accept online payments using
-            Credit Card, Apple pay and Google pay on your Strapi website or app
-            via Stripe.
+            The payment plugin enables you to accept online payments using Credit Card, Apple pay
+            and Google pay on your Strapi website or app via Stripe.
           </Typography>
         </Box>
       </Box>
@@ -190,14 +190,7 @@ const ProductList = () => {
           productImageId,
           stripeProductId
         ) =>
-          handleUpdateProduct(
-            productId,
-            title,
-            url,
-            description,
-            productImageId,
-            stripeProductId
-          )
+          handleUpdateProduct(productId, title, url, description, productImageId, stripeProductId)
         }
       />
 
@@ -206,7 +199,7 @@ const ProductList = () => {
           products={productData}
           handleSortAscendingName={handleSortAscendingName}
           handleSortDescendingName={handleSortDescendingName}
-          handleEditClick={(id) => handleEnableEditMode(id)}
+          handleEditClick={id => handleEnableEditMode(id)}
           totalCount={Math.ceil(count / limit)}
           page={pageNumber}
           sortAscendingName={sortAscendingName}

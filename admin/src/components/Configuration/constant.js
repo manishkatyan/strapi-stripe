@@ -1,177 +1,177 @@
 const currencies = [
   {
-    label: "USD - US Dollar",
-    value: "usd",
+    label: 'USD - US Dollar',
+    value: 'usd',
   },
   {
-    label: "ALL - Albania Lek",
-    value: "all",
+    label: 'ALL - Albania Lek',
+    value: 'all',
   },
   {
-    label: "AED - United Arab Emirates Dirham",
-    value: "aed",
-  },
-
-  {
-    label: "ANG - Netherlands Antillean Guilder",
-    value: "ang",
+    label: 'AED - United Arab Emirates Dirham',
+    value: 'aed',
   },
 
   {
-    label: "ARS - Argentine Peso",
-    value: "ars",
-  },
-  {
-    label: "AWG - Aruba Guilder",
-    value: "awg",
-  },
-  {
-    label: "AUD - Australian Dollar",
-    value: "aud",
-  },
-  {
-    label: "BBD - Barbados Dollar",
-    value: "bbd",
-  },
-  {
-    label: "BDT - Bangladeshi Taka",
-    value: "bdt",
-  },
-  {
-    label: "BGN - Bulgarian Lev",
-    value: "bgn",
+    label: 'ANG - Netherlands Antillean Guilder',
+    value: 'ang',
   },
 
   {
-    label: "BMD - Bermudan Dollar",
-    value: "bmd",
+    label: 'ARS - Argentine Peso',
+    value: 'ars',
+  },
+  {
+    label: 'AWG - Aruba Guilder',
+    value: 'awg',
+  },
+  {
+    label: 'AUD - Australian Dollar',
+    value: 'aud',
+  },
+  {
+    label: 'BBD - Barbados Dollar',
+    value: 'bbd',
+  },
+  {
+    label: 'BDT - Bangladeshi Taka',
+    value: 'bdt',
+  },
+  {
+    label: 'BGN - Bulgarian Lev',
+    value: 'bgn',
   },
 
   {
-    label: "BRL - Brazilian Real",
-    value: "brl",
+    label: 'BMD - Bermudan Dollar',
+    value: 'bmd',
   },
 
   {
-    label: "CAD - Canadian Dollar",
-    value: "cad",
-  },
-  {
-    label: "CHF - Swiss Franc",
-    value: "chf",
+    label: 'BRL - Brazilian Real',
+    value: 'brl',
   },
 
   {
-    label: "COP - Colombian Peso",
-    value: "cop",
+    label: 'CAD - Canadian Dollar',
+    value: 'cad',
   },
   {
-    label: "EGP - Egyptian Pound",
-    value: "egp",
-  },
-  {
-    label: "EUR - Euro",
-    value: "eur",
-  },
-  {
-    label: "GBP - British Pound",
-    value: "gbp",
-  },
-  {
-    label: "HKD - Hong Kong Dollar",
-    value: "hkd",
+    label: 'CHF - Swiss Franc',
+    value: 'chf',
   },
 
   {
-    label: "IDR - Indonesian Rupiah",
-    value: "idr",
+    label: 'COP - Colombian Peso',
+    value: 'cop',
   },
   {
-    label: "INR - Indian Rupee",
-    value: "inr",
+    label: 'EGP - Egyptian Pound',
+    value: 'egp',
   },
   {
-    label: "JPY - Japanese Yen",
-    value: "jpy",
-  },
-
-  {
-    label: "KRW - South Korean Won",
-    value: "krw",
-  },
-
-  {
-    label: "LKR - Sri Lankan Rupee",
-    value: "lkr",
+    label: 'EUR - Euro',
+    value: 'eur',
   },
   {
-    label: "MXN - Mexican Peso",
-    value: "mxn",
+    label: 'GBP - British Pound',
+    value: 'gbp',
   },
   {
-    label: "MYR - Malaysian Ringitt",
-    value: "myr",
+    label: 'HKD - Hong Kong Dollar',
+    value: 'hkd',
   },
 
   {
-    label: "NGN - Nigerian Naira",
-    value: "ngn",
+    label: 'IDR - Indonesian Rupiah',
+    value: 'idr',
   },
   {
-    label: "NOK - Norweign Krone",
-    value: "nok",
+    label: 'INR - Indian Rupee',
+    value: 'inr',
   },
   {
-    label: "NPR - Nepalese Rupee",
-    value: "npr",
+    label: 'JPY - Japanese Yen',
+    value: 'jpy',
+  },
+
+  {
+    label: 'KRW - South Korean Won',
+    value: 'krw',
+  },
+
+  {
+    label: 'LKR - Sri Lankan Rupee',
+    value: 'lkr',
   },
   {
-    label: "NZD - New Zealand Dollar",
-    value: "nzd",
+    label: 'MXN - Mexican Peso',
+    value: 'mxn',
   },
   {
-    label: "PLN - Poland Zloty",
-    value: "pln",
+    label: 'MYR - Malaysian Ringitt',
+    value: 'myr',
+  },
+
+  {
+    label: 'NGN - Nigerian Naira',
+    value: 'ngn',
   },
   {
-    label: "PHP - Philippine Piso",
-    value: "php",
+    label: 'NOK - Norweign Krone',
+    value: 'nok',
   },
   {
-    label: "PKR - Pakistani Rupee",
-    value: "pkr",
+    label: 'NPR - Nepalese Rupee',
+    value: 'npr',
   },
   {
-    label: "QAR - Qatari Rial",
-    value: "qar",
+    label: 'NZD - New Zealand Dollar',
+    value: 'nzd',
   },
   {
-    label: "ZAR - South Africa Rand",
-    value: "zar",
+    label: 'PLN - Poland Zloty',
+    value: 'pln',
   },
   {
-    label: "SAR - Saudi Riyal",
-    value: "sar",
+    label: 'PHP - Philippine Piso',
+    value: 'php',
   },
   {
-    label: "SGD - Singapore Dollar",
-    value: "sgd",
+    label: 'PKR - Pakistani Rupee',
+    value: 'pkr',
   },
   {
-    label: "SEK - Sweden Krona",
-    value: "sek",
+    label: 'QAR - Qatari Rial',
+    value: 'qar',
   },
   {
-    label: "THB - Thai Baht",
-    value: "thb",
+    label: 'ZAR - South Africa Rand',
+    value: 'zar',
   },
   {
-    label: "VND - Viet Nam Dong",
-    value: "vnd",
+    label: 'SAR - Saudi Riyal',
+    value: 'sar',
   },
   {
-    label: "ZWD - Zimbabwe Dollar",
-    value: "zwd",
+    label: 'SGD - Singapore Dollar',
+    value: 'sgd',
+  },
+  {
+    label: 'SEK - Sweden Krona',
+    value: 'sek',
+  },
+  {
+    label: 'THB - Thai Baht',
+    value: 'thb',
+  },
+  {
+    label: 'VND - Viet Nam Dong',
+    value: 'vnd',
+  },
+  {
+    label: 'ZWD - Zimbabwe Dollar',
+    value: 'zwd',
   },
 ];
 

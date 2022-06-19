@@ -1,93 +1,95 @@
+'use strict';
+
 module.exports = {
   info: {
-    tableName: "StrapiStripeProduct",
-    singularName: "strapi-stripe-product", // kebab-case mandatory
-    pluralName: "strapi-stripe-products", // kebab-case mandatory
-    displayName: "Product",
-    description: "Stripe Products",
-    kind: "collectionType",
+    tableName: 'StrapiStripeProduct',
+    singularName: 'strapi-stripe-product', // kebab-case mandatory
+    pluralName: 'strapi-stripe-products', // kebab-case mandatory
+    displayName: 'Product',
+    description: 'Stripe Products',
+    kind: 'collectionType',
   },
   options: {
-    draftAndPublish: "false",
+    draftAndPublish: 'false',
   },
   pluginOptions: {
-    "content-manager": {
+    'content-manager': {
       visible: true,
     },
-    "content-type-builder": {
+    'content-type-builder': {
       visible: true,
     },
   },
   attributes: {
     title: {
-      type: "string",
+      type: 'string',
       min: 1,
       required: true,
       configurable: false,
     },
     slug: {
-      type: "uid",
-      targetField: "title",
+      type: 'uid',
+      targetField: 'title',
       unique: true,
       required: true,
       configurable: false,
     },
     description: {
-      type: "string",
+      type: 'string',
       min: 1,
       required: true,
       configurable: false,
     },
     price: {
-      type: "decimal",
+      type: 'decimal',
       required: true,
       configurable: false,
     },
     currency: {
-      type: "string",
+      type: 'string',
       min: 1,
       required: true,
       configurable: false,
     },
     productImage: {
-      type: "media",
+      type: 'media',
       required: true,
       configurable: false,
     },
     isSubscription: {
-      type: "boolean",
+      type: 'boolean',
       default: false,
       configurable: false,
     },
     interval: {
-      type: "string",
+      type: 'string',
       configurable: false,
     },
     trialPeriodDays: {
-      type: "integer",
+      type: 'integer',
       configurable: false,
     },
     stripeProductId: {
-      type: "string",
+      type: 'string',
       min: 3,
       required: true,
       configurable: false,
     },
     stripePriceId: {
-      type: "string",
+      type: 'string',
       min: 3,
       configurable: false,
     },
     stripePlanId: {
-      type: "string",
+      type: 'string',
       min: 3,
       configurable: false,
     },
     stripePayment: {
-      type: "relation",
-      relation: "oneToMany",
-      target: "plugin::strapi-stripe.strapi-stripe-payment",
-      mappedBy: "stripeProduct",
+      type: 'relation',
+      relation: 'oneToMany',
+      target: 'plugin::strapi-stripe.strapi-stripe-payment',
+      mappedBy: 'stripeProduct',
       configurable: false,
     },
   },

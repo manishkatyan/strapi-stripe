@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 module.exports = {
-  updateSetting: async (ctx) => {
+  async updateSetting(ctx) {
     const {
       isLiveMode,
       stripeLivePubKey,
@@ -15,12 +15,12 @@ module.exports = {
 
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
 
     const response = await pluginStore.set({
-      key: "stripeSetting",
+      key: 'stripeSetting',
       value: {
         isLiveMode,
         stripeLivePubKey,
@@ -34,13 +34,13 @@ module.exports = {
     });
     return ctx.send({ ok: true, response });
   },
-  getSetting: async (ctx) => {
+  async getSetting(ctx) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
-    const response = await pluginStore.get({ key: "stripeSetting" });
+    const response = await pluginStore.get({ key: 'stripeSetting' });
     return ctx.send({ ok: true, response });
   },
 };
