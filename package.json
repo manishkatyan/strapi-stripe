@@ -1,6 +1,6 @@
 {
   "name": "strapi-stripe",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "Online payments made simple, secure and fast. This free plugin enables you to accept online payments using Credit Card, Apple pay and Google pay on your Strapi website or app via Stripe.",
   "strapi": {
     "name": "strapi-stripe",
@@ -10,6 +10,49 @@
   "dependencies": {
     "html-react-parser": "^1.4.10",
     "stripe": "^8.210.0"
+  },
+  "scripts": {
+    "format": "npm-run-all -p format:*",
+    "format:code": "npm run prettier:code -- --write",
+    "format:other": "npm run prettier:other -- --write",
+    "lint": "npm-run-all -p lint:code",
+    "lint:code": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:other": "npm run prettier:other -- --check",
+    "prettier:code": "prettier \"**/*.js\"",
+    "prettier:other": "prettier \"**/*.{md,css,scss,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.4",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-react": "^7.16.7",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsdoc": "^37.9.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "3.0.0",
+    "lint-staged": "10.5.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,md,css,scss,yaml,yml}": [
+      "prettier --write"
+    ],
+    "*.js": [
+      "eslint --fix"
+    ]
   },
   "author": {
     "name": "HigherEdLab.com",

@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const stripeService = require("./stripeService");
+const stripeService = require('./stripeService');
 
 module.exports = {
   stripeService,

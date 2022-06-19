@@ -1,45 +1,34 @@
+/* eslint-disable react/no-array-index-key */
+
 /**
  *
  * This component is the responsible for displaying the table.
  *
  */
 
-import React, { useState } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Td,
-  Th,
-  TFooter,
-} from "@strapi/design-system/Table";
-import { Flex } from "@strapi/design-system/Flex";
-import { Box } from "@strapi/design-system/Box";
-import { IconButton } from "@strapi/design-system/IconButton";
-import { Link, useRouteMatch } from "react-router-dom";
-import { Typography } from "@strapi/design-system/Typography";
-import parse from "html-react-parser";
-import {
-  Dots,
-  NextLink,
-  PageLink,
-  Pagination,
-  PreviousLink,
-} from "@strapi/design-system/Pagination";
-import { EmptyStateLayout } from "@strapi/design-system/EmptyStateLayout";
-import { VisuallyHidden } from "@strapi/design-system/VisuallyHidden";
-import { Button } from "@strapi/design-system/Button";
-import Pencil from "@strapi/icons/Pencil";
-import LinkIcon from "./linkIcon";
-import CarretUp from "@strapi/icons/CarretUp";
-import CarretDown from "@strapi/icons/CarretDown";
-import { Badge } from "@strapi/design-system/Badge";
-import Plus from "@strapi/icons/Plus";
-import ChartPie from "@strapi/icons/ChartPie";
-import { currencies } from "./constant";
-import EmbedCodeModal from "./embedCodeModal";
-import SettingLink from "./SettingLink";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Table, Thead, Tbody, Tr, Td, Th, TFooter } from '@strapi/design-system/Table';
+import { Flex } from '@strapi/design-system/Flex';
+import { Box } from '@strapi/design-system/Box';
+import { IconButton } from '@strapi/design-system/IconButton';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { Typography } from '@strapi/design-system/Typography';
+import parse from 'html-react-parser';
+import { NextLink, PageLink, Pagination, PreviousLink } from '@strapi/design-system/Pagination';
+import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
+import { VisuallyHidden } from '@strapi/design-system/VisuallyHidden';
+import { Button } from '@strapi/design-system/Button';
+import Pencil from '@strapi/icons/Pencil';
+import CarretUp from '@strapi/icons/CarretUp';
+import CarretDown from '@strapi/icons/CarretDown';
+import { Badge } from '@strapi/design-system/Badge';
+import Plus from '@strapi/icons/Plus';
+import ChartPie from '@strapi/icons/ChartPie';
+import LinkIcon from './linkIcon';
+import { currencies } from './constant';
+import EmbedCodeModal from './embedCodeModal';
+import SettingLink from './SettingLink';
 
 const ProductTable = ({
   products,
@@ -59,7 +48,7 @@ const ProductTable = ({
   const COL_COUNT = 10;
 
   const [isVisible, setIsVisible] = useState(false);
-  const [productId, setIsProductId] = useState("");
+  const [productId, setIsProductId] = useState('');
   const [isSubscription, setIsSubscription] = useState(false);
 
   const handleSortCarretUp = () => {
@@ -90,7 +79,7 @@ const ProductTable = ({
 
   const getProductPrice = (price, currency) => {
     const currencyObj = currencies.find(
-      (item) => item.abbreviation.toLowerCase() === currency.toLowerCase()
+      item => item.abbreviation.toLowerCase() === currency.toLowerCase()
     );
     const symbol = currencyObj.symbol;
 
@@ -100,10 +89,11 @@ const ProductTable = ({
         <Box>{new Intl.NumberFormat().format(price)}</Box>
       </Flex>
     );
+
     return priceWithSymbol;
   };
 
-  const getDateTime = (date) => {
+  const getDateTime = date => {
     const dates = new Date(date);
 
     // get the date as a string
@@ -122,29 +112,33 @@ const ProductTable = ({
 
   const getPaymentMode = (isSubscription, interval) => {
     let mode;
+
     if (!isSubscription && !interval) {
-      mode = "One-Time";
+      mode = 'One-Time';
     } else if (isSubscription && interval) {
-      if (interval === "month") {
-        mode = "Monthly";
-      } else if (interval === "year") {
-        mode = "Year";
-      } else if (interval === "week") {
-        mode = "Weekly";
+      if (interval === 'month') {
+        mode = 'Monthly';
+      } else if (interval === 'year') {
+        mode = 'Year';
+      } else if (interval === 'week') {
+        mode = 'Weekly';
       }
     }
+
     return mode;
   };
 
   const getTrialPeriodDays = (trialPeriodDays, isSubscription) => {
     let trialDays;
+
     if (isSubscription && trialPeriodDays) {
       trialDays = trialPeriodDays;
     } else if (isSubscription && !trialPeriodDays) {
       trialDays = 0;
     } else if (!isSubscription && !trialPeriodDays) {
-      trialDays = "NA";
+      trialDays = 'NA';
     }
+
     return trialDays;
   };
 
@@ -224,7 +218,7 @@ const ProductTable = ({
             </Thead>
             <Tbody>
               {products &&
-                products.map((product) => (
+                products.map(product => (
                   <Tr key={product.id}>
                     <Td>
                       <Typography
@@ -235,9 +229,7 @@ const ProductTable = ({
                         {product.title}
                       </Typography>
                       <Box>
-                        <Typography variant="pi">
-                          {getDateTime(product.createdAt)}
-                        </Typography>
+                        <Typography variant="pi">{getDateTime(product.createdAt)}</Typography>
                       </Box>
                     </Td>
                     <Td>
@@ -247,26 +239,18 @@ const ProductTable = ({
                     </Td>
                     <Td>
                       <Typography textColor="neutral800">
-                        {getPaymentMode(
-                          product.isSubscription,
-                          product.interval
-                        )}
+                        {getPaymentMode(product.isSubscription, product.interval)}
                       </Typography>
                     </Td>
                     <Td>
                       <Typography textColor="neutral800">
-                        {getTrialPeriodDays(
-                          product.trialPeriodDays,
-                          product.isSubscription
-                        )}
+                        {getTrialPeriodDays(product.trialPeriodDays, product.isSubscription)}
                       </Typography>
                     </Td>
                     <Td>
                       <Flex justifyContent="end">
                         <IconButton
-                          onClick={() =>
-                            handleClickLink(product.id, product.isSubscription)
-                          }
+                          onClick={() => handleClickLink(product.id, product.isSubscription)}
                           label="Embed Code"
                           icon={<LinkIcon />}
                         />
@@ -280,7 +264,7 @@ const ProductTable = ({
                         <Box paddingLeft={3}>
                           <Link
                             to={`${url}/report/${product.id}/${product.title}`}
-                            style={{ textDecoration: "none" }}
+                            style={{ textDecoration: 'none' }}
                           >
                             <IconButton label="Report" icon={<ChartPie />} />
                           </Link>
@@ -297,11 +281,7 @@ const ProductTable = ({
               icon=""
               content=""
               action={
-                <Button
-                  variant="secondary"
-                  startIcon={<Plus />}
-                  onClick={handleClickCreateProduct}
-                >
+                <Button variant="secondary" startIcon={<Plus />} onClick={handleClickCreateProduct}>
                   Create your first Product / Subscription
                 </Button>
               }
@@ -318,21 +298,15 @@ const ProductTable = ({
             </PreviousLink>
             {totalCount &&
               [...Array(totalCount)].map((count, idx) => (
-                <PageLink
-                  key={idx}
-                  number={idx + 1}
-                  to={`/plugins/strapi-stripe?page=${idx + 1}`}
-                >
+                <PageLink key={idx} number={idx + 1} to={`/plugins/strapi-stripe?page=${idx + 1}`}>
                   Go to page 1
                 </PageLink>
               ))}
 
-            <NextLink to={`/plugins/strapi-stripe?page=${page + 1}`}>
-              Go to next page
-            </NextLink>
+            <NextLink to={`/plugins/strapi-stripe?page=${page + 1}`}>Go to next page</NextLink>
           </Pagination>
         ) : (
-          ""
+          ''
         )}
       </Flex>
       <br />
@@ -341,6 +315,20 @@ const ProductTable = ({
       </Box>
     </>
   );
+};
+
+ProductTable.propTypes = {
+  products: PropTypes.any.isRequired,
+  handleSortAscendingName: PropTypes.any.isRequired,
+  handleSortDescendingName: PropTypes.any.isRequired,
+  handleEditClick: PropTypes.any.isRequired,
+  totalCount: PropTypes.any.isRequired,
+  page: PropTypes.any.isRequired,
+  sortAscendingName: PropTypes.any.isRequired,
+  handleSortAscendingPrice: PropTypes.any.isRequired,
+  handleSortDescendingPrice: PropTypes.any.isRequired,
+  sortAscendingPrice: PropTypes.any.isRequired,
+  handleClickCreateProduct: PropTypes.any.isRequired,
 };
 
 export default ProductTable;

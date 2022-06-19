@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const Stripe = require("stripe");
+const Stripe = require('stripe');
 
 module.exports = ({ strapi }) => ({
   async createProduct(
@@ -15,11 +15,11 @@ module.exports = ({ strapi }) => ({
   ) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
 
-    const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
+    const stripeSettings = await pluginStore.get({ key: 'stripeSetting' });
     let stripe;
     if (stripeSettings.isLiveMode) {
       stripe = new Stripe(stripeSettings.stripeLiveSecKey);
@@ -29,29 +29,27 @@ module.exports = ({ strapi }) => ({
 
     const product = await stripe.products.create({
       name: title,
-      description: description,
+      description,
       images: [imageUrl],
     });
 
     const createproduct = async (productId, priceId, planId) => {
-      const create = await strapi
-        .query("plugin::strapi-stripe.strapi-stripe-product")
-        .create({
-          data: {
-            title,
-            description,
-            price: productPrice,
-            currency: stripeSettings.currency,
-            productImage: imageId,
-            isSubscription,
-            interval: paymentInterval,
-            trialPeriodDays,
-            stripeProductId: productId,
-            stripePriceId: priceId,
-            stripePlanId: planId,
-          },
-          populate: true,
-        });
+      const create = await strapi.query('plugin::strapi-stripe.strapi-stripe-product').create({
+        data: {
+          title,
+          description,
+          price: productPrice,
+          currency: stripeSettings.currency,
+          productImage: imageId,
+          isSubscription,
+          interval: paymentInterval,
+          trialPeriodDays,
+          stripeProductId: productId,
+          stripePriceId: priceId,
+          stripePlanId: planId,
+        },
+        populate: true,
+      });
       return create;
     };
 
@@ -63,31 +61,24 @@ module.exports = ({ strapi }) => ({
         product: product.id,
         trial_period_days: trialPeriodDays,
       });
-      createproduct(product.id, "", plan.id);
+      createproduct(product.id, '', plan.id);
     } else {
       const price = await stripe.prices.create({
         unit_amount: productPrice * 100,
         currency: stripeSettings.currency,
         product: product.id,
       });
-      createproduct(product.id, price.id, "");
+      createproduct(product.id, price.id, '');
     }
     return product;
   },
-  async updateProduct(
-    id,
-    title,
-    url,
-    description,
-    productImage,
-    stripeProductId
-  ) {
+  async updateProduct(id, title, url, description, productImage, stripeProductId) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
-    const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
+    const stripeSettings = await pluginStore.get({ key: 'stripeSetting' });
     let stripe;
     if (stripeSettings.isLiveMode) {
       stripe = new Stripe(stripeSettings.stripeLiveSecKey);
@@ -97,13 +88,13 @@ module.exports = ({ strapi }) => ({
 
     await stripe.products.update(stripeProductId, {
       name: title,
-      description: description,
+      description,
       images: [url],
     });
     const updateProductResponse = await strapi
-      .query("plugin::strapi-stripe.strapi-stripe-product")
+      .query('plugin::strapi-stripe.strapi-stripe-product')
       .update({
-        where: { id: id },
+        where: { id },
         data: {
           title,
           description,
@@ -112,32 +103,27 @@ module.exports = ({ strapi }) => ({
       });
     return updateProductResponse;
   },
-  async createCheckoutSession(
-    stripePriceId,
-    stripePlanId,
-    isSubscription,
-    productId,
-    productName
-  ) {
+  async createCheckoutSession(stripePriceId, stripePlanId, isSubscription, productId, productName) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
-    const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
+    const stripeSettings = await pluginStore.get({ key: 'stripeSetting' });
     let stripe;
     if (stripeSettings.isLiveMode) {
       stripe = new Stripe(stripeSettings.stripeLiveSecKey);
     } else {
       stripe = new Stripe(stripeSettings.stripeTestSecKey);
     }
-    let priceId, paymentMode;
+    let priceId;
+    let paymentMode;
     if (isSubscription) {
       priceId = stripePlanId;
-      paymentMode = "subscription";
+      paymentMode = 'subscription';
     } else {
       priceId = stripePriceId;
-      paymentMode = "payment";
+      paymentMode = 'payment';
     }
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -148,7 +134,7 @@ module.exports = ({ strapi }) => ({
         },
       ],
       mode: paymentMode,
-      payment_method_types: ["card"],
+      payment_method_types: ['card'],
       success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${stripeSettings.checkoutCancelUrl}`,
       metadata: {
@@ -161,10 +147,10 @@ module.exports = ({ strapi }) => ({
   async retrieveCheckoutSession(checkoutSessionId) {
     const pluginStore = strapi.store({
       environment: strapi.config.environment,
-      type: "plugin",
-      name: "strapi-stripe",
+      type: 'plugin',
+      name: 'strapi-stripe',
     });
-    const stripeSettings = await pluginStore.get({ key: "stripeSetting" });
+    const stripeSettings = await pluginStore.get({ key: 'stripeSetting' });
     let stripe;
     if (stripeSettings.isLiveMode) {
       stripe = new Stripe(stripeSettings.stripeLiveSecKey);

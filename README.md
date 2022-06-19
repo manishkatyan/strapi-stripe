@@ -14,6 +14,9 @@
 <a href="https://www.npmjs.org/package/strapi-stripe">
 <img src="https://img.shields.io/npm/dm/strapi-stripe.svg" alt="Monthly download on NPM" />
 </a>
+<a href="https://github.com/manishkatyan/strapi-stripe/actions/workflows/eslint.yml/badge.svg">
+<img src="https://github.com/manishkatyan/strapi-stripe/actions/workflows/eslint.yml/badge.svg" alt="EsLint" />
+</a>
 </p>
 
 <br>
