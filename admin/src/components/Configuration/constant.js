@@ -162,8 +162,24 @@ const currencies = [
     value: 'sek',
   },
   {
+    label: 'RON - Romania New Leu',
+    value: 'ron',
+  },
+  {
     label: 'THB - Thai Baht',
     value: 'thb',
+  },
+  {
+    label: 'TWD - Taiwan New Dollar',
+    value: 'twd',
+  },
+  {
+    label: 'TRL - Turkey Lira',
+    value: 'trl',
+  },
+  {
+    label: 'UAH - Ukraine Hryvna',
+    value: 'uah',
   },
   {
     label: 'VND - Viet Nam Dong',
