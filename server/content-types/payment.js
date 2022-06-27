@@ -10,14 +10,14 @@ module.exports = {
     kind: 'collectionType',
   },
   options: {
-    draftAndPublish: 'false',
+    draftAndPublish: false,
   },
   pluginOptions: {
     'content-manager': {
-      visible: true,
+      visible: false,
     },
     'content-type-builder': {
-      visible: true,
+      visible: false,
     },
   },
   attributes: {

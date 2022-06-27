@@ -56,7 +56,7 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
           productImage,
           description,
           stripeProductId,
-          isSubScription,
+          isSubscription,
           interval,
           trialPeriodDays,
         } = response.data;
@@ -67,7 +67,7 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
         setDescription(description);
         setStripeProduct(stripeProductId);
 
-        if (isSubScription) {
+        if (isSubscription) {
           setIsPaymentType('subscription');
         } else {
           setIsPaymentType('oneTime');
@@ -154,7 +154,7 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
         <ModalLayout onClose={handleCloseEdit} labelledBy="title">
           <ModalHeader>
             <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title" variant="beta">
-              Edit Product
+              Edit {paymentType}
             </Typography>
           </ModalHeader>
           <ModalBody>
