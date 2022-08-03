@@ -1,22 +1,18 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   ModalLayout,
   ModalBody,
   ModalHeader,
   ModalFooter,
-} from "@strapi/design-system/ModalLayout";
-import { Typography } from "@strapi/design-system/Typography";
-import { Button } from "@strapi/design-system/Button";
-import { Flex } from "@strapi/design-system/Flex";
-import { Box } from "@strapi/design-system/Box";
-import {
-  Accordion,
-  AccordionToggle,
-  AccordionContent,
-} from "@strapi/design-system/Accordion";
+} from '@strapi/design-system/ModalLayout';
+import { Typography } from '@strapi/design-system/Typography';
+import { Button } from '@strapi/design-system/Button';
+import { Flex } from '@strapi/design-system/Flex';
+import { Box } from '@strapi/design-system/Box';
+import { Accordion, AccordionToggle, AccordionContent } from '@strapi/design-system/Accordion';
 
-import { stripeResponse, ProductRespone } from "./constant";
+import { stripeResponse, ProductRespone } from './constant';
 
 const EmbedCodeModal = ({
   productId,
@@ -46,8 +42,8 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="omega">
-                  Enable the Stripe Payment button in your frontend app by
-                  following the simple steps mentioned below:
+                  Enable the Stripe Payment button in your frontend app by following the simple
+                  steps mentioned below:
                 </Typography>
               </Box>
             </Flex>
@@ -59,17 +55,12 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Embed the script tag in the html header section of your
-                  product list, payment success and payment failure pages:
+                  Embed the script tag in the html header section of your product list, payment
+                  success and payment failure pages:
                 </Typography>
               </Box>
             </Flex>
-            <Box
-              background="neutral100"
-              padding={2}
-              marginTop={4}
-              marginBottom={4}
-            >
+            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Typography>
                 {`
                 <script
@@ -87,23 +78,17 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Show the “Buy Now” button next to your product details on the
-                  product list page.
+                  Show the “Buy Now” button next to your product details on the product list page.
                 </Typography>
               </Box>
             </Flex>
-            <Box
-              background="neutral100"
-              padding={2}
-              marginTop={4}
-              marginBottom={4}
-            >
+            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Typography>
                 {`
                 <button class="css style" type="button" class="SS_ProductCheckout"  data-id="${productId}" data-url="${
                   window.location.origin
                 }">
-                ${isSubscription ? "Subscribe" : "BuyNow"}
+                ${isSubscription ? 'Subscribe' : 'BuyNow'}
                 </button>
                 `}
               </Typography>
@@ -114,18 +99,12 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Optionally, you can fetch product details such as title,
-                  description, image and price from the API end-point mentioned
-                  below and show them.
+                  Optionally, you can fetch product details such as title, description, image and
+                  price from the API end-point mentioned below and show them.
                 </Typography>
               </Box>
             </Flex>
-            <Box
-              background="neutral100"
-              padding={2}
-              marginTop={4}
-              marginBottom={4}
-            >
+            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Typography>
                 {`const response = await axios.get(
                    " ${window.location.origin}/strapi-stripe/getProduct/${productId}"
@@ -135,7 +114,7 @@ const EmbedCodeModal = ({
             <Box padding={4} background="neutral100" marginBottom={4}>
               <Accordion
                 expanded={expandProduct}
-                toggle={() => setExpandProduct((s) => !s)}
+                toggle={() => setExpandProduct(s => !s)}
                 id="acc-1"
                 size="S"
               >
@@ -156,18 +135,12 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Optionally, you can show payment transaction status and
-                  details on your payment success (or error) page. Use the API
-                  call mentioned below:
+                  Optionally, you can show payment transaction status and details on your payment
+                  success (or error) page. Use the API call mentioned below:
                 </Typography>
               </Box>
             </Flex>
-            <Box
-              background="neutral100"
-              padding={2}
-              marginTop={4}
-              marginBottom={4}
-            >
+            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Box>
                 <Typography>
                   {`
@@ -184,7 +157,7 @@ const EmbedCodeModal = ({
               <Typography>
                 {`const response = await axios.get(${
                   window.location.origin
-                }/strapi-stripe/retrieveCheckoutSession/${"$"}{checkoutSessionId}
+                }/strapi-stripe/retrieveCheckoutSession/${'$'}{checkoutSessionId}
                     )
                    `}
               </Typography>
@@ -192,7 +165,7 @@ const EmbedCodeModal = ({
             <Box padding={4} background="neutral100">
               <Accordion
                 expanded={expandPayment}
-                toggle={() => setExpandPayment((s) => !s)}
+                toggle={() => setExpandPayment(s => !s)}
                 id="acc-1"
                 size="S"
               >
