@@ -78,7 +78,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 **Supported Strapi versions**:
 
-- Strapi v4.1.5 (recently tested)
+- Strapi v4.3.0 (recently tested)
 - Strapi v4.x
 
 > The Stripe Payments plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
