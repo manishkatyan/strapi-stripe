@@ -85,6 +85,11 @@ export const currencies = [
     symbol: '&#76;&#101;&#107;',
   },
   {
+    currency: 'United Arab Emirates Dirham',
+    abbreviation: 'AED',
+    symbol: '&#x62f;&#x2e;&#x625;',
+  },
+  {
     currency: 'Afghanistan Afghani',
     abbreviation: 'AFN',
     symbol: '&#1547;',
