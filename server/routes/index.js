@@ -6,7 +6,7 @@ module.exports = [
     path: '/updateSettings',
     handler: 'configurationController.updateSetting',
     config: {
-      auth: false,
+      policies: ['admin::isAuthenticatedAdmin'],
     },
   },
   {
@@ -14,7 +14,7 @@ module.exports = [
     path: '/getSettings',
     handler: 'configurationController.getSetting',
     config: {
-      auth: false,
+      policies: ['admin::isAuthenticatedAdmin'],
     },
   },
   {
