@@ -184,4 +184,4 @@ The Stripe Payments plugin also provides the payment transaction report. To view
 
 [MIT License](LICENSE.md)
 
-Copyright (c) [HigherEdLab.com](https://higheredlab.com/).
+Copyright © 2022 [HigherEdLab.com](https://higheredlab.com/)
