@@ -78,7 +78,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 **Supported Strapi versions**:
 
-- Strapi v4.1.5 (recently tested)
+- Strapi v4.5.0 (recently tested)
 - Strapi v4.x
 
 > The Stripe Payments plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
@@ -177,6 +177,16 @@ The Stripe Payments plugin also provides the payment transaction report. To view
 <br/><br/>
 <img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe-payment_report-v2.gif" alt="strapi-stripe-payment-report" />
 <br/><br/>
+
+## Webhook URL
+
+The stripe Payments plugins also provides ability to add webhook URL. The response from Stripe will be posted to provided Webhook URL.
+<br/>
+To test this Functionality visit this [Link](https://webhook.site/)
+
+1. Copy the unique URL and paste it in webhook URL field.
+2. Whenever successfull stripe payment happens webhook URL recieve stripe data.
+   <br/><br/>
 
 <br/>
 

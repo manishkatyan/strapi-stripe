@@ -265,8 +265,8 @@ const PaymentDetailsTable = () => {
                     <Td>
                       <Typography textColor="neutral800">
                         {getPaymentMode(
-                          payment.stripeProduct.isSubscription,
-                          payment.stripeProduct.interval
+                          payment?.stripeProduct?.isSubscription,
+                          payment?.stripeProduct?.interval
                         )}
                       </Typography>
                     </Td>
