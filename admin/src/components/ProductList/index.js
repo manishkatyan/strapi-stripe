@@ -9,9 +9,15 @@ import { useLocation } from 'react-router-dom';
 import { Box } from '@strapi/design-system/Box';
 import { Typography } from '@strapi/design-system/Typography';
 import { Divider } from '@strapi/design-system/Divider';
+import { Alert } from '@strapi/design-system/Alert';
 import CreateProduct from '../CreateProduct';
 import ProductTable from './productTable';
-import { getStripeProduct, createStripeProduct, updateStripeProduct } from '../../utils/apiCalls';
+import {
+  getStripeProduct,
+  createStripeProduct,
+  updateStripeProduct,
+  getStripeConfiguration,
+} from '../../utils/apiCalls';
 import EditProduct from './editProduct';
 
 const limit = 5;
@@ -29,6 +35,9 @@ const ProductList = () => {
   const [sortAscendingPrice, setSortAscendingPrice] = useState(true);
   const [sortOrderName, setSortOrderName] = useState(true);
   const [sortOrderPrice, setSortOrderPrice] = useState(false);
+  const [isStripeSettings, setIsStripeSettings] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
+  const [message, setMessage] = useState('');
 
   const offset = pageNumber === 1 ? 0 : (pageNumber - 1) * limit;
 
@@ -36,6 +45,14 @@ const ProductList = () => {
     (async () => {
       let sort;
       let order;
+
+      const setting = await getStripeConfiguration();
+
+      if (setting.data.response) {
+        setIsStripeSettings(true);
+      } else {
+        setIsStripeSettings(false);
+      }
 
       if (sortOrderName) {
         sort = 'name';
@@ -123,18 +140,28 @@ const ProductList = () => {
     productImageId,
     stripeProductId
   ) => {
-    const updateProduct = await updateStripeProduct(
-      productId,
-      title,
-      url,
-      description,
-      productImageId,
-      stripeProductId
-    );
+    try {
+      const updateProduct = await updateStripeProduct(
+        productId,
+        title,
+        url,
+        description,
+        productImageId,
+        stripeProductId
+      );
 
-    if (updateProduct?.data?.id) {
+      if (updateProduct?.data?.id) {
+        setEditVisible(false);
+      }
+    } catch (error) {
       setEditVisible(false);
+      setIsAlert(true);
+      setMessage(error.response.data.error.message);
     }
+  };
+
+  const handleCloseAlert = () => {
+    setIsAlert(false);
   };
 
   const handleClickCreateProduct = () => setIsVisible(prev => !prev);
@@ -193,6 +220,15 @@ const ProductList = () => {
           handleUpdateProduct(productId, title, url, description, productImageId, stripeProductId)
         }
       />
+      {isAlert ? (
+        <Box paddingLeft={6} paddingRight={6}>
+          <Alert closeLabel="Close alert" title="Error" variant="danger" onClose={handleCloseAlert}>
+            {message}
+          </Alert>
+        </Box>
+      ) : (
+        ''
+      )}
 
       <Box>
         <ProductTable
@@ -207,6 +243,7 @@ const ProductList = () => {
           handleSortDescendingPrice={handleSortDescendingPrice}
           sortAscendingPrice={sortAscendingPrice}
           handleClickCreateProduct={handleClickCreateProduct}
+          isStripeSettings={isStripeSettings}
         />
       </Box>
     </Box>

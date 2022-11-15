@@ -11,6 +11,7 @@ module.exports = {
       checkoutSuccessUrl,
       checkoutCancelUrl,
       currency,
+      callbackUrl,
     } = ctx.request.body.data;
 
     const pluginStore = strapi.store({
@@ -30,6 +31,7 @@ module.exports = {
         checkoutSuccessUrl,
         checkoutCancelUrl,
         currency,
+        callbackUrl,
       },
     });
     return ctx.send({ ok: true, response });

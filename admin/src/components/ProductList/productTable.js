@@ -42,6 +42,7 @@ const ProductTable = ({
   handleSortDescendingPrice,
   sortAscendingPrice,
   handleClickCreateProduct,
+  isStripeSettings,
 }) => {
   let { url } = useRouteMatch();
   const ROW_COUNT = 6;
@@ -281,9 +282,26 @@ const ProductTable = ({
               icon=""
               content=""
               action={
-                <Button variant="secondary" startIcon={<Plus />} onClick={handleClickCreateProduct}>
-                  Create your first Product / Subscription
-                </Button>
+                <>
+                  {isStripeSettings ? (
+                    ''
+                  ) : (
+                    <Box paddingBottom={4}>
+                      {' '}
+                      <Typography textColor="danger500">
+                        Please add your stripe configuration first
+                      </Typography>
+                    </Box>
+                  )}
+                  <Button
+                    variant="secondary"
+                    disabled={!isStripeSettings}
+                    startIcon={<Plus />}
+                    onClick={handleClickCreateProduct}
+                  >
+                    Create your first Product / Subscription
+                  </Button>
+                </>
               }
             />
           </Box>
@@ -329,6 +347,7 @@ ProductTable.propTypes = {
   handleSortDescendingPrice: PropTypes.any.isRequired,
   sortAscendingPrice: PropTypes.any.isRequired,
   handleClickCreateProduct: PropTypes.any.isRequired,
+  isStripeSettings: PropTypes.any.isRequired,
 };
 
 export default ProductTable;

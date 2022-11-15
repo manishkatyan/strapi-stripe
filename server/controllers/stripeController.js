@@ -2,20 +2,8 @@
 
 module.exports = {
   async createProduct(ctx) {
-    const {
-      title,
-      price,
-      imageId,
-      imageUrl,
-      description,
-      isSubscription,
-      paymentInterval,
-      trialPeriodDays,
-    } = ctx.request.body;
-    const stripeProductResponse = await strapi
-      .plugin('strapi-stripe')
-      .service('stripeService')
-      .createProduct(
+    try {
+      const {
         title,
         price,
         imageId,
@@ -23,9 +11,28 @@ module.exports = {
         description,
         isSubscription,
         paymentInterval,
-        trialPeriodDays
-      );
-    ctx.send(stripeProductResponse, 200);
+        trialPeriodDays,
+      } = ctx.request.body;
+      const stripeProductResponse = await strapi
+        .plugin('strapi-stripe')
+        .service('stripeService')
+        .createProduct(
+          title,
+          price,
+          imageId,
+          imageUrl,
+          description,
+          isSubscription,
+          paymentInterval,
+          trialPeriodDays
+        );
+      ctx.send(stripeProductResponse, 200);
+    } catch (error) {
+      return {
+        status: 500,
+        message: error.message,
+      };
+    }
   },
   async find(ctx) {
     const { offset, limit, sort, order } = ctx.params;

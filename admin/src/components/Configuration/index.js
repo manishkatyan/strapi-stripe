@@ -34,6 +34,7 @@ const Configuration = () => {
     checkoutSuccessUrl: '',
     checkoutCancelUrl: '',
     currency: undefined,
+    callbackUrl: '',
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -48,7 +49,7 @@ const Configuration = () => {
     checkoutCancelUrl: '',
     currency: '',
   });
-
+  console.log('stripe configuration', stripeConfiguration);
   useEffect(() => {
     (async () => {
       const response = await getStripeConfiguration();
@@ -63,6 +64,7 @@ const Configuration = () => {
           checkoutSuccessUrl,
           checkoutCancelUrl,
           currency,
+          callbackUrl,
         } = response.data.response;
         setStripeConfiguration({
           ...stripeConfiguration,
@@ -74,6 +76,7 @@ const Configuration = () => {
           checkoutSuccessUrl,
           checkoutCancelUrl,
           currency,
+          callbackUrl,
         });
       }
     })();
@@ -378,6 +381,17 @@ const Configuration = () => {
                         </Option>
                       ))}
                   </Select>
+                </Box>
+              </GridItem>
+              <GridItem col={6} s={12}>
+                <Box paddingBottom={2}>
+                  <TextInput
+                    name="callbackUrl"
+                    label="Webhook URL"
+                    value={stripeConfiguration.callbackUrl}
+                    onChange={handleChange}
+                    hint="The response from Stripe will be posted to this URL."
+                  />
                 </Box>
               </GridItem>
             </Grid>
