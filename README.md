@@ -79,6 +79,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 **Supported Strapi versions**:
 
 - Strapi v4.5.0 (recently tested)
+
 - Strapi v4.x
 
 > The Stripe Payments plugin is designed for **Strapi v4.x**. It won't work with Strapi v3.x.
@@ -194,4 +195,4 @@ To test this Functionality visit this [Link](https://webhook.site/)
 
 [MIT License](LICENSE.md)
 
-Copyright (c) [HigherEdLab.com](https://higheredlab.com/).
+Copyright © 2022 [HigherEdLab.com](https://higheredlab.com/)
