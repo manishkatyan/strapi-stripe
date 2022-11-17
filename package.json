@@ -11,7 +11,7 @@
   "dependencies": {
     "better-sqlite3": "^7.6.2",
     "html-react-parser": "^1.4.10",
-    "stripe": "^8.210.0"
+    "stripe": "^8.222.0"
   },
   "scripts": {
     "format": "npm-run-all -p format:*",
