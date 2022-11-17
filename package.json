@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "better-sqlite3": "^7.6.2",
-    "html-react-parser": "^1.4.10",
+    "html-react-parser": "^1.4.14",
     "stripe": "^8.210.0"
   },
   "scripts": {
