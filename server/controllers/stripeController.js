@@ -42,9 +42,9 @@ module.exports = {
     } else if (sort === 'price') {
       needToshort = { price: `${order}` };
     }
-    const count = await strapi.query('plugin::strapi-stripe.strapi-stripe-product').count();
+    const count = await strapi.query('plugin::strapi-stripe.ss-product').count();
 
-    const res = await strapi.query('plugin::strapi-stripe.strapi-stripe-product').findMany({
+    const res = await strapi.query('plugin::strapi-stripe.ss-product').findMany({
       orderBy: needToshort,
       offset,
       limit,
@@ -57,7 +57,7 @@ module.exports = {
   async findOne(ctx) {
     const { id } = ctx.params;
     const res = await strapi
-      .query('plugin::strapi-stripe.strapi-stripe-product')
+      .query('plugin::strapi-stripe.ss-product')
       .findOne({ where: { id }, populate: true });
     ctx.body = res;
   },
@@ -102,22 +102,20 @@ module.exports = {
       stripeProduct,
     } = ctx.request.body;
 
-    const savePaymentDetails = await strapi
-      .query('plugin::strapi-stripe.strapi-stripe-payment')
-      .create({
-        data: {
-          txnDate,
-          transactionId,
-          isTxnSuccessful,
-          txnMessage: JSON.stringify(txnMessage),
-          txnAmount,
-          customerName,
-          customerEmail,
-          stripeProduct,
-        },
-        populate: true,
-      });
-
+    const savePaymentDetails = await strapi.query('plugin::strapi-stripe.ss-payment').create({
+      data: {
+        txnDate,
+        transactionId,
+        isTxnSuccessful,
+        txnMessage: JSON.stringify(txnMessage),
+        txnAmount,
+        customerName,
+        customerEmail,
+        stripeProduct,
+      },
+      populate: true,
+    });
+    await strapi.plugin('strapi-stripe').service('stripeService').sendDataToCallbackUrl(txnMessage);
     return savePaymentDetails;
   },
   async getProductPayments(ctx) {
@@ -130,11 +128,11 @@ module.exports = {
     } else if (sort === 'date') {
       needToshort = { txnDate: `${order}` };
     }
-    const count = await strapi.query('plugin::strapi-stripe.strapi-stripe-payment').count({
+    const count = await strapi.query('plugin::strapi-stripe.ss-payment').count({
       where: { stripeProduct: id },
     });
 
-    const payments = await strapi.query('plugin::strapi-stripe.strapi-stripe-payment').findMany({
+    const payments = await strapi.query('plugin::strapi-stripe.ss-payment').findMany({
       where: { stripeProduct: id },
       orderBy: needToshort,
       offset,
