@@ -44,7 +44,7 @@ module.exports = ({ strapi }) => ({
       });
 
       const createproduct = async (productId, priceId, planId) => {
-        const create = await strapi.query('plugin::strapi-stripe.strapi-stripe-product').create({
+        const create = await strapi.query('plugin::strapi-stripe.ss-product').create({
           data: {
             title,
             description,
@@ -101,16 +101,14 @@ module.exports = ({ strapi }) => ({
         description,
         images: [url],
       });
-      const updateProductResponse = await strapi
-        .query('plugin::strapi-stripe.strapi-stripe-product')
-        .update({
-          where: { id },
-          data: {
-            title,
-            description,
-            productImage,
-          },
-        });
+      const updateProductResponse = await strapi.query('plugin::strapi-stripe.ss-product').update({
+        where: { id },
+        data: {
+          title,
+          description,
+          productImage,
+        },
+      });
       return updateProductResponse;
     } catch (error) {
       console.log(error);
@@ -167,8 +165,15 @@ module.exports = ({ strapi }) => ({
         stripe = new Stripe(stripeSettings.stripeTestSecKey);
       }
       const session = await stripe.checkout.sessions.retrieve(checkoutSessionId);
-      await axiosInstance.post(stripeSettings.callbackUrl, session);
       return session;
+    } catch (error) {
+      throw new ApplicationError(error.message);
+    }
+  },
+  async sendDataToCallbackUrl(session) {
+    try {
+      const stripeSettings = await this.initialize();
+      await axiosInstance.post(stripeSettings.callbackUrl, session);
     } catch (error) {
       throw new ApplicationError(error.message);
     }

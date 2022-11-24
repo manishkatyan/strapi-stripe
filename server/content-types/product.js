@@ -2,9 +2,9 @@
 
 module.exports = {
   info: {
-    tableName: 'StrapiStripeProduct',
-    singularName: 'strapi-stripe-product', // kebab-case mandatory
-    pluralName: 'strapi-stripe-products', // kebab-case mandatory
+    tableName: 'StripeProduct',
+    singularName: 'ss-product', // kebab-case mandatory
+    pluralName: 'ss-products', // kebab-case mandatory
     displayName: 'Product',
     description: 'Stripe Products',
     kind: 'collectionType',
@@ -88,7 +88,7 @@ module.exports = {
     stripePayment: {
       type: 'relation',
       relation: 'oneToMany',
-      target: 'plugin::strapi-stripe.strapi-stripe-payment',
+      target: 'plugin::strapi-stripe.ss-payment',
       mappedBy: 'stripeProduct',
       configurable: false,
     },
