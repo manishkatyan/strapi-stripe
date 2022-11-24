@@ -88,6 +88,10 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 ## ⏳ Installation
 
+> From strapi-stripe plugin version 2.6.1 onwards, we have renamed these two tables `strapi-stripe_strapi-stripe-payment` `strapi-stripe_strapi-stripe-product` to `strapi-stripe_ss-payment` `strapi-stripe_ss-product` for mysql server compatability.
+
+> If you are using the strapi-stripe plugin verion 2.6.0 or any other below versions, please do take the data backup of these two table `strapi-stripe_strapi-stripe-payment` `strapi-stripe_strapi-stripe-product`, before updating to new version.
+
 Use **npm** to install this plugin within your Strapi project.
 
 [Refer to this doc to install npm](https://docs.npmjs.com/cli/v6/commands/npm-install)
