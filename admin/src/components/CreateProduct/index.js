@@ -168,9 +168,19 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         setUpload(true);
         setUploadMessage('Uploading Product image');
         const response = await uploadFiles(image);
-        imageUrl = `${window.location.origin}${response.data[0].url}`;
+
+        if (
+          response.data[0].url.indexOf('https://') === 0 ||
+          response.data[0].url.indexOf('http://') === 0
+        ) {
+          imageUrl = response.data[0].url;
+        } else {
+          imageUrl = `${window.location.origin}${response.data[0].url}`;
+        }
+
         imageId = response.data[0].id;
       }
+
       setUpload(false);
       handleClickSave(
         title,
