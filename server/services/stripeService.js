@@ -69,7 +69,7 @@ module.exports = ({ strapi }) => ({
           currency: stripeSettings.currency,
           interval: paymentInterval,
           product: product.id,
-          trial_period_days: trialPeriodDays,
+          trial_period_days: trialPeriodDays ? trialPeriodDays : 0,
         });
         createproduct(product.id, '', plan.id);
       } else {
