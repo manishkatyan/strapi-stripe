@@ -37,5 +37,6 @@ module.exports = {
     'node/no-callback-literal': 'error',
     'node/handle-callback-err': 'error',
     'one-var': ['error', 'never'],
+    'node/no-extraneous-require': 'off',
   },
 };

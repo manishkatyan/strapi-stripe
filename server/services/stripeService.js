@@ -31,6 +31,7 @@ module.exports = ({ strapi }) => ({
     try {
       const stripeSettings = await this.initialize();
       let stripe;
+
       if (stripeSettings.isLiveMode) {
         stripe = new Stripe(stripeSettings.stripeLiveSecKey);
       } else {
@@ -133,6 +134,15 @@ module.exports = ({ strapi }) => ({
         priceId = stripePriceId;
         paymentMode = 'payment';
       }
+
+      const price = await stripe.prices.retrieve(priceId);
+      //payment Methods
+      const PaymentMethods = await strapi
+        .plugin('strapi-stripe')
+        .service('paymentMethodService')
+        .getPaymentMethods(isSubscription, price.currency, stripeSettings.paymentMethods);
+
+      // Create Checkout Sessions.
       const session = await stripe.checkout.sessions.create({
         line_items: [
           {
@@ -142,7 +152,7 @@ module.exports = ({ strapi }) => ({
           },
         ],
         mode: paymentMode,
-        payment_method_types: ['card'],
+        payment_method_types: [...PaymentMethods],
         success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${stripeSettings.checkoutCancelUrl}`,
         metadata: {

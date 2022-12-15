@@ -35,6 +35,7 @@ const Configuration = () => {
     checkoutCancelUrl: '',
     currency: undefined,
     callbackUrl: '',
+    paymentMethods: ['card'],
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -49,7 +50,7 @@ const Configuration = () => {
     checkoutCancelUrl: '',
     currency: '',
   });
-  console.log('stripe configuration', stripeConfiguration);
+
   useEffect(() => {
     (async () => {
       const response = await getStripeConfiguration();
@@ -65,6 +66,7 @@ const Configuration = () => {
           checkoutCancelUrl,
           currency,
           callbackUrl,
+          paymentMethods,
         } = response.data.response;
         setStripeConfiguration({
           ...stripeConfiguration,
@@ -77,6 +79,7 @@ const Configuration = () => {
           checkoutCancelUrl,
           currency,
           callbackUrl,
+          paymentMethods,
         });
       }
     })();
@@ -394,6 +397,28 @@ const Configuration = () => {
                   />
                 </Box>
               </GridItem>
+              <GridItem col={6} s={12}>
+                <Select
+                  id="paymentMethod"
+                  label="Choose Payment Methods"
+                  onClear={() =>
+                    setStripeConfiguration({ ...stripeConfiguration, paymentMethods: [] })
+                  }
+                  value={
+                    stripeConfiguration.paymentMethods ? stripeConfiguration.paymentMethods : []
+                  }
+                  onChange={values =>
+                    setStripeConfiguration({ ...stripeConfiguration, paymentMethods: values })
+                  }
+                  multi
+                  withTags
+                >
+                  <Option value="card">Credit Card/Debit Card</Option>
+                  <Option value="sepa_debit"> SEPA Direct Debit</Option>
+                  <Option value="us_bank_account">ACH Direct Debit</Option>
+                  <Option value="alipay">Alipay</Option>
+                </Select>
+              </GridItem>
             </Grid>
           </Box>
         </Box>
@@ -444,6 +469,18 @@ const Configuration = () => {
               <GridItem col={6} s={12}>
                 <Typography variant="pi">
                   Need help? Contact us at : support@higheredlab.com
+                </Typography>
+              </GridItem>
+              <GridItem col={6} s={12}>
+                <Typography variant="pi">
+                  For Paypal payment plugin{' '}
+                  <a
+                    href="https://market.strapi.io/plugins/strapi-paypal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    click here
+                  </a>
                 </Typography>
               </GridItem>
             </Grid>

@@ -66,6 +66,10 @@ const currencies = [
     value: 'cop',
   },
   {
+    label: 'CNY - Chinese Yuan',
+    value: 'cny',
+  },
+  {
     label: 'EGP - Egyptian Pound',
     value: 'egp',
   },

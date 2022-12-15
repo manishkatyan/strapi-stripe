@@ -3,7 +3,7 @@
 </div>
 <h1 align="center">Stripe Payments</h1>
 <p align="center">Online payments and subscriptions made simple, secure and fast.</p>
-<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay and Google pay on your Strapi app via Stripe.</p>
+<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay, Google pay, SEPA Direct Debit, ACH Direct Debit on your Strapi app via Stripe.</p>
 
 <br />
 
@@ -21,7 +21,7 @@
 
 <br>
 
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-payment.gif" alt="strapi-stripe-payment" /> <br/>
 
 <br/><br/>
 
@@ -78,7 +78,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 **Supported Strapi versions**:
 
-- Strapi v4.5.0 (recently tested)
+- Strapi v4.5.3 (recently tested)
 
 - Strapi v4.x
 
