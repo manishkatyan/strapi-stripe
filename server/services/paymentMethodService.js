@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable node/no-extraneous-require */
+/* eslint-disable node/no-missing-require */
 
 'use strict';
 
