@@ -3,7 +3,7 @@
 </div>
 <h1 align="center">Stripe Payments</h1>
 <p align="center">Online payments and subscriptions made simple, secure and fast.</p>
-<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay, Google pay, SEPA Direct Debit, ACH Direct Debit on your Strapi app via Stripe.</p>
+<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit and Debit Cards, SEPA Direct Debit, ACH Direct Debit, AliPay, Apple pay and Google pay on your Strapi app via Stripe.</p>
 
 <br />
 
