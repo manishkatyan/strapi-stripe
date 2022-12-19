@@ -38,7 +38,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
   const [error, setError] = useState({
     title: '',
     price: '',
-    image: '',
     description: '',
     paymentType: '',
     paymentInterval: '',
@@ -55,7 +54,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
       setError({ ...error, title: '' });
     } else if (name === 'image') {
       setImage(event.target.files);
-      setError({ ...error, image: '' });
     } else if (name === 'description') {
       setDescription(value);
       setError({ ...error, description: '' });
@@ -90,12 +88,11 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
   };
 
   const handleSaveProduct = async () => {
-    if (!title && !price && image.length === 0 && !description && !paymentType) {
+    if (!title && !price && !description && !paymentType) {
       setError({
         ...error,
         title: 'Title is required',
         price: 'Price is required',
-        image: 'Product Image is required',
         description: 'Description is required',
         paymentType: 'Payment Type is required',
         paymentInterval: '',
@@ -105,7 +102,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         ...error,
         title: '',
         price: '',
-        image: '',
         description: '',
         paymentType: 'Payment Type is required',
         paymentInterval: '',
@@ -115,7 +111,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         ...error,
         title: '',
         price: 'Price is required',
-        image: '',
         description: '',
         paymentType: '',
         paymentInterval: '',
@@ -125,17 +120,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         ...error,
         title: 'Title is required',
         price: '',
-        image: '',
-        description: '',
-        paymentType: '',
-        paymentInterval: '',
-      });
-    } else if (image.length < 0) {
-      setError({
-        ...error,
-        title: '',
-        price: '',
-        image: 'Product Image is required',
         description: '',
         paymentType: '',
         paymentInterval: '',
@@ -145,7 +129,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         ...error,
         title: '',
         price: '',
-        image: '',
         description: 'Description is required',
         paymentType: '',
         paymentInterval: '',
@@ -155,7 +138,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         ...error,
         title: '',
         price: '',
-        image: '',
         description: '',
         paymentType: '',
         paymentInterval: 'Payment Interval is required',
@@ -267,7 +249,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
               </GridItem>
               <GridItem col={6}>
                 <Typography variant="pi" fontWeight="bold">
-                  Image <Typography textColor="danger700">&#42;</Typography>
+                  Image
                 </Typography>
 
                 <Box paddingTop={3}>

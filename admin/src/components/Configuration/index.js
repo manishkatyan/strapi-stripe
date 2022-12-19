@@ -23,6 +23,7 @@ import { Switch } from '@strapi/design-system/Switch';
 import { Flex } from '@strapi/design-system/Flex';
 import currencies from './constant';
 import { saveStripeConfiguration, getStripeConfiguration } from '../../utils/apiCalls';
+import Banner from './banner';
 
 const Configuration = () => {
   const [stripeConfiguration, setStripeConfiguration] = useState({
@@ -417,75 +418,88 @@ const Configuration = () => {
                   <Option value="sepa_debit"> SEPA Direct Debit</Option>
                   <Option value="us_bank_account">ACH Direct Debit</Option>
                   <Option value="alipay">Alipay</Option>
+                  <Option value="klarna">Klarna</Option>
+                  <Option value="ideal">iDEAL</Option>
+                  <Option value="sofort">SOFORT</Option>
                 </Select>
               </GridItem>
             </Grid>
           </Box>
         </Box>
         <br />
-        <Box
-          shadow="tableShadow"
-          background="neutral0"
-          paddingTop={6}
-          paddingLeft={7}
-          paddingRight={7}
-          paddingBottom={6}
-          hasRadius
-        >
-          <Box paddingBottom={2}>
-            <Typography variant="delta">Email Settings</Typography>
-          </Box>
+        <Banner
+          leftChild={
+            <Link
+              href="https://support.stripe.com/questions/set-up-account-email-notifications"
+              isExternal
+            >
+              Setup seller notification
+            </Link>
+          }
+          rightChild={
+            <Link href=" https://stripe.com/docs/receipts" isExternal>
+              Setup buyer notification
+            </Link>
+          }
+          rightChildCol={6}
+          leftChildCol={6}
+          header="Email Settings"
+          isHeader
+        />
 
-          <Box paddingTop={2}>
-            <Grid gap={4}>
-              <GridItem col={6} s={12}>
-                <Link
-                  href="https://support.stripe.com/questions/set-up-account-email-notifications"
-                  isExternal
-                >
-                  Setup seller notification
-                </Link>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Link href=" https://stripe.com/docs/receipts" isExternal>
-                  Setup buyer notification
-                </Link>
-              </GridItem>
-            </Grid>
-          </Box>
-        </Box>
         <br />
-        <Box
-          shadow="tableShadow"
-          background="neutral0"
-          paddingTop={6}
-          paddingLeft={7}
-          paddingRight={7}
-          paddingBottom={6}
-          hasRadius
-        >
-          <Box paddingTop={2}>
-            <Grid gap={4}>
-              <GridItem col={6} s={12}>
-                <Typography variant="pi">
-                  Need help? Contact us at : support@higheredlab.com
-                </Typography>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Typography variant="pi">
-                  For Paypal payment plugin{' '}
-                  <a
-                    href="https://market.strapi.io/plugins/strapi-paypal"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    click here
-                  </a>
-                </Typography>
-              </GridItem>
-            </Grid>
-          </Box>
-        </Box>
+
+        <Banner
+          leftChild={
+            <img
+              src="https://res.cloudinary.com/dvotpztje/image/upload/v1671441868/paypal-logo_tifrf5.webp"
+              alt="paypal"
+              height={25}
+              width={80}
+            />
+          }
+          rightChild={
+            <Typography variant="omega" fontWeight="bold">
+              Want to use Paypal?{' '}
+              <a
+                href="https://market.strapi.io/plugins/strapi-paypal"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download our free plugin
+              </a>
+              .
+            </Typography>
+          }
+          leftChildCol={2}
+          rightChildCol={10}
+        />
+        <br />
+        <Banner
+          leftChild={
+            <img
+              src="https://higheredlab.com/wp-content/uploads/hel_icon.png"
+              alt="hel-logo"
+              height={30}
+              width={50}
+            />
+          }
+          rightChild={
+            <Typography variant="omega" fontWeight="bold">
+              Facing technical issues?{' '}
+              <a
+                href="https://github.com/manishkatyan/strapi-stripe/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Raise an issue on Github
+              </a>
+              &nbsp;or email at support@higheredlab.com
+            </Typography>
+          }
+          leftChildCol={2}
+          rightChildCol={10}
+        />
       </ContentLayout>
     </Main>
   );
