@@ -3,7 +3,7 @@
 </div>
 <h1 align="center">Stripe Payments</h1>
 <p align="center">Online payments and subscriptions made simple, secure and fast.</p>
-<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay and Google pay on your Strapi app via Stripe.</p>
+<p align="center">This free plugin enables you to accept online payments and create subscriptions using Credit and Debit Cards, SEPA Direct Debit, ACH Direct Debit, AliPay, Apple pay and Google pay on your Strapi app via Stripe.</p>
 
 <br />
 
@@ -21,7 +21,7 @@
 
 <br>
 
-<img style="width: 100%; height: auto;" src="https://higheredlab.com/wp-content/uploads/strapi-stripe_payment.gif" alt="strapi-stripe-payment" /> <br/>
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-payment.gif" alt="strapi-stripe-payment" /> <br/>
 
 <br/><br/>
 
@@ -50,16 +50,16 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 ## ✨ Features
 
-1. Quick installation and setup.
-1. Easily accept online payment for any products (or services) you want to sell on your Strapi site.
-1. Automatically creates payment buttons for you to embed anywhere on your site.
-1. Add multiple “Buy Now” payment buttons on a page.
-1. View transaction details for all your products from your Strapi admin dashboard.
-1. Specify a custom name, image and description for a product.
-1. Setup email notification to the buyer and seller (aka you) after the purchase.
-1. Customize the message on the checkout result page.
-1. Configure the currency type for the payment.
-1. Run in test mode for debudding
+1. Accept payments via Credit and Debit Cards, SEPA Direct Debit, ACH Direct Debit, AliPay, Apple pay and Google pay.
+2. Request one-time payments or create subscriotions on your Strapi application.
+3. Quick installation and setup. Run in test mode for debugging. 
+4. Automatically creates payment buttons for you to embed anywhere on your site.
+5. Add multiple “Buy Now” payment buttons on a page.
+6. View transaction details for all your products from your Strapi admin dashboard.
+7. Specify a custom name, image and description for a product.
+8. Setup email notification to the buyer and seller (aka you) after the purchase.
+9. Customize the message on the checkout page
+10. Configure multiple currencies
 
 <br/><br/>
 
@@ -78,7 +78,7 @@ We are following the [official Node.js releases timelines](https://nodejs.org/en
 
 **Supported Strapi versions**:
 
-- Strapi v4.5.0 (recently tested)
+- Strapi v4.5.3 (recently tested)
 
 - Strapi v4.x
 

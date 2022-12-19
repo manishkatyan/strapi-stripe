@@ -35,7 +35,7 @@ module.exports = {
       configurable: false,
     },
     description: {
-      type: 'string',
+      type: 'text',
       min: 1,
       required: true,
       configurable: false,
