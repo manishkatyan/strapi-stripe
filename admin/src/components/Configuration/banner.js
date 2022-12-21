@@ -37,8 +37,8 @@ const Banner = ({ leftChild, rightChild, leftChildCol, rightChildCol, header, is
 
 // Props validation
 Banner.propTypes = {
-  leftChild: PropTypes.node.isRequired,
-  rightChild: PropTypes.node.isRequired,
+  leftChild: PropTypes.any,
+  rightChild: PropTypes.any,
   leftChildCol: PropTypes.number.isRequired,
   rightChildCol: PropTypes.number.isRequired,
   header: PropTypes.string,
@@ -49,6 +49,8 @@ Banner.propTypes = {
 Banner.defaultProps = {
   header: '',
   isHeader: false,
+  leftChild: null,
+  rightChild: null,
 };
 
 export default Banner;

@@ -86,3 +86,12 @@ export async function uploadFiles(files) {
 
   return response;
 }
+
+export async function getGithubVersion() {
+  const response = await fetch(
+    'https://api.github.com/repos/manishkatyan/strapi-stripe/releases/latest'
+  );
+  const data = await response.json();
+
+  return data;
+}
