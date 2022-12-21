@@ -24,6 +24,8 @@ import { Flex } from '@strapi/design-system/Flex';
 import currencies from './constant';
 import { saveStripeConfiguration, getStripeConfiguration } from '../../utils/apiCalls';
 import Banner from './banner';
+import pluginPkg from '../../../../package.json';
+import WarningIcon from './warningIcon';
 
 const Configuration = () => {
   const [stripeConfiguration, setStripeConfiguration] = useState({
@@ -51,6 +53,8 @@ const Configuration = () => {
     checkoutCancelUrl: '',
     currency: '',
   });
+
+  const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -82,6 +86,16 @@ const Configuration = () => {
           callbackUrl,
           paymentMethods,
         });
+      }
+      // call github api to get the latest version of the plugin
+      const responseGithub = await fetch(
+        'https://api.github.com/repos/manishkatyan/strapi-stripe/releases/latest'
+      );
+      const data = await responseGithub.json();
+
+      // compare the latest version with the current version
+      if (data.tag_name !== pluginPkg.version) {
+        setIsNewVersionAvailable(true);
       }
     })();
   }, []);
@@ -427,6 +441,7 @@ const Configuration = () => {
           </Box>
         </Box>
         <br />
+
         <Banner
           leftChild={
             <Link
@@ -448,6 +463,31 @@ const Configuration = () => {
         />
 
         <br />
+        {isNewVersionAvailable ? (
+          <>
+            <Banner
+              leftChild={<WarningIcon />}
+              rightChild={
+                <Typography variant="omega">
+                  {' '}
+                  A new version is available{' '}
+                  <a
+                    href="https://www.npmjs.com/package/strapi-stripe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    click here
+                  </a>{' '}
+                  to know more.{' '}
+                </Typography>
+              }
+              leftChildCol={2}
+              rightChildCol={10}
+            />
+
+            <br />
+          </>
+        ) : null}
 
         <Banner
           leftChild={
@@ -459,7 +499,7 @@ const Configuration = () => {
             />
           }
           rightChild={
-            <Typography variant="omega" fontWeight="bold">
+            <Typography variant="omega">
               Want to use Paypal?{' '}
               <a
                 href="https://market.strapi.io/plugins/strapi-paypal"
@@ -480,12 +520,12 @@ const Configuration = () => {
             <img
               src="https://higheredlab.com/wp-content/uploads/hel_icon.png"
               alt="hel-logo"
-              height={30}
-              width={50}
+              height={35}
+              width={40}
             />
           }
           rightChild={
-            <Typography variant="omega" fontWeight="bold">
+            <Typography variant="omega">
               Facing technical issues?{' '}
               <a
                 href="https://github.com/manishkatyan/strapi-stripe/issues"
