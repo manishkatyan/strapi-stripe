@@ -22,7 +22,12 @@ import { Link } from '@strapi/design-system/Link';
 import { Switch } from '@strapi/design-system/Switch';
 import { Flex } from '@strapi/design-system/Flex';
 import currencies from './constant';
-import { saveStripeConfiguration, getStripeConfiguration } from '../../utils/apiCalls';
+import { supportEmail } from '../ProductList/constant';
+import {
+  saveStripeConfiguration,
+  getStripeConfiguration,
+  getGithubVersion,
+} from '../../utils/apiCalls';
 import Banner from './banner';
 import pluginPkg from '../../../../package.json';
 import WarningIcon from './warningIcon';
@@ -88,13 +93,10 @@ const Configuration = () => {
         });
       }
       // call github api to get the latest version of the plugin
-      const responseGithub = await fetch(
-        'https://api.github.com/repos/manishkatyan/strapi-stripe/releases/latest'
-      );
-      const data = await responseGithub.json();
+      const data = await getGithubVersion();
 
       // compare the latest version with the current version
-      if (data.tag_name !== pluginPkg.version) {
+      if (data.tag_name > pluginPkg.version) {
         setIsNewVersionAvailable(true);
       }
     })();
@@ -534,7 +536,7 @@ const Configuration = () => {
               >
                 Raise an issue on Github
               </a>
-              &nbsp;or email at support@higheredlab.com
+              &nbsp;or email at {supportEmail.email}
             </Typography>
           }
           leftChildCol={2}

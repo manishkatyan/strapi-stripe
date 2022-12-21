@@ -1,3 +1,6 @@
+export const supportEmail = {
+  email: 'support@higheredlab.com',
+};
 export const stripeResponse = {
   id: 'cs_test_a1V6WMk1RmA0JKhI2vlMIrJrINvFWq62hgUnuyYbyxuBr2twbsMA4TXXDD',
   object: 'checkout.session',

@@ -5,6 +5,8 @@ import { Link } from '@strapi/design-system/Link';
 import { Typography } from '@strapi/design-system/Typography';
 import ArrowRight from '@strapi/icons/ArrowRight';
 import pluginPkg from '../../../../package.json';
+import { getGithubVersion } from '../../utils/apiCalls';
+import { supportEmail } from './constant';
 
 const SettingLink = () => {
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
@@ -12,13 +14,10 @@ const SettingLink = () => {
   useEffect(() => {
     (async () => {
       // call github api to get the latest version of the plugin
-      const responseGithub = await fetch(
-        'https://api.github.com/repos/manishkatyan/strapi-stripe/releases/latest'
-      );
-      const data = await responseGithub.json();
+      const response = await getGithubVersion();
 
       // compare the latest version with the current version
-      if (data.tag_name !== pluginPkg.version) {
+      if (response.tag_name > pluginPkg.version) {
         setIsNewVersionAvailable(true);
       }
     })();
@@ -47,7 +46,7 @@ const SettingLink = () => {
                 </GridItem>
                 <GridItem col={4} s={12}>
                   <Typography variant="pi">
-                    Need help? Contact us at : support@higheredlab.com
+                    Need help? Contact us at : {supportEmail.email}
                   </Typography>
                 </GridItem>
                 <GridItem col={4} s={12}>
@@ -85,7 +84,7 @@ const SettingLink = () => {
                 </GridItem>
                 <GridItem col={6} s={12}>
                   <Typography variant="pi">
-                    Need help? Contact us at : support@higheredlab.com
+                    Need help? Contact us at : {supportEmail.email}
                   </Typography>
                 </GridItem>
               </Grid>
