@@ -64,20 +64,9 @@ module.exports = ({ strapi }) => ({
         return create;
       };
 
-      // if currency is eur then format the price in euro
-      if (stripeSettings.currency === 'eur') {
-        // convert decimal to euro number
-        productPrice = productPrice.toLocaleString('de-DE', {
-          currency: 'EUR',
-        });
-
-        // format to euro number
-        productPrice = productPrice.replace(/,/g, '.');
-      }
-
       if (isSubscription) {
         const plan = await stripe.plans.create({
-          amount: productPrice * 100,
+          amount: Math.round(productPrice * 100),
           currency: stripeSettings.currency,
           interval: paymentInterval,
           product: product.id,
@@ -86,7 +75,7 @@ module.exports = ({ strapi }) => ({
         createproduct(product.id, '', plan.id);
       } else {
         const price = await stripe.prices.create({
-          unit_amount: productPrice * 100,
+          unit_amount: Math.round(productPrice * 100),
           currency: stripeSettings.currency,
           product: product.id,
         });
