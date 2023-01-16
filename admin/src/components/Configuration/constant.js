@@ -70,6 +70,10 @@ const currencies = [
     value: 'cny',
   },
   {
+    label: 'DKK - Danish Krone',
+    value: 'dkk',
+  },
+  {
     label: 'EGP - Egyptian Pound',
     value: 'egp',
   },
