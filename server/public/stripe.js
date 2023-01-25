@@ -47,7 +47,7 @@ function SS_ProductCheckout(productId, baseUrl, userEmail) {
           isSubscription: response.isSubscription,
           productId: response.id,
           productName: response.title,
-          userEmail: userEmail,
+          userEmail,
         }),
         mode: 'cors',
         headers: new Headers({
