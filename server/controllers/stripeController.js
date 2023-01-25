@@ -72,13 +72,20 @@ module.exports = {
   },
 
   async createCheckoutSession(ctx) {
-    const { stripePriceId, stripePlanId, isSubscription, productId, productName } =
+    const { stripePriceId, stripePlanId, isSubscription, productId, productName, userEmail } =
       ctx.request.body;
 
     const checkoutSessionResponse = await strapi
       .plugin('strapi-stripe')
       .service('stripeService')
-      .createCheckoutSession(stripePriceId, stripePlanId, isSubscription, productId, productName);
+      .createCheckoutSession(
+        stripePriceId,
+        stripePlanId,
+        isSubscription,
+        productId,
+        productName,
+        userEmail
+      );
     ctx.send(checkoutSessionResponse, 200);
   },
   async retrieveCheckoutSession(ctx) {
@@ -140,5 +147,19 @@ module.exports = {
       populate: true,
     });
     return { payments, count };
+  },
+  async searchSubscriptionStatus(ctx) {
+    const { email } = ctx.params;
+
+    const subscriptionStatus = await strapi
+      .plugin('strapi-stripe')
+      .service('stripeService')
+      .searchSubscriptionStatus(email);
+
+    if (subscriptionStatus) {
+      ctx.send(subscriptionStatus, 200);
+    } else {
+      ctx.send(subscriptionStatus, 204);
+    }
   },
 };
