@@ -236,6 +236,34 @@ const Configuration = () => {
             ''
           )}
         </Box>
+
+        <Box paddingBottom={4}>
+          <Banner
+            leftChild={
+              <img
+                src="https://higheredlab.com/wp-content/uploads/hel_icon.png"
+                alt="hel-logo"
+                height={35}
+                width={40}
+              />
+            }
+            rightChild={
+              <Typography variant="omega">
+                Facing technical issues?{' '}
+                <a
+                  href="https://github.com/manishkatyan/strapi-stripe/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Raise an issue on Github
+                </a>
+                &nbsp;or email at {supportEmail.email}
+              </Typography>
+            }
+            leftChildCol={2}
+            rightChildCol={10}
+          />
+        </Box>
         <Box
           shadow="tableShadow"
           background="neutral0"
@@ -511,32 +539,6 @@ const Configuration = () => {
                 Download our free plugin
               </a>
               .
-            </Typography>
-          }
-          leftChildCol={2}
-          rightChildCol={10}
-        />
-        <br />
-        <Banner
-          leftChild={
-            <img
-              src="https://higheredlab.com/wp-content/uploads/hel_icon.png"
-              alt="hel-logo"
-              height={35}
-              width={40}
-            />
-          }
-          rightChild={
-            <Typography variant="omega">
-              Facing technical issues?{' '}
-              <a
-                href="https://github.com/manishkatyan/strapi-stripe/issues"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Raise an issue on Github
-              </a>
-              &nbsp;or email at {supportEmail.email}
             </Typography>
           }
           leftChildCol={2}
