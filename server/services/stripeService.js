@@ -116,7 +116,14 @@ module.exports = ({ strapi }) => ({
       throw new ApplicationError(error.message);
     }
   },
-  async createCheckoutSession(stripePriceId, stripePlanId, isSubscription, productId, productName) {
+  async createCheckoutSession(
+    stripePriceId,
+    stripePlanId,
+    isSubscription,
+    productId,
+    productName,
+    userEmail
+  ) {
     try {
       const stripeSettings = await this.initialize();
       let stripe;
@@ -153,6 +160,7 @@ module.exports = ({ strapi }) => ({
         ],
         mode: paymentMode,
         payment_method_types: [...PaymentMethods],
+        customer_email: userEmail,
         success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${stripeSettings.checkoutCancelUrl}`,
         metadata: {
@@ -184,6 +192,28 @@ module.exports = ({ strapi }) => ({
     try {
       const stripeSettings = await this.initialize();
       await axiosInstance.post(stripeSettings.callbackUrl, session);
+    } catch (error) {
+      throw new ApplicationError(error.message);
+    }
+  },
+
+  // search subscription status by customer email
+  async searchSubscriptionStatus(email) {
+    try {
+      const stripeSettings = await this.initialize();
+      let stripe;
+      if (stripeSettings.isLiveMode) {
+        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+      } else {
+        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+      }
+      const customer = await stripe.customers.list({ email });
+
+      if (customer.data.length === 0) return null;
+      const subscription = await stripe.subscriptions.list({ customer: customer.data[0].id });
+      if (subscription.data.length === 0) return null;
+
+      return subscription;
     } catch (error) {
       throw new ApplicationError(error.message);
     }

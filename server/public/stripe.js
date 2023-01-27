@@ -7,7 +7,11 @@ window.onload = () => {
   if (ssProduct) {
     ssProduct.forEach(product => {
       product.addEventListener('click', function handleClick(event) {
-        SS_ProductCheckout(event.target.dataset.id, event.target.dataset.url);
+        SS_ProductCheckout(
+          event.target.dataset.id,
+          event.target.dataset.url,
+          event.target.dataset.email
+        );
       });
     });
   }
@@ -21,7 +25,7 @@ window.onload = () => {
 
 // product Checkout logic
 
-function SS_ProductCheckout(productId, baseUrl) {
+function SS_ProductCheckout(productId, baseUrl, userEmail) {
   localStorage.setItem('strapiStripeUrl', baseUrl);
   const getProductApi = baseUrl + '/strapi-stripe/getProduct/' + productId;
   const checkoutSessionUrl = baseUrl + '/strapi-stripe/createCheckoutSession/';
@@ -43,6 +47,7 @@ function SS_ProductCheckout(productId, baseUrl) {
           isSubscription: response.isSubscription,
           productId: response.id,
           productName: response.title,
+          userEmail,
         }),
         mode: 'cors',
         headers: new Headers({

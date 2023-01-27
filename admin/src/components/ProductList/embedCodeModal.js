@@ -78,14 +78,20 @@ const EmbedCodeModal = ({
               </Box>
               <Box>
                 <Typography variant="epsilon">
-                  Show the “Buy Now” button next to your product details on the product list page.
+                  Show the “{isSubscription ? 'Subscribe' : 'BuyNow'}” button next to your product
+                  details on the product list page.
                 </Typography>
               </Box>
             </Flex>
+            <Box paddingRight={2} paddingTop={1}>
+              <Typography variant="epsilon">
+                If you provide the email address of the user, it will pre-populate the email field.
+              </Typography>
+            </Box>
             <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Typography>
                 {`
-                <button class="css style" type="button" class="SS_ProductCheckout"  data-id="${productId}" data-url="${
+                <button class="css style" type="button" class="SS_ProductCheckout"  data-id="${productId}" data-email="<userEmail>" data-url="${
                   window.location.origin
                 }">
                 ${isSubscription ? 'Subscribe' : 'BuyNow'}
@@ -162,7 +168,7 @@ const EmbedCodeModal = ({
                    `}
               </Typography>
             </Box>
-            <Box padding={4} background="neutral100">
+            <Box padding={4} background="neutral100" marginBottom={4}>
               <Accordion
                 expanded={expandPayment}
                 toggle={() => setExpandPayment(s => !s)}
@@ -178,6 +184,24 @@ const EmbedCodeModal = ({
                   </Box>
                 </AccordionContent>
               </Accordion>
+            </Box>
+            <Flex alignItems="top">
+              <Box paddingRight={2}>
+                <Typography variant="epsilon">Step&nbsp;4:</Typography>
+              </Box>
+              <Box>
+                <Typography variant="epsilon">
+                  Optionally, You can get the subscription status of the user, by using the below
+                  API call:
+                </Typography>
+              </Box>
+            </Flex>
+            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
+              <Typography>
+                {`
+                const response = await axios.get(${window.location.origin}/strapi-stripe/getSubscriptionStatus/<userEmail>)
+                `}
+              </Typography>
             </Box>
           </ModalBody>
           <ModalFooter

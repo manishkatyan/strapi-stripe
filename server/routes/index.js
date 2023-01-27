@@ -83,4 +83,12 @@ module.exports = [
       auth: false,
     },
   },
+  {
+    method: 'GET',
+    path: '/getSubscriptionStatus/:email',
+    handler: 'stripeController.searchSubscriptionStatus',
+    config: {
+      auth: false,
+    },
+  },
 ];
