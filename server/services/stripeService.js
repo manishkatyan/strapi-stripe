@@ -191,6 +191,10 @@ module.exports = ({ strapi }) => ({
   async sendDataToCallbackUrl(session) {
     try {
       const stripeSettings = await this.initialize();
+      
+      // Return if no callbackUrl is set
+      if (!stripeSettings.callbackUrl) return;
+      
       await axiosInstance.post(stripeSettings.callbackUrl, session);
     } catch (error) {
       throw new ApplicationError(error.message);
