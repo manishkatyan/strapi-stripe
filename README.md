@@ -52,7 +52,7 @@ That's all you need to do to turn your Strapi website or application into an e-c
 
 1. Accept payments via Credit and Debit Cards, SEPA Direct Debit, ACH Direct Debit, AliPay, Apple pay and Google pay.
 2. Request one-time payments or create subscriotions on your Strapi application.
-3. Quick installation and setup. Run in test mode for debugging. 
+3. Quick installation and setup. Run in test mode for debugging.
 4. Automatically creates payment buttons for you to embed anywhere on your site.
 5. Add multiple “Buy Now” payment buttons on a page.
 6. View transaction details for all your products from your Strapi admin dashboard.
@@ -192,6 +192,20 @@ To test this Functionality visit this [Link](https://webhook.site/)
 1. Copy the unique URL and paste it in webhook URL field.
 2. Whenever successfull stripe payment happens webhook URL recieve stripe data.
    <br/><br/>
+
+## Subscription Payment Status
+
+The stripe Payments plugins also provides ability to check the status of subscription using customer Email.
+<br/>
+You can easily embed the subscription status on your website, using plugin Api-End point.
+<br/><br/>
+<img style="width: 100%; height: auto;" src="/static/strapi-stripe-embed.png" alt="strapi-stripe-embed" />
+
+<br/>
+
+> You can get user email from payment report.
+
+<br/><br/>
 
 <br/>
 
