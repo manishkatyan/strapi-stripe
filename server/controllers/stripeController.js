@@ -61,6 +61,7 @@ module.exports = {
       .findOne({ where: { id }, populate: true });
     ctx.body = res;
   },
+
   async updateProduct(ctx) {
     const { id } = ctx.params;
     const { title, url, description, productImage, stripeProductId } = ctx.request.body;
@@ -71,6 +72,14 @@ module.exports = {
     ctx.send(updateProductResponse, 200);
   },
 
+  async deleteProduct(ctx) {
+    const { productId, stripeProductId } = ctx.params;
+    const deleteProductResponse = await strapi
+      .plugin('strapi-stripe')
+      .service('stripeService')
+      .deleteProduct(productId, stripeProductId);
+    ctx.send(deleteProductResponse, 200);
+  },
   async createCheckoutSession(ctx) {
     const { stripePriceId, stripePlanId, isSubscription, productId, productName, userEmail } =
       ctx.request.body;

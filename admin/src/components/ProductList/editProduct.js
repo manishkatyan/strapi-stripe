@@ -62,8 +62,8 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
         } = response.data;
         setTitle(title);
         setPrice(price);
-        setUrl(`${window.location.origin}${productImage.url}`);
-        setProductImageId(productImage.id);
+        setUrl(`${window.location.origin}${productImage?.url}`);
+        setProductImageId(productImage?.id);
         setDescription(description);
         setStripeProduct(stripeProductId);
 
