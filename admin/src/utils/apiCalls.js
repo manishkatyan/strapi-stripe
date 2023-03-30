@@ -71,6 +71,14 @@ export async function updateStripeProduct(
   return response;
 }
 
+export async function deleteStripeProduct(productId, stripeProductId) {
+  const response = await axios.delete(
+    `/strapi-stripe/deleteProduct/${productId}/${stripeProductId}`
+  );
+
+  return response;
+}
+
 export async function getProductPayments(productId, sort, order, offset, limit) {
   const response = await axios.get(
     `/strapi-stripe/getPayments/${productId}/${sort}/${order}/${offset}/${limit}`

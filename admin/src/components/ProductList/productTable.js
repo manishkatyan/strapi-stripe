@@ -25,10 +25,12 @@ import CarretDown from '@strapi/icons/CarretDown';
 import { Badge } from '@strapi/design-system/Badge';
 import Plus from '@strapi/icons/Plus';
 import ChartPie from '@strapi/icons/ChartPie';
+import Trash from '@strapi/icons/Trash';
 import LinkIcon from './linkIcon';
 import { currencies } from './constant';
 import EmbedCodeModal from './embedCodeModal';
 import SettingLink from './SettingLink';
+import ConfirmDialog from '../confirmDialog/confirmDialog';
 
 const ProductTable = ({
   products,
@@ -43,6 +45,7 @@ const ProductTable = ({
   sortAscendingPrice,
   handleClickCreateProduct,
   isStripeSettings,
+  handleProductDelete,
 }) => {
   let { url } = useRouteMatch();
   const ROW_COUNT = 6;
@@ -51,6 +54,15 @@ const ProductTable = ({
   const [isVisible, setIsVisible] = useState(false);
   const [productId, setIsProductId] = useState('');
   const [isSubscription, setIsSubscription] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsConfirmVisible(false);
+  };
+
+  const handleOpenModal = () => {
+    setIsConfirmVisible(true);
+  };
 
   const handleSortCarretUp = () => {
     handleSortDescendingName();
@@ -141,6 +153,10 @@ const ProductTable = ({
     }
 
     return trialDays;
+  };
+
+  const handleDeleteProductClick = () => {
+    handleProductDelete();
   };
 
   return (
@@ -270,6 +286,20 @@ const ProductTable = ({
                             <IconButton label="Report" icon={<ChartPie />} />
                           </Link>
                         </Box>
+                        <Box paddingLeft={3}>
+                          <IconButton
+                            onClick={() => handleOpenModal()}
+                            label="Delete"
+                            icon={<Trash />}
+                          />
+                        </Box>
+                        <ConfirmDialog
+                          isConfirmVisible={isConfirmVisible}
+                          handleCloseModal={handleCloseModal}
+                          productId={product.id}
+                          stripeProductId={product.stripeProductId}
+                          handleDeleteProductClick={handleDeleteProductClick}
+                        />
                       </Flex>
                     </Td>
                   </Tr>
@@ -348,6 +378,7 @@ ProductTable.propTypes = {
   sortAscendingPrice: PropTypes.any.isRequired,
   handleClickCreateProduct: PropTypes.any.isRequired,
   isStripeSettings: PropTypes.any.isRequired,
+  handleProductDelete: PropTypes.any.isRequired,
 };
 
 export default ProductTable;

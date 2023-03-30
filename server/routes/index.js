@@ -51,6 +51,14 @@ module.exports = [
     },
   },
   {
+    method: 'DELETE',
+    path: '/deleteProduct/:productId/:stripeProductId',
+    handler: 'stripeController.deleteProduct',
+    config: {
+      auth: false,
+    },
+  },
+  {
     method: 'POST',
     path: '/createCheckoutSession',
     handler: 'stripeController.createCheckoutSession',

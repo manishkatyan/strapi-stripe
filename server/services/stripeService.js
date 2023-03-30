@@ -1,5 +1,6 @@
 /* eslint-disable node/no-extraneous-require */
 /* eslint-disable node/no-missing-require */
+/* eslint-disable no-unused-vars */
 
 'use strict';
 
@@ -116,6 +117,23 @@ module.exports = ({ strapi }) => ({
       throw new ApplicationError(error.message);
     }
   },
+  async deleteProduct(productId, stripeProductId) {
+    try {
+      const stripeSettings = await this.initialize();
+      let stripe;
+      if (stripeSettings.isLiveMode) {
+        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+      } else {
+        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+      }
+        const response = await strapi
+          .query('plugin::strapi-stripe.ss-product')
+          .delete({ where: { id: productId } });
+      return response;
+    } catch (error) {
+      throw new ApplicationError(error.message);
+    }
+  },
   async createCheckoutSession(
     stripePriceId,
     stripePlanId,
@@ -161,6 +179,7 @@ module.exports = ({ strapi }) => ({
         mode: paymentMode,
         payment_method_types: [...PaymentMethods],
         customer_email: userEmail,
+        allow_promotion_codes:stripeSettings.allowPromotionCode,
         success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${stripeSettings.checkoutCancelUrl}`,
         metadata: {
@@ -191,10 +210,10 @@ module.exports = ({ strapi }) => ({
   async sendDataToCallbackUrl(session) {
     try {
       const stripeSettings = await this.initialize();
-      
+
       // Return if no callbackUrl is set
       if (!stripeSettings.callbackUrl) return;
-      
+
       await axiosInstance.post(stripeSettings.callbackUrl, session);
     } catch (error) {
       throw new ApplicationError(error.message);

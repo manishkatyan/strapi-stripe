@@ -38,6 +38,7 @@ const ProductList = () => {
   const [isStripeSettings, setIsStripeSettings] = useState(false);
   const [isAlert, setIsAlert] = useState(false);
   const [message, setMessage] = useState('');
+  const [isProductDeleted, setIsProductDeleted] = useState(false);
 
   const offset = pageNumber === 1 ? 0 : (pageNumber - 1) * limit;
 
@@ -67,7 +68,7 @@ const ProductList = () => {
       setProductData(response.data.res);
       setCount(response.data.count);
     })();
-  }, [isVisible, isEditVisible, offset, sortAscendingName, sortAscendingPrice]);
+  }, [isVisible, isEditVisible, offset, sortAscendingName, sortAscendingPrice, isProductDeleted]);
 
   const handleCloseModal = () => {
     setIsVisible(false);
@@ -166,6 +167,10 @@ const ProductList = () => {
 
   const handleClickCreateProduct = () => setIsVisible(prev => !prev);
 
+  const handleProductDelete = () => {
+    setIsProductDeleted(true);
+  };
+
   return (
     <Box>
       <Box paddingTop={6} paddingLeft={7}>
@@ -244,6 +249,7 @@ const ProductList = () => {
           sortAscendingPrice={sortAscendingPrice}
           handleClickCreateProduct={handleClickCreateProduct}
           isStripeSettings={isStripeSettings}
+          handleProductDelete={handleProductDelete}
         />
       </Box>
     </Box>
