@@ -125,12 +125,9 @@ module.exports = ({ strapi }) => ({
       } else {
         stripe = new Stripe(stripeSettings.stripeTestSecKey);
       }
-      // const response = await stripe.products.del(stripeProductId);
-      // if (response.deleted) {
-      const response = await strapi
-        .query('plugin::strapi-stripe.ss-product')
-        .delete({ where: { id: productId } });
-      // }
+        const response = await strapi
+          .query('plugin::strapi-stripe.ss-product')
+          .delete({ where: { id: productId } });
       return response;
     } catch (error) {
       throw new ApplicationError(error.message);
@@ -181,6 +178,7 @@ module.exports = ({ strapi }) => ({
         mode: paymentMode,
         payment_method_types: [...PaymentMethods],
         customer_email: userEmail,
+        allow_promotion_codes:stripeSettings.allowPromotionCode,
         success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${stripeSettings.checkoutCancelUrl}`,
         metadata: {

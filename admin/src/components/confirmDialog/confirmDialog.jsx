@@ -29,7 +29,8 @@ const ConfirmDialog = ({
       <DialogBody icon={<ExclamationMarkCircle />}>
         <Stack spacing={2}>
           <Flex justifyContent="center">
-            <Typography id="confirm-description">Are you sure you want to delete this?</Typography>
+            <Typography id="confirm-description">Are you sure you want to delete this ? 
+            <br/>This will only delete from the database.</Typography>
           </Flex>
         </Stack>
       </DialogBody>

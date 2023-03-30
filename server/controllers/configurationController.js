@@ -13,6 +13,7 @@ module.exports = {
       currency,
       callbackUrl,
       paymentMethods,
+      allowPromotionCode
     } = ctx.request.body.data;
 
     const pluginStore = strapi.store({
@@ -34,6 +35,7 @@ module.exports = {
         currency,
         callbackUrl,
         paymentMethods,
+        allowPromotionCode
       },
     });
     return ctx.send({ ok: true, response });

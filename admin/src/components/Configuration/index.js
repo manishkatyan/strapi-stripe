@@ -44,6 +44,7 @@ const Configuration = () => {
     currency: undefined,
     callbackUrl: '',
     paymentMethods: ['card'],
+    allowPromotionCode: false,
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -77,6 +78,7 @@ const Configuration = () => {
           currency,
           callbackUrl,
           paymentMethods,
+          allowPromotionCode
         } = response.data.response;
         setStripeConfiguration({
           ...stripeConfiguration,
@@ -90,6 +92,7 @@ const Configuration = () => {
           currency,
           callbackUrl,
           paymentMethods,
+          allowPromotionCode
         });
       }
       // call github api to get the latest version of the plugin
@@ -466,6 +469,33 @@ const Configuration = () => {
                   <Option value="ideal">iDEAL</Option>
                   <Option value="sofort">SOFORT</Option>
                 </Select>
+              </GridItem>
+              <GridItem col={6} s={12}>
+                <Box paddingTop={6}>
+                  <Flex alignItems="center">
+                    <Box paddingRight={4}>
+                      <Typography 
+                      style={{textTransform: 'capitalize',fontSize:'0.8rem'}}
+                      fontWeight="bold">
+                        Promotion Code
+                      </Typography>
+                    </Box>
+
+                    <Switch
+                      label="Allow Promotion Code"
+                      visibleLabels
+                      offLabel="OFF"
+                      onLabel="ON"
+                      selected={stripeConfiguration.allowPromotionCode}
+                      onChange={() => {
+                        setStripeConfiguration({
+                          ...stripeConfiguration,
+                          allowPromotionCode: !stripeConfiguration.allowPromotionCode,
+                        });
+                      }}
+                    />
+                  </Flex>
+                </Box>
               </GridItem>
             </Grid>
           </Box>
