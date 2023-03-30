@@ -1,5 +1,6 @@
 /* eslint-disable node/no-extraneous-require */
 /* eslint-disable node/no-missing-require */
+/* eslint-disable no-unused-vars */
 
 'use strict';
 
