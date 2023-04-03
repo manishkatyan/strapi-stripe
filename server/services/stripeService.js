@@ -119,13 +119,6 @@ module.exports = ({ strapi }) => ({
   },
   async deleteProduct(productId, stripeProductId) {
     try {
-      const stripeSettings = await this.initialize();
-      let stripe;
-      if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
-      } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
-      }
         const response = await strapi
           .query('plugin::strapi-stripe.ss-product')
           .delete({ where: { id: productId } });
