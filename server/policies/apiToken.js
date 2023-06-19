@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = async (policyContext, config, { strapi }) => {
-  const bearerToken = policyContext.request.header?.authorization?.substring('Bearer '.length);
+  const bearerToken = policyContext.request.header.authorization.substring('Bearer '.length);
 
   if (!bearerToken) {
     return false;
   }
   const apiTokenService = strapi.services['admin::api-token'];
   const accessKey = await apiTokenService.hash(bearerToken);
-  const storedToken = await apiTokenService.getBy({ accessKey: accessKey });
+  const storedToken = await apiTokenService.getBy({ accessKey });
 
   if (!storedToken) {
     return false;

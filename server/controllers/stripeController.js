@@ -98,6 +98,7 @@ module.exports = {
       );
     ctx.send(checkoutSessionResponse, 200);
   },
+
   async retrieveCheckoutSession(ctx) {
     try {
       const { id } = ctx.params;
@@ -108,8 +109,7 @@ module.exports = {
         .retrieveCheckoutSession(id);
 
       if (retrieveCheckoutSessionResponse.payment_status === 'paid') {
-        const { customer_details, amount_total, id, payment_intent, metadata } =
-          retrieveCheckoutSessionResponse;
+        const { customer_details, amount_total, id, metadata } = retrieveCheckoutSessionResponse;
 
         const queryId = metadata.productId;
         // get id from productschema
@@ -126,7 +126,7 @@ module.exports = {
         const customerEmail = customer_details.email;
         const stripeProduct = res.id;
 
-        const savePaymentDetails = await strapi.query('plugin::strapi-stripe.ss-payment').create({
+        await strapi.query('plugin::strapi-stripe.ss-payment').create({
           data: {
             txnDate,
             transactionId,
@@ -210,7 +210,7 @@ module.exports = {
             email
           );
 
-        ctx.send({ url: checkoutSessionResponse?.url }, 200);
+        ctx.send({ url: checkoutSessionResponse.url }, 200);
       }
     } catch (error) {
       console.error(error);
