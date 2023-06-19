@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -5,14 +6,16 @@ import {
   ModalBody,
   ModalHeader,
   ModalFooter,
-} from '@strapi/design-system/ModalLayout';
-import { Typography } from '@strapi/design-system/Typography';
-import { Button } from '@strapi/design-system/Button';
-import { Flex } from '@strapi/design-system/Flex';
-import { Box } from '@strapi/design-system/Box';
-import { Accordion, AccordionToggle, AccordionContent } from '@strapi/design-system/Accordion';
+  Button,
+  Typography,
+  Flex,
+  Box,
+  Accordion,
+  AccordionToggle,
+  AccordionContent,
+} from '@strapi/design-system/';
 
-import { stripeResponse, ProductRespone } from './constant';
+import { stripeResponse } from './constant';
 
 const EmbedCodeModal = ({
   productId,
@@ -20,7 +23,6 @@ const EmbedCodeModal = ({
   handleCloseEmbedCode,
   isSubscription,
 }) => {
-  const [expandProduct, setExpandProduct] = useState(false);
   const [expandPayment, setExpandPayment] = useState(false);
 
   return (
@@ -74,7 +76,7 @@ const EmbedCodeModal = ({
             </Box>
             <Flex alignItems="top">
               <Box paddingRight={2}>
-                <Typography variant="epsilon">Step&nbsp;2a:</Typography>
+                <Typography variant="epsilon">Step&nbsp;2:</Typography>
               </Box>
               <Box>
                 <Typography variant="epsilon">
@@ -98,41 +100,6 @@ const EmbedCodeModal = ({
                 </button>
                 `}
               </Typography>
-            </Box>
-            <Flex alignItems="top">
-              <Box paddingRight={2}>
-                <Typography variant="epsilon">Step&nbsp;2b:</Typography>
-              </Box>
-              <Box>
-                <Typography variant="epsilon">
-                  Optionally, you can fetch product details such as title, description, image and
-                  price from the API end-point mentioned below and show them.
-                </Typography>
-              </Box>
-            </Flex>
-            <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
-              <Typography>
-                {`const response = await axios.get(
-                   " ${window.location.origin}/strapi-stripe/getProduct/${productId}"
-                  ) `}
-              </Typography>
-            </Box>
-            <Box padding={4} background="neutral100" marginBottom={4}>
-              <Accordion
-                expanded={expandProduct}
-                toggle={() => setExpandProduct(s => !s)}
-                id="acc-1"
-                size="S"
-              >
-                <AccordionToggle title="Sample Product response object" />
-                <AccordionContent>
-                  <Box padding={3}>
-                    <Typography>
-                      <pre>{JSON.stringify(ProductRespone, null, 2)}</pre>
-                    </Typography>
-                  </Box>
-                </AccordionContent>
-              </Accordion>
             </Box>
 
             <Flex alignItems="top">
@@ -171,7 +138,7 @@ const EmbedCodeModal = ({
             <Box padding={4} background="neutral100" marginBottom={4}>
               <Accordion
                 expanded={expandPayment}
-                toggle={() => setExpandPayment(s => !s)}
+                onToggle={() => setExpandPayment(s => !s)}
                 id="acc-1"
                 size="S"
               >

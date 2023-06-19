@@ -1,8 +1,7 @@
+// @ts-nocheck
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@strapi/design-system/Box';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { Typography } from '@strapi/design-system/Typography';
+import { Box, Grid, GridItem, Typography } from '@strapi/design-system';
 
 const Banner = ({ leftChild, rightChild, leftChildCol, rightChildCol, header, isHeader }) => {
   return (

@@ -4,16 +4,12 @@ module.exports = {
   async updateSetting(ctx) {
     const {
       isLiveMode,
-      stripeLivePubKey,
-      stripeLiveSecKey,
-      stripeTestPubKey,
-      stripeTestSecKey,
       checkoutSuccessUrl,
       checkoutCancelUrl,
       currency,
       callbackUrl,
       paymentMethods,
-      allowPromotionCode
+      allowPromotionCode,
     } = ctx.request.body.data;
 
     const pluginStore = strapi.store({
@@ -26,16 +22,12 @@ module.exports = {
       key: 'stripeSetting',
       value: {
         isLiveMode,
-        stripeLivePubKey,
-        stripeLiveSecKey,
-        stripeTestPubKey,
-        stripeTestSecKey,
         checkoutSuccessUrl,
         checkoutCancelUrl,
         currency,
         callbackUrl,
         paymentMethods,
-        allowPromotionCode
+        allowPromotionCode,
       },
     });
     return ctx.send({ ok: true, response });

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  *
  * This component is the responsible for displaying all the created Products.
@@ -19,6 +20,8 @@ import {
   getStripeConfiguration,
 } from '../../utils/apiCalls';
 import EditProduct from './editProduct';
+
+const apiToken = process.env.STRAPI_ADMIN_API_TOKEN;
 
 const limit = 5;
 const ProductList = () => {
@@ -47,7 +50,7 @@ const ProductList = () => {
       let sort;
       let order;
 
-      const setting = await getStripeConfiguration();
+      const setting = await getStripeConfiguration(apiToken);
 
       if (setting.data.response) {
         setIsStripeSettings(true);
@@ -63,7 +66,7 @@ const ProductList = () => {
         order = sortAscendingPrice ? 'asc' : 'desc';
       }
 
-      const response = await getStripeProduct(offset, limit, sort, order);
+      const response = await getStripeProduct(offset, limit, sort, order, apiToken);
 
       setProductData(response.data.res);
       setCount(response.data.count);
@@ -92,7 +95,8 @@ const ProductList = () => {
       description,
       isSubscription,
       paymentInterval,
-      trialPeriodDays
+      trialPeriodDays,
+      apiToken
     );
 
     if (createProduct?.data?.id) {
@@ -102,14 +106,14 @@ const ProductList = () => {
 
   const handleSortAscendingName = () => {
     setSortAscendingName(true);
-    sortOrderName(true);
-    sortOrderPrice(false);
+    setSortOrderName(true);
+    setSortOrderPrice(false);
   };
 
   const handleSortDescendingName = () => {
     setSortAscendingName(false);
-    sortOrderName(true);
-    sortOrderPrice(false);
+    setSortOrderName(true);
+    setSortOrderPrice(false);
   };
 
   const handleSortAscendingPrice = () => {
@@ -148,7 +152,8 @@ const ProductList = () => {
         url,
         description,
         productImageId,
-        stripeProductId
+        stripeProductId,
+        apiToken
       );
 
       if (updateProduct?.data?.id) {
@@ -168,7 +173,7 @@ const ProductList = () => {
   const handleClickCreateProduct = () => setIsVisible(prev => !prev);
 
   const handleProductDelete = () => {
-    setIsProductDeleted(true);
+    setIsProductDeleted(!isProductDeleted);
   };
 
   return (

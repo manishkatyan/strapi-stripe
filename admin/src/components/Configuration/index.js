@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
@@ -9,18 +10,25 @@
 import React, { useState, useEffect } from 'react';
 import { SettingsPageTitle } from '@strapi/helper-plugin';
 import Check from '@strapi/icons/Check';
-import { Box } from '@strapi/design-system/Box';
-import { Button } from '@strapi/design-system/Button';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { HeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
-import { Main } from '@strapi/design-system/Main';
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Typography } from '@strapi/design-system/Typography';
-import { Alert } from '@strapi/design-system/Alert';
-import { Select, Option } from '@strapi/design-system/Select';
-import { Link } from '@strapi/design-system/Link';
-import { Switch } from '@strapi/design-system/Switch';
-import { Flex } from '@strapi/design-system/Flex';
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HeaderLayout,
+  ContentLayout,
+  Main,
+  TextInput,
+  Typography,
+  Alert,
+  SingleSelect,
+  SingleSelectOption,
+  MultiSelect,
+  MultiSelectOption,
+  Link,
+  Switch,
+  Flex,
+} from '@strapi/design-system';
 import currencies from './constant';
 import { supportEmail } from '../ProductList/constant';
 import {
@@ -32,13 +40,11 @@ import Banner from './banner';
 import pluginPkg from '../../../../package.json';
 import WarningIcon from './warningIcon';
 
+const apiToken = process.env.STRAPI_ADMIN_API_TOKEN;
+
 const Configuration = () => {
   const [stripeConfiguration, setStripeConfiguration] = useState({
     isLiveMode: false,
-    stripeLivePubKey: '',
-    stripeLiveSecKey: '',
-    stripeTestPubKey: '',
-    stripeTestSecKey: '',
     checkoutSuccessUrl: '',
     checkoutCancelUrl: '',
     currency: undefined,
@@ -51,10 +57,6 @@ const Configuration = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [error, setError] = useState({
-    stripeLivePubKey: '',
-    stripeLiveSecKey: '',
-    stripeTestPubKey: '',
-    stripeTestSecKey: '',
     checkoutSuccessUrl: '',
     checkoutCancelUrl: '',
     currency: '',
@@ -64,35 +66,27 @@ const Configuration = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await getStripeConfiguration();
+      const response = await getStripeConfiguration(apiToken);
 
       if (response.data?.response) {
         const {
           isLiveMode,
-          stripeLivePubKey,
-          stripeLiveSecKey,
-          stripeTestPubKey,
-          stripeTestSecKey,
           checkoutSuccessUrl,
           checkoutCancelUrl,
           currency,
           callbackUrl,
           paymentMethods,
-          allowPromotionCode
+          allowPromotionCode,
         } = response.data.response;
         setStripeConfiguration({
           ...stripeConfiguration,
           isLiveMode,
-          stripeLivePubKey,
-          stripeLiveSecKey,
-          stripeTestPubKey,
-          stripeTestSecKey,
           checkoutSuccessUrl,
           checkoutCancelUrl,
           currency,
           callbackUrl,
           paymentMethods,
-          allowPromotionCode
+          allowPromotionCode,
         });
       }
       // call github api to get the latest version of the plugin
@@ -114,15 +108,7 @@ const Configuration = () => {
     const { name, value } = event.target;
     setStripeConfiguration({ ...stripeConfiguration, [name]: value });
 
-    if (name === 'stripeLivePubKey') {
-      setError({ ...error, stripeLivePubKey: '' });
-    } else if (name === 'stripeLiveSecKey') {
-      setError({ ...error, stripeLiveSecKey: '' });
-    } else if (name === 'stripeTestPubKey') {
-      setError({ ...error, stripeTestPubKey: '' });
-    } else if (name === 'stripeTestSecKey') {
-      setError({ ...error, stripeTestSecKey: '' });
-    } else if (name === 'checkoutSuccessUrl') {
+    if (name === 'checkoutSuccessUrl') {
       setError({ ...error, checkoutSuccessUrl: '' });
     } else if (name === 'checkoutCancelUrl') {
       setError({ ...error, checkoutCancelUrl: '' });
@@ -133,47 +119,16 @@ const Configuration = () => {
     setIsSubmitting(true);
 
     if (
-      !stripeConfiguration.stripeLivePubKey &&
-      !stripeConfiguration.stripeLiveSecKey &&
-      !stripeConfiguration.stripeTestPubKey &&
-      !stripeConfiguration.stripeTestSecKey &&
       !stripeConfiguration.checkoutSuccessUrl &&
       !stripeConfiguration.checkoutCancelUrl &&
       !stripeConfiguration.currency
     ) {
       setError({
         ...error,
-        stripeLivePubKey: 'Live Stripe Publishable Key is required',
-        stripeLiveSecKey: 'Live Stripe Secret Key is required',
-        stripeTestPubKey: 'Test Stripe Publishable Key is required',
-        stripeTestSecKey: 'Test Stripe Secret Key is required',
+
         checkoutSuccessUrl: 'Checkout Success Page URL is required',
         checkoutCancelUrl: 'Checkout Cancel Page URL is required',
         currency: 'Currency is required',
-      });
-      setIsSubmitting(false);
-    } else if (!stripeConfiguration.stripeLivePubKey) {
-      setError({
-        ...error,
-        stripeLivePubKey: 'Live Stripe Publishable Key is required',
-      });
-      setIsSubmitting(false);
-    } else if (!stripeConfiguration.stripeLiveSecKey) {
-      setError({
-        ...error,
-        stripeLiveSecKey: 'Live Stripe Secret Key is required',
-      });
-      setIsSubmitting(false);
-    } else if (!stripeConfiguration.stripeTestPubKey) {
-      setError({
-        ...error,
-        stripeTestPubKey: 'Test Stripe Publishable Key is required',
-      });
-      setIsSubmitting(false);
-    } else if (!stripeConfiguration.stripeTestSecKey) {
-      setError({
-        ...error,
-        stripeTestSecKey: 'Test Stripe Secret Key is required',
       });
       setIsSubmitting(false);
     } else if (!stripeConfiguration.checkoutSuccessUrl) {
@@ -195,7 +150,7 @@ const Configuration = () => {
       });
       setIsSubmitting(false);
     } else {
-      const response = await saveStripeConfiguration(stripeConfiguration);
+      const response = await saveStripeConfiguration(stripeConfiguration, apiToken);
 
       if (response.data.ok) {
         setShowAlert(true);
@@ -267,6 +222,7 @@ const Configuration = () => {
             rightChildCol={10}
           />
         </Box>
+        <br />
         <Box
           shadow="tableShadow"
           background="neutral0"
@@ -276,14 +232,10 @@ const Configuration = () => {
           paddingBottom={6}
           hasRadius
         >
-          <Box>
-            <Typography variant="delta">Credentials</Typography>
+          <Box paddingBottom={1}>
+            <Typography variant="delta">Global Setting</Typography>
           </Box>
-          <Box paddingBottom={2} paddingTop={1}>
-            <Typography variant="omega">
-              Configure your stripe publishable and secret Key.
-            </Typography>
-          </Box>
+
           <Box paddingTop={2}>
             <Grid gap={4}>
               <GridItem col={12} s={12}>
@@ -309,74 +261,7 @@ const Configuration = () => {
                   </Flex>
                 </Box>
               </GridItem>
-
-              <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={3}>
-                  <TextInput
-                    name="stripeLivePubKey"
-                    label="Live Stripe Publishable Key"
-                    placeholder="Live Stripe Publishable Key"
-                    required
-                    value={stripeConfiguration.stripeLivePubKey}
-                    error={error.stripeLivePubKey ? error.stripeLivePubKey : ''}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingTop={2} paddingBottom={3}>
-                  <TextInput
-                    name="stripeLiveSecKey"
-                    placeholder="Live Stripe Secret Key"
-                    label="Live Stripe Secret Key"
-                    required
-                    value={stripeConfiguration.stripeLiveSecKey}
-                    error={error.stripeLiveSecKey ? error.stripeLiveSecKey : ''}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingBottom={2}>
-                  <TextInput
-                    name="stripeTestPubKey"
-                    placeholder="Test Stripe Publishable Key"
-                    label="Test Stripe Publishable Key"
-                    required
-                    value={stripeConfiguration.stripeTestPubKey}
-                    error={error.stripeTestPubKey ? error.stripeTestPubKey : ''}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Box paddingBottom={2}>
-                  <TextInput
-                    name="stripeTestSecKey"
-                    placeholder="Test Stripe Secret Key"
-                    label="Test Stripe Secret Key"
-                    required
-                    value={stripeConfiguration.stripeTestSecKey}
-                    error={error.stripeTestSecKey ? error.stripeTestSecKey : ''}
-                    onChange={handleChange}
-                  />
-                </Box>
-              </GridItem>
             </Grid>
-          </Box>
-        </Box>
-        <br />
-        <Box
-          shadow="tableShadow"
-          background="neutral0"
-          paddingTop={6}
-          paddingLeft={7}
-          paddingRight={7}
-          paddingBottom={6}
-          hasRadius
-        >
-          <Box paddingBottom={2}>
-            <Typography variant="delta">Global Setting</Typography>
           </Box>
 
           <Box paddingTop={2}>
@@ -409,7 +294,7 @@ const Configuration = () => {
               </GridItem>
               <GridItem col={6} s={12}>
                 <Box paddingBottom={2}>
-                  <Select
+                  <SingleSelect
                     id="select1"
                     label="Choose Currency"
                     required
@@ -427,11 +312,11 @@ const Configuration = () => {
                   >
                     {currencies &&
                       currencies.map((currency, idx) => (
-                        <Option value={currency.value} key={idx}>
+                        <SingleSelectOption value={currency.value} key={idx}>
                           {currency.label}
-                        </Option>
+                        </SingleSelectOption>
                       ))}
-                  </Select>
+                  </SingleSelect>
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
@@ -446,7 +331,7 @@ const Configuration = () => {
                 </Box>
               </GridItem>
               <GridItem col={6} s={12}>
-                <Select
+                <MultiSelect
                   id="paymentMethod"
                   label="Choose Payment Methods"
                   onClear={() =>
@@ -461,22 +346,23 @@ const Configuration = () => {
                   multi
                   withTags
                 >
-                  <Option value="card">Credit Card/Debit Card</Option>
-                  <Option value="sepa_debit"> SEPA Direct Debit</Option>
-                  <Option value="us_bank_account">ACH Direct Debit</Option>
-                  <Option value="alipay">Alipay</Option>
-                  <Option value="klarna">Klarna</Option>
-                  <Option value="ideal">iDEAL</Option>
-                  <Option value="sofort">SOFORT</Option>
-                </Select>
+                  <MultiSelectOption value="card">Credit Card/Debit Card</MultiSelectOption>
+                  <MultiSelectOption value="sepa_debit"> SEPA Direct Debit</MultiSelectOption>
+                  <MultiSelectOption value="us_bank_account">ACH Direct Debit</MultiSelectOption>
+                  <MultiSelectOption value="alipay">Alipay</MultiSelectOption>
+                  <MultiSelectOption value="klarna">Klarna</MultiSelectOption>
+                  <MultiSelectOption value="ideal">iDEAL</MultiSelectOption>
+                  <MultiSelectOption value="sofort">SOFORT</MultiSelectOption>
+                </MultiSelect>
               </GridItem>
               <GridItem col={6} s={12}>
                 <Box paddingTop={6}>
                   <Flex alignItems="center">
                     <Box paddingRight={4}>
-                      <Typography 
-                      style={{textTransform: 'capitalize',fontSize:'0.8rem'}}
-                      fontWeight="bold">
+                      <Typography
+                        style={{ textTransform: 'capitalize', fontSize: '0.8rem' }}
+                        fontWeight="bold"
+                      >
                         Promotion Code
                       </Typography>
                     </Box>

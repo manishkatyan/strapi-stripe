@@ -1,3 +1,6 @@
 'use strict';
 
-module.exports = {};
+const apiToken = require('./apiToken');
+module.exports = {
+  apiToken,
+};

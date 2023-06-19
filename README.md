@@ -71,14 +71,14 @@ Please refer to the official Strapi installation requirement doc here: [Installa
 
 **Minimum environment requirements**
 
-- Node.js `>=14.x.x`
-- NPM `>=6.x.x`
+- Node.js `>=18.x.x`
+- NPM `>=8.x.x`
 
 We are following the [official Node.js releases timelines](https://nodejs.org/en/about/releases/).
 
 **Supported Strapi versions**:
 
-- Strapi v4.5.3 (recently tested)
+- Strapi v4.11.1 (recently tested)
 
 - Strapi v4.x
 
@@ -100,7 +100,19 @@ Use **npm** to install this plugin within your Strapi project.
 npm i strapi-stripe
 ```
 
-After successful installation you would need to build a fresh package that includes the Stripe Payments plugin UI. Execute the commands below:
+After successful installation you would need to Add .env file in your root directory and add the following keys in it.
+
+```bash
+STRAPI_ADMIN_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+> Note: You can get the STRAPI_ADMIN_API_TOKEN from your Strapi Admin Panel. Go to ` Settings -> Global settings ->API Tokens -> Create new API Token`. Make Sure to Select `Token duration-> Unlimited` and `Token type -> Full Access` and save it Copy the token and add it in .env file.
+
+> Note: Please Make sure to add the .env variables and verify them before starting the server.
+
+To Build a fresh package that includes the Stripe Payments plugin UI. Execute the commands below:
 
 ```bash
 # with npm (option 1)
@@ -110,6 +122,7 @@ $ npm run develop
 # with npx (option 2)
 $ npx strapi  build
 $ npx strapi  develop
+
 ```
 
 The **Payment** plugin should appear in the **Plugins** section of the Strapi sidebar after you run the app again.
