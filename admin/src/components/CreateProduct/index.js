@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  *
  * This component is the responsible for opening modal when the Add Product
@@ -12,17 +13,19 @@ import {
   ModalBody,
   ModalHeader,
   ModalFooter,
-} from '@strapi/design-system/ModalLayout';
-import { Box } from '@strapi/design-system/Box';
-import { Flex } from '@strapi/design-system/Flex';
-import { Button } from '@strapi/design-system/Button';
-import { Typography } from '@strapi/design-system/Typography';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Loader } from '@strapi/design-system/Loader';
-import { Select, Option } from '@strapi/design-system/Select';
-import { NumberInput } from '@strapi/design-system/NumberInput';
-import { Textarea } from '@strapi/design-system/Textarea';
+  Box,
+  Flex,
+  Button,
+  Typography,
+  Grid,
+  GridItem,
+  TextInput,
+  Loader,
+  NumberInput,
+  Textarea,
+  SingleSelect,
+  SingleSelectOption,
+} from '@strapi/design-system';
 import { uploadFiles } from '../../utils/apiCalls';
 
 const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
@@ -54,9 +57,6 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
       setError({ ...error, title: '' });
     } else if (name === 'image') {
       setImage(event.target.files);
-    } else if (name === 'description') {
-      setDescription(value);
-      setError({ ...error, description: '' });
     }
   };
 
@@ -150,17 +150,15 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
         setUpload(true);
         setUploadMessage('Uploading Product image');
         const response = await uploadFiles(image);
+        const data = await response.json();
 
-        if (
-          response.data[0].url.indexOf('https://') === 0 ||
-          response.data[0].url.indexOf('http://') === 0
-        ) {
-          imageUrl = response.data[0].url;
+        if (data[0].url.indexOf('https://') === 0 || data[0].url.indexOf('http://') === 0) {
+          imageUrl = data[0].url;
         } else {
-          imageUrl = `${window.location.origin}${response.data[0].url}`;
+          imageUrl = `${window.location.origin}${data[0].url}`;
         }
 
-        imageId = response.data[0].id;
+        imageId = data[0].id;
       }
 
       setUpload(false);
@@ -211,10 +209,9 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
             </Flex>
           </ModalHeader>
           <ModalBody>
-            <Grid gap={5}>
+            <Grid gap="5">
               <GridItem col={6}>
-                <Select
-                  id="select1"
+                <SingleSelect
                   label="Payment Type"
                   required
                   clearLabel="Clear the payment type"
@@ -224,9 +221,9 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                   onChange={value => handleChangePaymentType(value)}
                   value={paymentType}
                 >
-                  <Option value="oneTime">One-Time</Option>
-                  <Option value="subscription">Subscription</Option>
-                </Select>
+                  <SingleSelectOption value="oneTime">One-Time</SingleSelectOption>
+                  <SingleSelectOption value="subscription">Subscription</SingleSelectOption>
+                </SingleSelect>
               </GridItem>
               <GridItem col={6}>
                 <NumberInput
@@ -267,7 +264,10 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                 <Textarea
                   label="Description"
                   name="description"
-                  onChange={handleChange}
+                  onChange={e => {
+                    setDescription(e.target.value);
+                    setError({ ...error, description: '' });
+                  }}
                   error={error.description ? error.description : ''}
                   required
                 >
@@ -275,7 +275,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                 </Textarea>
               </GridItem>
               <GridItem col={6}>
-                <Select
+                <SingleSelect
                   id="select2"
                   label="Payment Interval"
                   required={isSubscription}
@@ -287,10 +287,10 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
                   onChange={value => handleChangePaymentInterval(value)}
                   value={paymentInterval}
                 >
-                  <Option value="month">Month</Option>
-                  <Option value="year">Year</Option>
-                  <Option value="week">Week</Option>
-                </Select>
+                  <SingleSelectOption value="month">Month</SingleSelectOption>
+                  <SingleSelectOption value="year">Year</SingleSelectOption>
+                  <SingleSelectOption value="week">Week</SingleSelectOption>
+                </SingleSelect>
               </GridItem>
               <GridItem col={6}>
                 <NumberInput

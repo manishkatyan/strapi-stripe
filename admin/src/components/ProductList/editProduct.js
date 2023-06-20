@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  *
  * This component is the responsible for opening modal when the edit
@@ -12,17 +13,22 @@ import {
   ModalBody,
   ModalHeader,
   ModalFooter,
-} from '@strapi/design-system/ModalLayout';
-import { Button } from '@strapi/design-system/Button';
-import { Typography } from '@strapi/design-system/Typography';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Loader } from '@strapi/design-system/Loader';
-import { Flex } from '@strapi/design-system/Flex';
-import { Box } from '@strapi/design-system/Box';
-import { Select, Option } from '@strapi/design-system/Select';
-import { Textarea } from '@strapi/design-system/Textarea';
+  Button,
+  Typography,
+  Grid,
+  GridItem,
+  TextInput,
+  Loader,
+  Flex,
+  Box,
+  SingleSelect,
+  SingleSelectOption,
+  Textarea,
+} from '@strapi/design-system/';
+
 import { getStripeProductProductById, uploadFiles } from '../../utils/apiCalls';
+
+const apiToken = process.env.STRAPI_ADMIN_API_TOKEN;
 
 const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpdateEdit }) => {
   const [title, setTitle] = useState('');
@@ -47,7 +53,7 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
 
   useEffect(() => {
     (async () => {
-      const response = await getStripeProductProductById(productId);
+      const response = await getStripeProductProductById(productId, apiToken);
 
       if (response.status === 200 && response.data) {
         const {
@@ -90,9 +96,6 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
       setError({ ...error, price: '' });
     } else if (name === 'image') {
       setImage(event.target.files);
-    } else if (name === 'description') {
-      setDescription(value);
-      setError({ ...error, description: '' });
     }
   };
 
@@ -134,10 +137,11 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
         setUploadMessage('Uploading Product image');
 
         const response = await uploadFiles(image);
+        const data = await response.json();
 
-        if (response.data[0].id) {
-          imageUrl = `${window.location.origin}${response.data[0].url}`;
-          imageId = response.data[0].id;
+        if (data[0].id) {
+          imageUrl = `${window.location.origin}${data[0].url}`;
+          imageId = data[0].id;
         }
         handleClickUpdateEdit(productId, title, imageUrl, description, imageId, stripeProduct);
       } else {
@@ -158,9 +162,9 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
             </Typography>
           </ModalHeader>
           <ModalBody>
-            <Grid gap={5}>
+            <Grid gap="5">
               <GridItem col={6}>
-                <Select
+                <SingleSelect
                   id="select1"
                   label="Payment Type"
                   required
@@ -169,9 +173,9 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
                   disabled
                   value={paymentType}
                 >
-                  <Option value="oneTime">One-Time</Option>
-                  <Option value="subscription">Subscription</Option>
-                </Select>
+                  <SingleSelectOption value="oneTime">One-Time</SingleSelectOption>
+                  <SingleSelectOption value="subscription">Subscription</SingleSelectOption>
+                </SingleSelect>
               </GridItem>
               <GridItem col={6}>
                 <TextInput
@@ -210,7 +214,10 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
                 <Textarea
                   label="Description"
                   name="description"
-                  onChange={handleChange}
+                  onChange={({ target }) => {
+                    setDescription(target.value);
+                    setError({ ...error, description: '' });
+                  }}
                   error={error.description ? error.description : ''}
                   required
                 >
@@ -218,7 +225,7 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
                 </Textarea>
               </GridItem>
               <GridItem col={6}>
-                <Select
+                <SingleSelect
                   id="select2"
                   label="Payment Interval"
                   disabled
@@ -226,10 +233,10 @@ const EditProduct = ({ productId, isEditVisible, handleCloseEdit, handleClickUpd
                   hint="Subscription billing frequency: weekly, monthly or yearly."
                   value={paymentInterval}
                 >
-                  <Option value="month">Month</Option>
-                  <Option value="year">Year</Option>
-                  <Option value="week">Week</Option>
-                </Select>
+                  <SingleSelectOption value="month">Month</SingleSelectOption>
+                  <SingleSelectOption value="year">Year</SingleSelectOption>
+                  <SingleSelectOption value="week">Week</SingleSelectOption>
+                </SingleSelect>
               </GridItem>
               <GridItem col={6}>
                 <TextInput

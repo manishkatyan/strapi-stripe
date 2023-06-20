@@ -1,27 +1,41 @@
+// @ts-nocheck
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
-import { Table, Thead, Tbody, Tr, Td, Th } from '@strapi/design-system/Table';
-import { Box } from '@strapi/design-system/Box';
-import { Typography } from '@strapi/design-system/Typography';
-import { Divider } from '@strapi/design-system/Divider';
-import { Flex } from '@strapi/design-system/Flex';
-import { Badge } from '@strapi/design-system/Badge';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  Th,
+  Box,
+  Typography,
+  Divider,
+  Flex,
+  Badge,
+  Breadcrumbs,
+  Crumb,
+  Stack,
+  Link,
+  IconButton,
+  EmptyStateLayout,
+  NextLink,
+  PageLink,
+  Pagination,
+  PreviousLink,
+} from '@strapi/design-system';
 import parse from 'html-react-parser';
 import { useParams, useLocation } from 'react-router-dom';
-import { Breadcrumbs, Crumb } from '@strapi/design-system/Breadcrumbs';
-import { Stack } from '@strapi/design-system/Stack';
-import { Link } from '@strapi/design-system/Link';
 import ArrowLeft from '@strapi/icons/ArrowLeft';
-import { IconButton } from '@strapi/design-system/IconButton';
 import CarretUp from '@strapi/icons/CarretUp';
 import ExclamationMarkCircle from '@strapi/icons/ExclamationMarkCircle';
-import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
 import CarretDown from '@strapi/icons/CarretDown';
-import { NextLink, PageLink, Pagination, PreviousLink } from '@strapi/design-system/Pagination';
 import { currencies } from '../ProductList/constant';
 import { getProductPayments } from '../../utils/apiCalls';
 
 const limit = 7;
+
+const apiToken = process.env.STRAPI_ADMIN_API_TOKEN;
 
 const PaymentDetailsTable = () => {
   const { productId, productName } = useParams();
@@ -42,27 +56,30 @@ const PaymentDetailsTable = () => {
 
   const pageCount = Math.ceil(totalCount / limit);
 
-  useEffect(async () => {
-    let sort;
-    let order;
+  useEffect(() => {
+    async function fetchData() {
+      let sort;
+      let order;
 
-    if (sortOrderName) {
-      sort = 'name';
-      order = sortAscendingName ? 'asc' : 'desc';
-    } else if (sortOrderEmail) {
-      sort = 'email';
-      order = sortAscendingEmail ? 'asc' : 'desc';
-    } else if (sortOrderTxnDate) {
-      sort = 'date';
-      order = sortAscendingTxnDate ? 'asc' : 'desc';
-    }
-    const response = await getProductPayments(productId, sort, order, offset, limit);
+      if (sortOrderName) {
+        sort = 'name';
+        order = sortAscendingName ? 'asc' : 'desc';
+      } else if (sortOrderEmail) {
+        sort = 'email';
+        order = sortAscendingEmail ? 'asc' : 'desc';
+      } else if (sortOrderTxnDate) {
+        sort = 'date';
+        order = sortAscendingTxnDate ? 'asc' : 'desc';
+      }
+      const response = await getProductPayments(productId, sort, order, offset, limit, apiToken);
 
-    if (response?.data) {
-      setPayments(response.data.payments);
-      setProductDetail(response.data.payments[0].stripeProduct);
-      setTotalCount(response.data.count);
+      if (response?.data) {
+        setPayments(response?.data?.payments);
+        setProductDetail(response.data?.payments[0]?.stripeProduct);
+        setTotalCount(response.data?.count);
+      }
     }
+    fetchData();
   }, [sortAscendingName, sortAscendingEmail, sortAscendingTxnDate, offset]);
 
   const getTransactionAmount = (txnAmount, currency) => {

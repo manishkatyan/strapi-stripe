@@ -80,6 +80,7 @@ module.exports = {
       .deleteProduct(productId, stripeProductId);
     ctx.send(deleteProductResponse, 200);
   },
+
   async createCheckoutSession(ctx) {
     const { stripePriceId, stripePlanId, isSubscription, productId, productName, userEmail } =
       ctx.request.body;
@@ -97,43 +98,60 @@ module.exports = {
       );
     ctx.send(checkoutSessionResponse, 200);
   },
+
   async retrieveCheckoutSession(ctx) {
-    const { id } = ctx.params;
-    const retrieveCheckoutSessionResponse = await strapi
-      .plugin('strapi-stripe')
-      .service('stripeService')
-      .retrieveCheckoutSession(id);
+    try {
+      const { id } = ctx.params;
 
-    ctx.send(retrieveCheckoutSessionResponse, 200);
-  },
-  async savePayment(ctx) {
-    const {
-      txnDate,
-      transactionId,
-      isTxnSuccessful,
-      txnMessage,
-      txnAmount,
-      customerName,
-      customerEmail,
-      stripeProduct,
-    } = ctx.request.body;
+      const retrieveCheckoutSessionResponse = await strapi
+        .plugin('strapi-stripe')
+        .service('stripeService')
+        .retrieveCheckoutSession(id);
 
-    const savePaymentDetails = await strapi.query('plugin::strapi-stripe.ss-payment').create({
-      data: {
-        txnDate,
-        transactionId,
-        isTxnSuccessful,
-        txnMessage: JSON.stringify(txnMessage),
-        txnAmount,
-        customerName,
-        customerEmail,
-        stripeProduct,
-      },
-      populate: true,
-    });
-    await strapi.plugin('strapi-stripe').service('stripeService').sendDataToCallbackUrl(txnMessage);
-    return savePaymentDetails;
+      if (retrieveCheckoutSessionResponse.payment_status === 'paid') {
+        const { customer_details, amount_total, id, metadata } = retrieveCheckoutSessionResponse;
+
+        const queryId = metadata.productId;
+        // get id from productschema
+        const res = await strapi
+          .query('plugin::strapi-stripe.ss-product')
+          .findOne({ where: { stripeProductId: queryId }, populate: true });
+
+        const txnDate = new Date();
+        const transactionId = id;
+        const isTxnSuccessful = true;
+        const txnMessage = retrieveCheckoutSessionResponse;
+        const txnAmount = amount_total / 100;
+        const customerName = customer_details.name;
+        const customerEmail = customer_details.email;
+        const stripeProduct = res.id;
+
+        await strapi.query('plugin::strapi-stripe.ss-payment').create({
+          data: {
+            txnDate,
+            transactionId,
+            isTxnSuccessful,
+            txnMessage: JSON.stringify(txnMessage),
+            txnAmount,
+            customerName,
+            customerEmail,
+            stripeProduct,
+          },
+          populate: true,
+        });
+
+        await strapi
+          .plugin('strapi-stripe')
+          .service('stripeService')
+          .sendDataToCallbackUrl(txnMessage);
+
+        ctx.send(retrieveCheckoutSessionResponse, 200);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   },
+
   async getProductPayments(ctx) {
     const { id, sort, order, offset, limit } = ctx.params;
     let needToshort;
@@ -169,6 +187,33 @@ module.exports = {
       ctx.send(subscriptionStatus, 200);
     } else {
       ctx.send(subscriptionStatus, 204);
+    }
+  },
+
+  async getRedirectUrl(ctx) {
+    try {
+      const { id, email } = ctx.params;
+      const res = await strapi
+        .query('plugin::strapi-stripe.ss-product')
+        .findOne({ where: { id }, populate: true });
+
+      if (res) {
+        const checkoutSessionResponse = await strapi
+          .plugin('strapi-stripe')
+          .service('stripeService')
+          .createCheckoutSession(
+            res.stripePriceId,
+            res.stripePlanId,
+            res.isSubscription,
+            res.stripeProductId,
+            res.title,
+            email
+          );
+
+        ctx.send({ url: checkoutSessionResponse.url }, 200);
+      }
+    } catch (error) {
+      console.error(error);
     }
   },
 };

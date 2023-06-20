@@ -6,7 +6,8 @@ module.exports = [
     path: '/updateSettings',
     handler: 'configurationController.updateSetting',
     config: {
-      policies: ['admin::isAuthenticatedAdmin'],
+      auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
@@ -14,7 +15,8 @@ module.exports = [
     path: '/getSettings',
     handler: 'configurationController.getSetting',
     config: {
-      policies: ['admin::isAuthenticatedAdmin'],
+      auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
@@ -23,6 +25,7 @@ module.exports = [
     handler: 'stripeController.createProduct',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
@@ -31,6 +34,7 @@ module.exports = [
     handler: 'stripeController.find',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
 
@@ -40,6 +44,7 @@ module.exports = [
     handler: 'stripeController.findOne',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
@@ -48,6 +53,7 @@ module.exports = [
     handler: 'stripeController.updateProduct',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
@@ -56,29 +62,13 @@ module.exports = [
     handler: 'stripeController.deleteProduct',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
-  {
-    method: 'POST',
-    path: '/createCheckoutSession',
-    handler: 'stripeController.createCheckoutSession',
-    config: {
-      auth: false,
-    },
-  },
-
   {
     method: 'GET',
     path: '/retrieveCheckoutSession/:id',
     handler: 'stripeController.retrieveCheckoutSession',
-    config: {
-      auth: false,
-    },
-  },
-  {
-    method: 'POST',
-    path: '/stripePayment',
-    handler: 'stripeController.savePayment',
     config: {
       auth: false,
     },
@@ -89,12 +79,21 @@ module.exports = [
     handler: 'stripeController.getProductPayments',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
     method: 'GET',
     path: '/getSubscriptionStatus/:email',
     handler: 'stripeController.searchSubscriptionStatus',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/getRedirectUrl/:id/:email',
+    handler: 'stripeController.getRedirectUrl',
     config: {
       auth: false,
     },

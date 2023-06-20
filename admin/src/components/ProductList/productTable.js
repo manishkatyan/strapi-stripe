@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable react/no-array-index-key */
 
 /**
@@ -8,21 +9,36 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Thead, Tbody, Tr, Td, Th, TFooter } from '@strapi/design-system/Table';
-import { Flex } from '@strapi/design-system/Flex';
-import { Box } from '@strapi/design-system/Box';
-import { IconButton } from '@strapi/design-system/IconButton';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Td,
+  Th,
+  TFooter,
+  Flex,
+  Box,
+  IconButton,
+  Typography,
+  NextLink,
+  PageLink,
+  Pagination,
+  PreviousLink,
+  EmptyStateLayout,
+  VisuallyHidden,
+  Button,
+  Badge,
+} from '@strapi/design-system/';
+
 import { Link, useRouteMatch } from 'react-router-dom';
-import { Typography } from '@strapi/design-system/Typography';
+
 import parse from 'html-react-parser';
-import { NextLink, PageLink, Pagination, PreviousLink } from '@strapi/design-system/Pagination';
-import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
-import { VisuallyHidden } from '@strapi/design-system/VisuallyHidden';
-import { Button } from '@strapi/design-system/Button';
+
 import Pencil from '@strapi/icons/Pencil';
 import CarretUp from '@strapi/icons/CarretUp';
 import CarretDown from '@strapi/icons/CarretDown';
-import { Badge } from '@strapi/design-system/Badge';
+
 import Plus from '@strapi/icons/Plus';
 import ChartPie from '@strapi/icons/ChartPie';
 import Trash from '@strapi/icons/Trash';
@@ -294,6 +310,7 @@ const ProductTable = ({
                           />
                         </Box>
                         <ConfirmDialog
+                          key={product.id}
                           isConfirmVisible={isConfirmVisible}
                           handleCloseModal={handleCloseModal}
                           productId={product.id}

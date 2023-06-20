@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable node/no-extraneous-require */
 /* eslint-disable node/no-missing-require */
 /* eslint-disable no-unused-vars */
@@ -7,6 +8,9 @@
 const Stripe = require('stripe');
 const { ApplicationError } = require('@strapi/utils').errors;
 const axiosInstance = require('axios');
+
+const liveStripeKey = process.env.STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY;
+const testStripeKey = process.env.STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY;
 
 module.exports = ({ strapi }) => ({
   async initialize() {
@@ -34,9 +38,9 @@ module.exports = ({ strapi }) => ({
       let stripe;
 
       if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+        stripe = new Stripe(liveStripeKey);
       } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+        stripe = new Stripe(testStripeKey);
       }
 
       const product = await stripe.products.create({
@@ -93,9 +97,9 @@ module.exports = ({ strapi }) => ({
       const stripeSettings = await this.initialize();
       let stripe;
       if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+        stripe = new Stripe(liveStripeKey);
       } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+        stripe = new Stripe(testStripeKey);
       }
 
       await stripe.products.update(stripeProductId, {
@@ -119,9 +123,9 @@ module.exports = ({ strapi }) => ({
   },
   async deleteProduct(productId, stripeProductId) {
     try {
-        const response = await strapi
-          .query('plugin::strapi-stripe.ss-product')
-          .delete({ where: { id: productId } });
+      const response = await strapi
+        .query('plugin::strapi-stripe.ss-product')
+        .delete({ where: { id: productId } });
       return response;
     } catch (error) {
       throw new ApplicationError(error.message);
@@ -139,9 +143,9 @@ module.exports = ({ strapi }) => ({
       const stripeSettings = await this.initialize();
       let stripe;
       if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+        stripe = new Stripe(liveStripeKey);
       } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+        stripe = new Stripe(testStripeKey);
       }
       let priceId;
       let paymentMode;
@@ -172,7 +176,7 @@ module.exports = ({ strapi }) => ({
         mode: paymentMode,
         payment_method_types: [...PaymentMethods],
         customer_email: userEmail,
-        allow_promotion_codes:stripeSettings.allowPromotionCode,
+        allow_promotion_codes: stripeSettings.allowPromotionCode,
         success_url: `${stripeSettings.checkoutSuccessUrl}?sessionId={CHECKOUT_SESSION_ID}`,
         cancel_url: `${stripeSettings.checkoutCancelUrl}`,
         metadata: {
@@ -190,9 +194,9 @@ module.exports = ({ strapi }) => ({
       const stripeSettings = await this.initialize();
       let stripe;
       if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+        stripe = new Stripe(liveStripeKey);
       } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+        stripe = new Stripe(testStripeKey);
       }
       const session = await stripe.checkout.sessions.retrieve(checkoutSessionId);
       return session;
@@ -219,9 +223,9 @@ module.exports = ({ strapi }) => ({
       const stripeSettings = await this.initialize();
       let stripe;
       if (stripeSettings.isLiveMode) {
-        stripe = new Stripe(stripeSettings.stripeLiveSecKey);
+        stripe = new Stripe(liveStripeKey);
       } else {
-        stripe = new Stripe(stripeSettings.stripeTestSecKey);
+        stripe = new Stripe(testStripeKey);
       }
       const customer = await stripe.customers.list({ email });
 
