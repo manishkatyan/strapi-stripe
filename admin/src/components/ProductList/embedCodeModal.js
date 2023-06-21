@@ -166,8 +166,21 @@ const EmbedCodeModal = ({
             <Box background="neutral100" padding={2} marginTop={4} marginBottom={4}>
               <Typography>
                 {`
-                const response = await axios.get(${window.location.origin}/strapi-stripe/getSubscriptionStatus/<userEmail>)
+                const response = await axios.get(${window.location.origin}/strapi-stripe/getSubscriptionStatus/<userEmail>,{
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`}
+                <span>{`Bearer ${'${'}apiToken}`}</span>
+                {`
+                  },
+                }
+                )
                 `}
+              </Typography>
+              <br /> <br />
+              <Typography>
+                {`
+                 Use the same ApiToken created during the plugin setup.`}
               </Typography>
             </Box>
           </ModalBody>

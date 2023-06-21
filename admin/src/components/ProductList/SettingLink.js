@@ -1,8 +1,6 @@
+// @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import { Grid, GridItem } from '@strapi/design-system/Grid';
-import { Box } from '@strapi/design-system/Box';
-import { Link } from '@strapi/design-system/Link';
-import { Typography } from '@strapi/design-system/Typography';
+import { Grid, GridItem, Box, Link, Typography } from '@strapi/design-system';
 import ArrowRight from '@strapi/icons/ArrowRight';
 import pluginPkg from '../../../../package.json';
 import { getGithubVersion } from '../../utils/apiCalls';
