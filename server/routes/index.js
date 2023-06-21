@@ -88,6 +88,7 @@ module.exports = [
     handler: 'stripeController.searchSubscriptionStatus',
     config: {
       auth: false,
+      policies: ['plugin::strapi-stripe.apiToken'],
     },
   },
   {
