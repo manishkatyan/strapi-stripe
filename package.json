@@ -1,6 +1,6 @@
 {
   "name": "strapi-stripe",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Online payments and subscriptions made simple, secure and fast. This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay, Google pay, SEPA Direct Debit, ACH Direct Debit on your Strapi app via Stripe.",
   "strapi": {
     "name": "strapi-stripe",
