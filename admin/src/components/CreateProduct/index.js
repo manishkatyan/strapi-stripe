@@ -28,6 +28,7 @@ import {
 } from '@strapi/design-system';
 import { uploadFiles } from '../../utils/apiCalls';
 
+const apiToken = process.env.STRAPI_ADMIN_API_TOKEN;
 const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState();
@@ -149,7 +150,7 @@ const CreateProduct = ({ isVisible, handleClose, handleClickSave }) => {
       if (image.length > 0) {
         setUpload(true);
         setUploadMessage('Uploading Product image');
-        const response = await uploadFiles(image);
+        const response = await uploadFiles(image, apiToken);
         const data = await response.json();
 
         if (data[0].url.indexOf('https://') === 0 || data[0].url.indexOf('http://') === 0) {
