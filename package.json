@@ -8,9 +8,9 @@
     "kind": "plugin"
   },
   "dependencies": {
-    "better-sqlite3": "^7.6.2",
-    "html-react-parser": "^1.4.10",
-    "stripe": "^8.210.0"
+    "better-sqlite3": "^9.4.3",
+    "html-react-parser": "^5.1.8",
+    "stripe": "^14.19.0"
   },
   "scripts": {
     "format": "npm-run-all -p format:*",
