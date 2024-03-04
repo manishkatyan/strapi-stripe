@@ -1,6 +1,6 @@
 {
   "name": "strapi-stripe",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Online payments and subscriptions made simple, secure and fast. This free plugin enables you to accept online payments and create subscriptions using Credit Card, Apple pay, Google pay, SEPA Direct Debit, ACH Direct Debit on your Strapi app via Stripe.",
   "strapi": {
     "name": "strapi-stripe",
@@ -8,9 +8,9 @@
     "kind": "plugin"
   },
   "dependencies": {
-    "better-sqlite3": "^7.6.2",
-    "html-react-parser": "^1.4.10",
-    "stripe": "^8.210.0"
+    "better-sqlite3": "^9.4.3",
+    "html-react-parser": "^5.1.8",
+    "stripe": "^14.19.0"
   },
   "scripts": {
     "format": "npm-run-all -p format:*",
@@ -73,7 +73,7 @@
     }
   ],
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
   "keywords": [
